@@ -58,6 +58,7 @@
     <Compile Include="Assets\Scripts\Begginer Scripting\Axis.cs" />
     <Compile Include="Assets\Scripts\Movement.cs" />
     <Compile Include="Assets\Scripts\Collectable.cs" />
+    <Compile Include="Assets\Scripts\Pause.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
