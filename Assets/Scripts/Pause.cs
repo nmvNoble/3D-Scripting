@@ -21,7 +21,5 @@ public class Pause : MonoBehaviour
         {
             Time.timeScale = 1;
         }
-        else
-            Debug.LogError("Error Pause");
     }
 }

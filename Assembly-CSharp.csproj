@@ -60,6 +60,8 @@
     <Compile Include="Assets\Scripts\Movement.cs" />
     <Compile Include="Assets\Scripts\Begginer Scripting\Axis.cs" />
     <Compile Include="Assets\Scripts\Aim.cs" />
+    <Compile Include="Assets\Scripts\Bot.cs" />
+    <Compile Include="Assets\Scripts\ColorChanger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
