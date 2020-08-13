@@ -55,13 +55,21 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Bot.cs" />
-    <Compile Include="Assets\Scripts\Pause.cs" />
-    <Compile Include="Assets\Scripts\ColorChanger.cs" />
-    <Compile Include="Assets\Scripts\Collectable.cs" />
-    <Compile Include="Assets\Scripts\Movement.cs" />
+    <Compile Include="Assets\Scripts\Unity C# Survival Guide\Bot.cs" />
+    <Compile Include="Assets\Scripts\Unity C# Survival Guide\Pause.cs" />
+    <Compile Include="Assets\Scripts\Unity C# Survival Guide\ColorChanger.cs" />
+    <Compile Include="Assets\Scripts\Unity C# Survival Guide\Collectable.cs" />
+    <Compile Include="Assets\Scripts\Unity C# Survival Guide\Movement.cs" />
     <Compile Include="Assets\Scripts\Begginer Scripting\Axis.cs" />
-    <Compile Include="Assets\Scripts\Aim.cs" />
+    <Compile Include="Assets\Scripts\Unity C# Survival Guide\Aim.cs" />
+    <Compile Include="Assets\Scripts\Unity C# Survival Guide\Non-mono Classes\Item.cs" />
+    <Compile Include="Assets\Scripts\Unity C# Survival Guide\ItemDB.cs" />
+    <Compile Include="Assets\Scripts\Unity C# Survival Guide\Non-mono Classes\Spell.cs" />
+    <Compile Include="Assets\Scripts\Unity C# Survival Guide\Wizard.cs" />
+    <Compile Include="Assets\Scripts\Unity C# Survival Guide\Non-mono Classes\Consumable.cs" />
+    <Compile Include="Assets\Scripts\Unity C# Survival Guide\Non-mono Classes\Weapon.cs" />
+    <Compile Include="Assets\Scripts\Unity C# Survival Guide\Pet.cs" />
+    <Compile Include="Assets\Scripts\Unity C# Survival Guide\Non-mono Classes\Duck.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
