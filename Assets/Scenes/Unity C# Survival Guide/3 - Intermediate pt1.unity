@@ -704,6 +704,43 @@ MonoBehaviour:
   - name: Scorching Ray
     lvlRequired: 3
     expGained: 10
+  runes:
+  - name: 
+    id: 0
+    description: 
+    icon: {fileID: 0}
+  - name: 
+    id: 0
+    description: 
+    icon: {fileID: 0}
+  - name: 
+    id: 0
+    description: 
+    icon: {fileID: 0}
+  - name: 
+    id: 0
+    description: 
+    icon: {fileID: 0}
+  - name: 
+    id: 0
+    description: 
+    icon: {fileID: 0}
+  - name: 
+    id: 0
+    description: 
+    icon: {fileID: 0}
+  - name: 
+    id: 0
+    description: 
+    icon: {fileID: 0}
+  - name: 
+    id: 0
+    description: 
+    icon: {fileID: 0}
+  - name: 
+    id: 0
+    description: 
+    icon: {fileID: 0}
   level: 1
   exp: 0
   expCap: 10
@@ -946,7 +983,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2679437fa6a8b6244ba2e79e2ffdbb85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items: []
+  _items:
+  - name: Rune-Red
+    id: 0
+    description: A warm rune.
+    icon: {fileID: 0}
+  - name: Rune-Orange
+    id: 1
+    description: A hot rune.
+    icon: {fileID: 0}
+  - name: Rune-White
+    id: 2
+    description: A scalding rune.
+    icon: {fileID: 0}
+  - name: Rune-Blue
+    id: 3
+    description: A searing rune.
+    icon: {fileID: 0}
   consumables: []
   weapons: []
   note1:

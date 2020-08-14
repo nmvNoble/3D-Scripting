@@ -56,9 +56,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\2 - Beginner\Bot.cs" />
+    <Compile Include="Assets\Scripts\Unity C# Survival Guide\3 - Intermediate pt1\Non-mono Classes\Enemy.cs" />
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\3 - Intermediate pt1\Wizard.cs" />
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\1 - Basics\Pause.cs" />
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\2 - Beginner\ColorChanger.cs" />
+    <Compile Include="Assets\Scripts\Unity C# Survival Guide\3 - Intermediate pt1\UIManager.cs" />
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\3 - Intermediate pt1\Non-mono Classes\Duck.cs" />
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\3 - Intermediate pt1\Non-mono Classes\Weapon.cs" />
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\3 - Intermediate pt1\Pet.cs" />
@@ -67,13 +69,12 @@
     <Compile Include="Assets\Scripts\Beginner Scripting\Axis.cs" />
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\3 - Intermediate pt1\Non-mono Classes\Spell.cs" />
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\3 - Intermediate pt1\Non-mono Classes\Consumable.cs" />
+    <Compile Include="Assets\Scripts\Unity C# Survival Guide\3 - Intermediate pt1\SpawnManager.cs" />
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\2 - Beginner\Aim.cs" />
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\3 - Intermediate pt1\Non-mono Classes\Item.cs" />
-    <Compile Include="Assets\Scripts\Unity C# Survival Guide\3 - Intermediate pt1\ItemDB.cs" />
-    <Compile Include="Assets\Scripts\Unity C# Survival Guide\3 - Intermediate pt1\SpawnManager.cs" />
-    <Compile Include="Assets\Scripts\Unity C# Survival Guide\3 - Intermediate pt1\Non-mono Classes\Enemy.cs" />
-    <Compile Include="Assets\Scripts\Unity C# Survival Guide\3 - Intermediate pt1\UIManager.cs" />
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\3 - Intermediate pt1\Non-mono Classes\UtilityHelper.cs" />
+    <Compile Include="Assets\Scripts\Unity C# Survival Guide\3 - Intermediate pt1\ItemDB.cs" />
+    <Compile Include="Assets\Scripts\Unity C# Survival Guide\3 - Intermediate pt1\Player.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

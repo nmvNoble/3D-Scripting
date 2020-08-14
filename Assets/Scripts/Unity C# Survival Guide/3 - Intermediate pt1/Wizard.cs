@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Wizard : MonoBehaviour
 {
+    private ItemDB _iDB;
     public Spell[] spells;
+    public Item[] runes = new Item[9];
 
     public int level = 1;
     public int exp;
@@ -13,7 +15,7 @@ public class Wizard : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _iDB = GameObject.Find("ItemDB").GetComponent<ItemDB>();
     }
 
     // Update is called once per frame
@@ -21,17 +23,27 @@ public class Wizard : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            foreach(var spell in spells)
+            foreach (var spell in spells)
             {
-                if(spell.lvlRequired == this.level)
+                if (spell.lvlRequired == this.level)
                     this.exp += spell.Cast();
             }
         }
 
-        if(this.exp == expCap)
+        if (this.exp == expCap)
         {
             this.level++;
             expCap *= 10;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            _iDB.AddItem(0, this);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            _iDB.RemoveItem(0, this);
         }
     }
 }
