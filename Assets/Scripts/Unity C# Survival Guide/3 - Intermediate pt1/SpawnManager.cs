@@ -13,7 +13,10 @@ public class SpawnManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-            Instantiate(enemyPrefab);
+            
+            Instantiate(enemyPrefab, 
+                new Vector3(Random.Range(-7,7), Random.Range(0, 7), 7), 
+                Quaternion.identity);
         }
     }
 }
