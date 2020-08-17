@@ -8,7 +8,7 @@ public class ItemDB : MonoBehaviour
     //public Consumable[] consumables;
     //public Weapon[] weapons;
     [SerializeField]
-    private List<Item> _items; 
+    private List<Item> _items;
     public List<Item> Items
     {
         get
@@ -20,18 +20,54 @@ public class ItemDB : MonoBehaviour
             _items = value;
         }
     }
+    private Dictionary<int, Item> _runes;
+    public Dictionary<int, Item> Runes
+    {
+        get
+        {
+            return _runes;
+        }
+        private set
+        {
+            _runes = value;
+        }
+    }
+
     public List<Consumable> consumables = new List<Consumable>();
     public List<Weapon> weapons = new List<Weapon>();
 
 
     [SerializeField]
     Item note1, note2;
+    Item Rr, Ro, Rw, Rb;
 
     // Start is called before the first frame update
     void Start()
     {
         note1 = new Item("note 1", 0, "sword is Sharp boi.");
         note2 = CreateItem("note 2", 1, "staff is Bonky boi.");
+        Rr = CreateItem("Rune-Red", 0, "A Warm Rune.", 1);
+        Ro = CreateItem("Rune-Orange", 1, "A Hot Rune.", 1);
+        Rw = CreateItem("Rune-White", 2, "A Scalding Rune.", 1);
+        Rb = CreateItem("Rune-Blue", 3, "A Searing Rune.", 1);
+        Runes = new Dictionary<int, Item>
+        {
+            { Rr.id, Rr },
+            { Ro.id, Ro },
+            { Rw.id, Rw },
+            { Rb.id, Rb }
+        };
+
+        //Debug.Log("Item Actions: ");
+        //foreach (var item in Items)
+        //{
+        //    item.Action();
+        //}
+        Debug.Log("Rune Actions: ");
+        foreach (var val in Runes.Values)
+        {
+            val.Action();
+        }
     }
 
     // Update is called once per frame
@@ -43,6 +79,11 @@ public class ItemDB : MonoBehaviour
     private Item CreateItem(string name, int id, string desc)
     {
         var item = new Item(name, id, desc);
+        return item;
+    }
+    private Item CreateItem(string name, int id, string desc, int type)
+    {
+        var item = new Item(name, id, desc, type);
         return item;
     }
 
@@ -67,6 +108,35 @@ public class ItemDB : MonoBehaviour
         foreach (var rune in player.runes)
         {
             if (rune.name == _items[index].name)
+            {
+                player.runes[index] = null;
+                Debug.Log("Removed " + rune.name);
+            }
+        }
+    }
+
+    public void AddRune(int index, Wizard player)
+    {
+        foreach (var rune in Runes)//_items)
+        {
+            if (index == rune.Key) //.id)
+            {
+                if (rune.Value != null && player.runes[index].name == rune.Value.name)
+                {
+                    Debug.Log("Rune already aquired!");
+                    return;
+                }
+                else
+                    player.runes[index] = rune.Value;
+                Debug.Log("Aquired " + rune.Value.name);
+            }
+        }
+    }
+    public void RemoveRune(int index, Wizard player)
+    {
+        foreach (var rune in player.runes)
+        {
+            if (rune.name == Runes[index].name)
             {
                 player.runes[index] = null;
                 Debug.Log("Removed " + rune.name);

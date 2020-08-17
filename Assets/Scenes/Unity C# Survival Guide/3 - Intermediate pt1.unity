@@ -709,38 +709,47 @@ MonoBehaviour:
     id: 0
     description: 
     icon: {fileID: 0}
+    itemType: 0
   - name: 
     id: 0
     description: 
     icon: {fileID: 0}
+    itemType: 0
   - name: 
     id: 0
     description: 
     icon: {fileID: 0}
+    itemType: 0
   - name: 
     id: 0
     description: 
     icon: {fileID: 0}
+    itemType: 0
   - name: 
     id: 0
     description: 
     icon: {fileID: 0}
+    itemType: 0
   - name: 
     id: 0
     description: 
     icon: {fileID: 0}
+    itemType: 0
   - name: 
     id: 0
     description: 
     icon: {fileID: 0}
+    itemType: 0
   - name: 
     id: 0
     description: 
     icon: {fileID: 0}
+    itemType: 0
   - name: 
     id: 0
     description: 
     icon: {fileID: 0}
+    itemType: 0
   level: 1
   exp: 0
   expCap: 10
@@ -818,7 +827,7 @@ Transform:
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 1344407081}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &691360145
 GameObject:
@@ -988,18 +997,22 @@ MonoBehaviour:
     id: 0
     description: A warm rune.
     icon: {fileID: 0}
+    itemType: 1
   - name: Rune-Orange
     id: 1
     description: A hot rune.
     icon: {fileID: 0}
+    itemType: 1
   - name: Rune-White
     id: 2
     description: A scalding rune.
     icon: {fileID: 0}
+    itemType: 1
   - name: Rune-Blue
     id: 3
     description: A searing rune.
     icon: {fileID: 0}
+    itemType: 1
   consumables: []
   weapons: []
   note1:
@@ -1007,11 +1020,13 @@ MonoBehaviour:
     id: 0
     description: 
     icon: {fileID: 0}
+    itemType: 0
   note2:
     name: 
     id: 0
     description: 
     icon: {fileID: 0}
+    itemType: 0
 --- !u!4 &747666017
 Transform:
   m_ObjectHideFlags: 0
@@ -1024,7 +1039,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1344407081}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &860824122
 GameObject:
@@ -1566,9 +1581,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 2081020819}
   - {fileID: 747666017}
   - {fileID: 578191420}
-  - {fileID: 2081020819}
   m_Father: {fileID: 1814367122}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2309,7 +2324,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 1344407081}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2081020820
 MonoBehaviour:

@@ -38,12 +38,12 @@ public class Wizard : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            _iDB.AddItem(0, this);
+            _iDB.AddRune(0, this);
         }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            _iDB.RemoveItem(0, this);
+            _iDB.RemoveRune(0, this);
         }
     }
 }
