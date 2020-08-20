@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,21 +13,25 @@ public class Wizard : MonoBehaviour, IDamagable
     public int exp;
     public int expCap = 10;
     public int Health { get; set; }
+    public static Action<int> OnDamage;
+
+    private Color robes;
 
     // Start is called before the first frame update
     void Start()
     {
         _iDB = GameObject.Find("ItemDB").GetComponent<ItemDB>();
         Health = 10;
+        robes = GetComponent<MeshRenderer>().material.color;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Cast();
-        }
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    Cast();
+        //}
 
         if (this.exp == expCap)
         {
@@ -48,7 +53,8 @@ public class Wizard : MonoBehaviour, IDamagable
         if (Health <= 0)
         {
             Debug.Log("The Wizard has fallen!");
-            Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
+            //Destroy(this.gameObject);
         }
     }
 
@@ -65,6 +71,25 @@ public class Wizard : MonoBehaviour, IDamagable
     {
         GetComponent<MeshRenderer>().material.color = Color.yellow;
         Health -= dmgAmount;
+        if (OnDamage != null)
+        {
+            OnDamage(Health);
+        }
         Debug.Log("Quack! The Wizard Hit himself! HP: " + Health);
+    }
+
+    public void ResetWizard()
+    {
+        level = 1;
+        exp = 0;
+        expCap = 10;
+        Health = 10;
+        runes = null;
+        GetComponent<MeshRenderer>().material.color = robes;
+        this.gameObject.SetActive(true);
+        if (OnDamage != null)
+        {
+            OnDamage(Health);
+        }
     }
 }

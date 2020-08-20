@@ -34,7 +34,7 @@ public class Item
         this.itemType = (ItemType)type;
     }
 
-    public void Action()
+    public void enumTyping()
     {
         switch (this.itemType)
         {

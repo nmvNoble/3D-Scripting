@@ -17,6 +17,8 @@ public class Bandit : Enemy, IDamagable
     {
         GetComponent<MeshRenderer>().material.color = Color.magenta;
         Health -= dmgAmount;
+        if (Health <= 0)
+            Destroy(this.gameObject);
         Debug.Log("Bandit - Magenta! HP: "+Health);
     }
 

@@ -63,10 +63,10 @@ public class ItemDB : MonoBehaviour
         //{
         //    item.Action();
         //}
-        Debug.Log("Rune Actions: ");
+        Debug.Log("Item Typing: ");
         foreach (var val in Runes.Values)
         {
-            val.Action();
+            val.enumTyping();
         }
     }
 
