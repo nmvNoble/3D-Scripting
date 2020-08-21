@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoSingleton<GameManager>
 {
+    public override void Init()
+    {
+        base.Init();
+    }
+
     public Wizard wizard;
     private void OnEnable()
     {

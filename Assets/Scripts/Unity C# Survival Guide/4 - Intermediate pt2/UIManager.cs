@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class UIManager : MonoSingleton<UIManager>
 {
+    public override void Init()
+    {
+        base.Init();
+    }
+
     public Text activeEnemiesText;
     public Text playerDeathsText;
     public Text playerHealthText;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bandit : Enemy, IDamagable
 {
-    private UIManager _ui;
+    //private UIManager _ui;
 
     public int Health { get; set; }
 
@@ -31,14 +31,16 @@ public class Bandit : Enemy, IDamagable
     {
         Health = 10;
         SpawnManager.enemyCount++;
-        _ui = GameObject.Find("UI Manager").GetComponent<UIManager>();
-        _ui.UpdateEnemyCount();
+        //_ui = GameObject.Find("UI Manager").GetComponent<UIManager>();
+        //_ui.UpdateEnemyCount();
+        UIManager.Instance.UpdateEnemyCount();
         Die();
     }
 
     public void OnDisable()
     {
         SpawnManager.enemyCount--;
-        _ui.UpdateEnemyCount();
+        //_ui.UpdateEnemyCount();
+        UIManager.Instance.UpdateEnemyCount();
     }
 }

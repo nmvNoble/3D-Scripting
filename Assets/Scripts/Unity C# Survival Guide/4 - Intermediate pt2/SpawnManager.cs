@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnManager : MonoBehaviour
+public class SpawnManager : MonoSingleton<SpawnManager>
 {
+    public override void Init()
+    {
+        base.Init();
+    }
+
     public GameObject enemyPrefab;
 
     public static int enemyCount;
