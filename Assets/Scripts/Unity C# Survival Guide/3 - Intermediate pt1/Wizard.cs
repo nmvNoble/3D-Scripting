@@ -15,14 +15,14 @@ public class Wizard : MonoBehaviour, IDamagable
     public int Health { get; set; }
     public static Action<int> OnDamage;
 
-    private Color robes;
+    private Color defaultColor;
 
     // Start is called before the first frame update
     void Start()
     {
         _iDB = GameObject.Find("ItemDB").GetComponent<ItemDB>();
         Health = 10;
-        robes = GetComponent<MeshRenderer>().material.color;
+        defaultColor = GetComponent<MeshRenderer>().material.color;
     }
 
     // Update is called once per frame
@@ -85,7 +85,7 @@ public class Wizard : MonoBehaviour, IDamagable
         expCap = 10;
         Health = 10;
         runes = null;
-        GetComponent<MeshRenderer>().material.color = robes;
+        GetComponent<MeshRenderer>().material.color = defaultColor;
         this.gameObject.SetActive(true);
         if (OnDamage != null)
         {

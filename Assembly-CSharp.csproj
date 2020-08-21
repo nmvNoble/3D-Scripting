@@ -85,6 +85,7 @@
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\4 - Intermediate pt2\GameManager.cs" />
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\4 - Intermediate pt2\MonoSingleton.cs" />
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\4 - Intermediate pt2\LevelManager.cs" />
+    <Compile Include="Assets\Scripts\Unity C# Survival Guide\4 - Intermediate pt2\PoolManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

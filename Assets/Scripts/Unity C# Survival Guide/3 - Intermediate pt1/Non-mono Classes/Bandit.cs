@@ -7,6 +7,7 @@ public class Bandit : Enemy, IDamagable
     //private UIManager _ui;
 
     public int Health { get; set; }
+    private Color defaultColor;
 
     public override void Attack()
     {
@@ -17,14 +18,21 @@ public class Bandit : Enemy, IDamagable
     {
         GetComponent<MeshRenderer>().material.color = Color.magenta;
         Health -= dmgAmount;
+        Debug.Log("Bandit - Magenta! HP: " + Health);
         if (Health <= 0)
-            Destroy(this.gameObject);
-        Debug.Log("Bandit - Magenta! HP: "+Health);
+        {
+            //Destroy(this.gameObject);
+            this.CancelInvoke();
+            Die();
+        }
     }
 
     public override void Die()
     {
-        base.Die();
+        Health = 10;
+        GetComponent<MeshRenderer>().material.color = defaultColor;
+        Debug.Log("Bandit Dying");
+        this.gameObject.SetActive(false);
     }
 
     public void OnEnable()
@@ -34,7 +42,8 @@ public class Bandit : Enemy, IDamagable
         //_ui = GameObject.Find("UI Manager").GetComponent<UIManager>();
         //_ui.UpdateEnemyCount();
         UIManager.Instance.UpdateEnemyCount();
-        Die();
+        Invoke("Die", Random.Range(2, 6));
+        defaultColor = GetComponent<MeshRenderer>().material.color;
     }
 
     public void OnDisable()
