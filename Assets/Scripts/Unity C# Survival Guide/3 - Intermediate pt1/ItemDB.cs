@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class ItemDB : MonoBehaviour
 {
@@ -57,7 +58,19 @@ public class ItemDB : MonoBehaviour
             { Rw.id, Rw },
             { Rb.id, Rb }
         };
+    }
 
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            ItemTyping();
+        }
+    }
+
+    public void ItemTyping()
+    {
         //Debug.Log("Item Actions: ");
         //foreach (var item in Items)
         //{
@@ -68,12 +81,17 @@ public class ItemDB : MonoBehaviour
         {
             val.enumTyping();
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        //Linq
+        var highDex = weapons.Where(w => w.dexBonus >= 3);
+        Debug.Log("Weapon Typing(Dex Bonus 3 and up): ");
+        foreach (var weap in highDex)
+        {
+            weap.enumTyping();
+            Debug.Log(weap.name + " Dmg(" + weap.damage + "), " +
+                "StrB(" + weap.strBonus + "), DexB(" + weap.dexBonus + ")");
+        }
+
     }
 
     private Item CreateItem(string name, int id, string desc)
