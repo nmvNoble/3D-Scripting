@@ -1,5 +1,8 @@
 # 3D-Scripting
 
+<strong>Currently Working On:</strong> Cleaning and organizing 3D-Scripting project to be more neat and accessible.
+<br><br>
+
 Consolidated project:
 <li>
   <strong>Unity C# Survival Guide</strong>, Course in Unity Learn<br>
