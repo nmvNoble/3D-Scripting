@@ -26,7 +26,7 @@ public class Movement : MonoBehaviour
             float _horizontalInput = Input.GetAxis("Horizontal");
             moveHorizontal = new MoveHorizontalCommand(this.transform, _speed, _horizontalInput);
             moveHorizontal.Execute();
-            CommandManager.Instance.AddCommand(moveHorizontal);
+            //CommandManager.Instance.AddCommand(moveHorizontal);
         }
         
 
@@ -36,7 +36,7 @@ public class Movement : MonoBehaviour
             float _verticalInput = Input.GetAxis("Vertical");
             moveVertical = new MoveVerticalCommand(this.transform, _speed, _verticalInput);
             moveVertical.Execute();
-            CommandManager.Instance.AddCommand(moveVertical);
+            //CommandManager.Instance.AddCommand(moveVertical);
         }
         
     }

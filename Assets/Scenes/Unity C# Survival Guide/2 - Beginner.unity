@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 82842308}
   m_Layer: 0
   m_Name: Target
-  m_TagString: Objects
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -424,6 +424,7 @@ MonoBehaviour:
   - {x: -3, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   - {x: 3, y: 0, z: 0}
+  playerBoxes: []
 --- !u!1 &374967782
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,8 +767,8 @@ GameObject:
   - component: {fileID: 1359196186}
   - component: {fileID: 1359196185}
   m_Layer: 0
-  m_Name: Player
-  m_TagString: Objects
+  m_Name: Player Box
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -861,8 +862,8 @@ GameObject:
   - component: {fileID: 1706335892}
   - component: {fileID: 1706335891}
   m_Layer: 0
-  m_Name: Player (1)
-  m_TagString: Objects
+  m_Name: Player Box (1)
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1177,8 +1178,8 @@ GameObject:
   - component: {fileID: 2062570458}
   - component: {fileID: 2062570457}
   m_Layer: 0
-  m_Name: Player (2)
-  m_TagString: Objects
+  m_Name: Player Box (2)
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
