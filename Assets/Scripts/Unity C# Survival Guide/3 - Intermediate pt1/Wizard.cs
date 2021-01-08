@@ -13,7 +13,7 @@ public class Wizard : MonoBehaviour, IDamagable
     public int exp;
     public int expCap = 10;
     public int Health { get; set; }
-    public static Action<int> OnDamage;
+    public static Action<int> OnDamage, OnLvlUp;
 
     private Color defaultColor;
 
@@ -38,6 +38,14 @@ public class Wizard : MonoBehaviour, IDamagable
             this.level++;
             expCap *= 10;
             Health += 10;
+            if (OnLvlUp != null)
+            {
+                OnLvlUp(level);
+            }
+            if (OnDamage != null)
+            {
+                OnDamage(Health);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
