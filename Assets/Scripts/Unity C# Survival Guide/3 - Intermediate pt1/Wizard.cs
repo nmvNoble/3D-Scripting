@@ -13,7 +13,8 @@ public class Wizard : MonoBehaviour, IDamagable
     public int exp;
     public int expCap = 10;
     public int Health { get; set; }
-    public static Action<int> OnDamage, OnLvlUp;
+    public static Action<int> OnDamage;
+    public static Action<int, string> OnLvlUp;
 
     private Color defaultColor;
 
@@ -23,6 +24,7 @@ public class Wizard : MonoBehaviour, IDamagable
         _iDB = GameObject.Find("ItemDB").GetComponent<ItemDB>();
         Health = 10;
         defaultColor = GetComponent<MeshRenderer>().material.color;
+        DisplayStats();
     }
 
     // Update is called once per frame
@@ -38,14 +40,7 @@ public class Wizard : MonoBehaviour, IDamagable
             this.level++;
             expCap *= 10;
             Health += 10;
-            if (OnLvlUp != null)
-            {
-                OnLvlUp(level);
-            }
-            if (OnDamage != null)
-            {
-                OnDamage(Health);
-            }
+            DisplayStats();
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -84,6 +79,22 @@ public class Wizard : MonoBehaviour, IDamagable
             OnDamage(Health);
         }
         Debug.Log("Quack! The Wizard Hit himself! HP: " + Health);
+    }
+
+    public void DisplayStats()
+    {
+        if (OnLvlUp != null)
+        {
+            foreach (var spell in spells)
+            {
+                if (spell.lvlRequired == this.level)
+                    OnLvlUp(level, spell.name);
+            }
+        }
+        if (OnDamage != null)
+        {
+            OnDamage(Health);
+        }
     }
 
     public void ResetWizard()

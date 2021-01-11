@@ -14,12 +14,13 @@ public class UIManager : MonoSingleton<UIManager>
     public Text playerDeathsText;
     public Text playerHealthText;
     public Text playerLevelText;
+    public Text wizardSpellText;
     private int _playerDeaths = 0;
 
     public void OnEnable()
     {
         Wizard.OnDamage += UpdatePlayerHealth;
-        Wizard.OnLvlUp += UpdateLevelHealth;
+        Wizard.OnLvlUp += UpdatePlayerLevel;
         Player.onDeath += UpdatePlayerDeath;
     }
 
@@ -39,8 +40,10 @@ public class UIManager : MonoSingleton<UIManager>
         playerHealthText.text = "Health: " + Health;
     }
 
-    public void UpdateLevelHealth(int lvl)
+    public void UpdatePlayerLevel(int lvl, string spell)
     {
+        Debug.Log(spell);
         playerLevelText.text = "Level: " + lvl;
-    }
+        wizardSpellText.text = "Current Spell\n"+spell;
+}
 }
