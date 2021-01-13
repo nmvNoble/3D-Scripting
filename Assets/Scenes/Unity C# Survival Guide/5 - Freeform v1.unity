@@ -526,7 +526,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 82842307}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5912f9f7124c8a3408b9ed45dedc686b, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c33036e1ccac15418affeeee56c1db0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
@@ -648,9 +648,9 @@ GameObject:
   - component: {fileID: 171522266}
   - component: {fileID: 171522265}
   - component: {fileID: 171522264}
+  - component: {fileID: 171522267}
   - component: {fileID: 171522268}
   - component: {fileID: 171522269}
-  - component: {fileID: 171522270}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -723,6 +723,19 @@ Transform:
   m_Father: {fileID: 1312332139}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
+--- !u!114 &171522267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171522263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc9cfd5b8d418974f84181d96c54f331, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objects: []
 --- !u!114 &171522268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -732,10 +745,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 171522263}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6daff238d2ce53478220a65d9a5c4c7, type: 3}
+  m_Script: {fileID: 11500000, guid: bf74c26ca3a52384fa6442faef008be3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects: []
 --- !u!114 &171522269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -745,22 +757,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 171522263}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa1aaa1cd1fe15f4bb15e91207741919, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e24a85fb6c694c469e191f930f9eb8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   wiz: {fileID: 578191416}
---- !u!114 &171522270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 171522263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d31499848b2a6444b9f186d116442047, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &194896955
 GameObject:
   m_ObjectHideFlags: 0
@@ -770,7 +770,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 194896956}
-  - component: {fileID: 194896957}
+  - component: {fileID: 194896958}
   m_Layer: 0
   m_Name: Bot
   m_TagString: Untagged
@@ -794,7 +794,7 @@ Transform:
   m_Father: {fileID: 1301456165}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &194896957
+--- !u!114 &194896958
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -803,7 +803,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 194896955}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4326556022b0c6643a6326c58fd1ad35, type: 3}
+  m_Script: {fileID: 11500000, guid: e8e68deeb7665fa479071dd3eaebbf66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   positions:
@@ -938,7 +938,7 @@ RectTransform:
   - {fileID: 11802434}
   - {fileID: 694508095}
   m_Father: {fileID: 721211702}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1637,7 +1637,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 578191415}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8885b5a27fbc60a49abb4ebc608cb36a, type: 3}
+  m_Script: {fileID: 11500000, guid: e86b016ebbd52ee4eb77b57924caed3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spells:
@@ -2146,8 +2146,8 @@ RectTransform:
   m_Children:
   - {fileID: 746824481}
   - {fileID: 1032494603}
-  - {fileID: 294047793}
   - {fileID: 1631373787}
+  - {fileID: 294047793}
   m_Father: {fileID: 1312332139}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2388,7 +2388,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 747666017}
-  - component: {fileID: 747666016}
+  - component: {fileID: 747666018}
   m_Layer: 0
   m_Name: ItemDB
   m_TagString: Untagged
@@ -2396,7 +2396,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &747666016
+--- !u!4 &747666017
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747666015}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1623979736}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &747666018
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2405,30 +2419,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 747666015}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2679437fa6a8b6244ba2e79e2ffdbb85, type: 3}
+  m_Script: {fileID: 11500000, guid: 92989d88d4309744c87584df0698cb4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _items:
-  - name: Rune-Red
-    id: 0
-    description: A warm rune.
-    icon: {fileID: 0}
-    itemType: 1
-  - name: Rune-Orange
-    id: 1
-    description: A hot rune.
-    icon: {fileID: 0}
-    itemType: 1
-  - name: Rune-White
-    id: 2
-    description: A scalding rune.
-    icon: {fileID: 0}
-    itemType: 1
-  - name: Rune-Blue
-    id: 3
-    description: A searing rune.
-    icon: {fileID: 0}
-    itemType: 1
+  _items: []
   consumables: []
   weapons:
   - name: Shortsword
@@ -2483,20 +2477,6 @@ MonoBehaviour:
     description: 
     icon: {fileID: 0}
     itemType: 0
---- !u!4 &747666017
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 747666015}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1623979736}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &860824122
 GameObject:
   m_ObjectHideFlags: 0
@@ -4028,7 +4008,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1455621908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0af47ab7d9319494fb806504db97b8cb, type: 3}
+  m_Script: {fileID: 11500000, guid: a3ccab2093e798a42b0ae49be2c05c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!54 &1455621910
@@ -4270,7 +4250,7 @@ RectTransform:
   m_Children:
   - {fileID: 1252206642}
   m_Father: {fileID: 721211702}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -4290,7 +4270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -4379,7 +4359,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1631373786}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af7048d21372fcd4a89916f696de952a, type: 3}
+  m_Script: {fileID: 11500000, guid: bf6f0190800fb044fa0d7680c23190cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   PauseBtn: {fileID: 1252206643}
@@ -4423,7 +4403,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1670749708}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c03d5af6c670b1b49a50e9deb48e434b, type: 3}
+  m_Script: {fileID: 11500000, guid: cf23378f3f7756c46afa2483e50e8d9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   wizard: {fileID: 578191416}
@@ -4819,7 +4799,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1763518163}
-  - component: {fileID: 1763518164}
+  - component: {fileID: 1763518165}
   m_Layer: 0
   m_Name: Spawn Manager
   m_TagString: Untagged
@@ -4842,7 +4822,7 @@ Transform:
   m_Father: {fileID: 32240614}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1763518164
+--- !u!114 &1763518165
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4851,11 +4831,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1763518162}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3074a4fbb2652934a8bd27fbb0780d6d, type: 3}
+  m_Script: {fileID: 11500000, guid: a5d31d5ce67e74b4b9daacccb65d0718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _banditContainer: {fileID: 132439139}
-  _enemyPrefab: {fileID: 1612547001947452149, guid: 462cd02e15e403640a78095393d4d73e, type: 3}
+  _enemyPrefab: {fileID: 1612547001947452149, guid: 017b4d036265044479845e0c750d998f, type: 3}
   _banditPool: []
 --- !u!1 &1814367121
 GameObject:
@@ -5249,7 +5229,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2008663321}
-  - component: {fileID: 2008663322}
+  - component: {fileID: 2008663323}
   m_Layer: 0
   m_Name: UI Manager
   m_TagString: Untagged
@@ -5271,7 +5251,7 @@ Transform:
   m_Father: {fileID: 32240614}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2008663322
+--- !u!114 &2008663323
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5280,7 +5260,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2008663320}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7c18474cd7341e46af8804e3f2ad82e, type: 3}
+  m_Script: {fileID: 11500000, guid: da64ed65983540045ab2befad8d025a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   activeEnemiesText: {fileID: 1504908932}
@@ -5330,7 +5310,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2020144937}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68622a82c35251b4c8b8038fc64fb8b7, type: 3}
+  m_Script: {fileID: 11500000, guid: dcc613252277e8b4085fdb00eab199f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   wizard: {fileID: 578191416}
@@ -5556,7 +5536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05af30d69601f314db93e71d6571e169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  petName: Beebo
+  petName: Bleeb
 --- !u!135 &2081020821
 SphereCollider:
   m_ObjectHideFlags: 0

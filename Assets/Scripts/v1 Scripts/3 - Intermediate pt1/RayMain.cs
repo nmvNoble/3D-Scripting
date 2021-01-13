@@ -8,7 +8,6 @@ public class RayMain : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -16,7 +15,6 @@ public class RayMain : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-
             Ray rayOrigin = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
 

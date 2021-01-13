@@ -21,6 +21,7 @@ public class ItemDB : MonoBehaviour
             _items = value;
         }
     }
+
     private Dictionary<int, Item> _runes;
     public Dictionary<int, Item> Runes
     {

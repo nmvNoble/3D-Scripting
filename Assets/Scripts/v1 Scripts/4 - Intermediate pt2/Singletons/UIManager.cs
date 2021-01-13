@@ -42,7 +42,6 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void UpdatePlayerLevel(int lvl, string spell)
     {
-        Debug.Log(spell);
         playerLevelText.text = "Level: " + lvl;
         wizardSpellText.text = "Current Spell\n"+spell;
 }
