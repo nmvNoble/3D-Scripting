@@ -17,25 +17,33 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     private List<GameObject> _banditPool;
 
     public static int enemyCount;
+    public bool isGameOver = false;
+    public int time;
 
     // Start is called before the first frame update
     void Start()
     {
         _banditPool = GenerateBandits(10);
+        StartCoroutine(StartTimer());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
-        {
-            GameObject bandit = spawnBandit();
-            bandit.transform.position = new Vector3(Random.Range(-7, 7), Random.Range(0, 7), 7);
-            //bandit.GetComponent<Bandit>().Die();
+    }
 
-            //Instantiate(_enemyPrefab, 
-            //    new Vector3(Random.Range(-7,7), Random.Range(0, 7), 7), 
-            //    Quaternion.identity);
+    public IEnumerator StartTimer()
+    {
+        while (!isGameOver)
+        {
+            yield return new WaitForSeconds(1.0f);
+            time++;
+            if (time%3 == 0)
+            {
+                GameObject bandit = spawnBandit();
+                bandit.transform.position = new Vector3(Random.Range(-7, 7), Random.Range(0, 7), 7);
+            }
+            //_timeText.text = "Time: " + time;
         }
     }
 
