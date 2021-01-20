@@ -24,8 +24,8 @@ public class RayMain : MonoBehaviour
                 //hitInfo.collider.GetComponent<Bandit>().Damage(1);
                 if (obj != null)
                 {
-                    wiz.Cast();
-                    obj.Damage(2);
+                    
+                    obj.Damage(wiz.Cast(obj.RetPos()));
                 }
                 
             }

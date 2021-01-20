@@ -17,6 +17,7 @@ public class Wizard : MonoBehaviour, IDamagable
     public static Action<int, string> OnLvlUp;
 
     private Color defaultColor;
+    private GameObject spellEffect;
 
     // Start is called before the first frame update
     void Start()
@@ -61,13 +62,46 @@ public class Wizard : MonoBehaviour, IDamagable
         }
     }
 
-    public void Cast()
+    public Vector3 RetPos()
+    {
+        return transform.position;
+    }
+
+    public int Cast(Vector3 enemyPos)
     {
         foreach (var spell in spells)
         {
+            Debug.Log("lvl " + level + ", lvlreq: "+ spell.lvlRequired);
             if (spell.lvlRequired == this.level)
-                this.exp += spell.Cast();
+            {
+                this.exp += spell.Cast(enemyPos);
+                Debug.Log("Wizard has " + exp + " Total Exp");
+
+                spellEffect = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                spellEffect.transform.position =
+                        new Vector3(enemyPos.x, enemyPos.y + spell.spellRadius, enemyPos.z);
+                spellEffect.transform.localScale =
+                        new Vector3(spell.spellRadius, spell.spellRadius, spell.spellRadius);
+                UtilityHelper.ChangeColor(spellEffect, spell.spellColor);
+                StartCoroutine(SpellEffectAnimation(spellEffect, spell.spellCD));//, spellEffect.transform.position, enemyPos));
+
+                return spell.spellDmg;
+            }
         }
+        Debug.Log("The Wizard does not have a Cast-able Spell!!!");
+        return 0;
+    }
+
+    IEnumerator SpellEffectAnimation(GameObject Effect, float CD)//, Vector3 origin, Vector3 destination)
+    {
+            yield return new WaitForSeconds(CD);
+            /*while(origin != destination)
+            {
+                Vector3 toFace = destination - origin;
+                Effect.transform.Translate(toFace);
+                yield return new WaitForEndOfFrame();
+            }*/
+            Destroy(Effect);
     }
 
     public void Damage(int dmgAmount)

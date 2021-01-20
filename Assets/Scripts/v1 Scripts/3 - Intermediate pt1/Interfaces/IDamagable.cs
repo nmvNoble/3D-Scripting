@@ -6,5 +6,7 @@ public interface IDamagable
 {
     int Health { get; set; }
 
+    Vector3 RetPos();
+
     void Damage(int dmgAmount);
 }

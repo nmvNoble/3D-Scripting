@@ -14,6 +14,11 @@ public class Bandit : Enemy, IDamagable
         throw new System.NotImplementedException();
     }
 
+    public Vector3 RetPos()
+    {
+        return transform.position;
+    }
+
     public void Damage(int dmgAmount)
     {
         GetComponent<MeshRenderer>().material.color = Color.magenta;

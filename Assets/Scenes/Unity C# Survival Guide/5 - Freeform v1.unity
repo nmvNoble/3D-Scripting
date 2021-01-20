@@ -1644,12 +1644,24 @@ MonoBehaviour:
   - name: Fire Bolt
     lvlRequired: 1
     expGained: 1
+    spellCD: 0.5
+    spellDmg: 1
+    spellRadius: 1
+    spellColor: {r: 1, g: 0, b: 0, a: 0}
   - name: Burning Hands
     lvlRequired: 2
     expGained: 5
+    spellCD: 1
+    spellDmg: 2
+    spellRadius: 2
+    spellColor: {r: 1, g: 0, b: 0, a: 0}
   - name: Scorching Ray
     lvlRequired: 3
     expGained: 10
+    spellCD: 2
+    spellDmg: 3
+    spellRadius: 3
+    spellColor: {r: 1, g: 0, b: 0, a: 0}
   runes:
   - name: 
     id: 0
@@ -4837,6 +4849,8 @@ MonoBehaviour:
   _banditContainer: {fileID: 132439139}
   _enemyPrefab: {fileID: 1612547001947452149, guid: 017b4d036265044479845e0c750d998f, type: 3}
   _banditPool: []
+  isGameOver: 0
+  time: 0
 --- !u!1 &1814367121
 GameObject:
   m_ObjectHideFlags: 0
