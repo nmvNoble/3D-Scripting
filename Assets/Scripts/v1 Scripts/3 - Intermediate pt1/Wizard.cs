@@ -18,6 +18,7 @@ public class Wizard : MonoBehaviour, IDamagable
 
     private Color defaultColor;
     private GameObject spellEffect;
+    private bool isOnSpellCD = false;
 
     // Start is called before the first frame update
     void Start()
@@ -69,33 +70,46 @@ public class Wizard : MonoBehaviour, IDamagable
 
     public int Cast(Vector3 enemyPos)
     {
-        foreach (var spell in spells)
+        if (!isOnSpellCD)
         {
-            //Debug.Log("lvl " + level + ", lvlreq: "+ spell.lvlRequired);
-            if (spell.lvlRequired == this.level)
+            foreach (var spell in spells)
             {
-                this.exp += spell.Cast(enemyPos);
-                //Debug.Log("Wizard has " + exp + " Total Exp");
+                //Debug.Log("lvl " + level + ", lvlreq: "+ spell.lvlRequired);
+                if (spell.lvlRequired == this.level)
+                {
+                    this.exp += spell.Cast(enemyPos);
+                    //Debug.Log("Wizard has " + exp + " Total Exp");
 
-                spellEffect = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                spellEffect.transform.position =
-                        new Vector3(enemyPos.x, enemyPos.y + spell.spellRadius, enemyPos.z);
-                spellEffect.transform.localScale =
-                        new Vector3(spell.spellRadius, spell.spellRadius, spell.spellRadius);
-                UtilityHelper.ChangeColor(spellEffect, spell.spellColor);
-                StartCoroutine(SpellEffectAnimation(spellEffect, spell.spellCD, spellEffect.transform.position, enemyPos));
+                    spellEffect = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    spellEffect.transform.position =
+                            new Vector3(enemyPos.x, enemyPos.y + spell.spellRadius, enemyPos.z);
+                    spellEffect.transform.localScale =
+                            new Vector3(spell.spellRadius, spell.spellRadius, spell.spellRadius);
+                    UtilityHelper.ChangeColor(spellEffect, spell.spellColor);
 
-                return spell.spellDmg;
+                    StartCoroutine(SpellEffectAnimation(spellEffect, spell.spellCD, spellEffect.transform.position, enemyPos));
+                    isOnSpellCD = true;
+                    StartCoroutine(SpellCoolDownTimer(spell.spellCD));
+                    return spell.spellDmg;
+                }
             }
+            Debug.Log("The Wizard does not have a Cast-able Spell!!!");
+            return 0;
         }
-        Debug.Log("The Wizard does not have a Cast-able Spell!!!");
+        Debug.Log("The Wizard is on Cool Down! They cannot Cast yet.");
         return 0;
+    }
+
+    IEnumerator SpellCoolDownTimer(float spellCD)
+    {
+        yield return new WaitForSeconds(spellCD);
+        isOnSpellCD = false;
     }
 
     IEnumerator SpellEffectAnimation(GameObject Effect, float CD, Vector3 origin, Vector3 destination)
     {
         //yield return new WaitForSeconds(CD);
-        while(Effect.transform.position.y >= destination.y)
+        while (Effect.transform.position.y >= destination.y)
         {
             Vector3 toFace = destination - origin;
             Effect.transform.Translate(new Vector3(0, -0.05f, 0));//toFace);

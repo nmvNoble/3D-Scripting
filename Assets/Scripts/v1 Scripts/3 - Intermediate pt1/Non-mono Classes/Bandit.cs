@@ -21,14 +21,17 @@ public class Bandit : Enemy, IDamagable
 
     public void Damage(int dmgAmount)
     {
-        GetComponent<MeshRenderer>().material.color = Color.magenta;
-        Health -= dmgAmount;
-        Debug.Log("Bandit - Magenta! HP: " + Health);
-        if (Health <= 0)
+        if(dmgAmount > 0)
         {
-            //Destroy(this.gameObject);
-            this.CancelInvoke();
-            Die();
+            GetComponent<MeshRenderer>().material.color = Color.magenta;
+            Health -= dmgAmount;
+            Debug.Log("Bandit - Magenta! HP: " + Health);
+            if (Health <= 0)
+            {
+                //Destroy(this.gameObject);
+                this.CancelInvoke();
+                Die();
+            }
         }
     }
 
