@@ -24,7 +24,7 @@ public class Spell
     public int Cast(Vector3 enemyPos)
     {
         Debug.Log("Casting: " + this.name);
-        Debug.Log("Wizard gains " + expGained + " Exp");
+        //Debug.Log("Wizard gains " + expGained + " Exp");
         return this.expGained;
     }
 }

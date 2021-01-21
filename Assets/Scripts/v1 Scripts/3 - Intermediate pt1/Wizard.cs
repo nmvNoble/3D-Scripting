@@ -71,11 +71,11 @@ public class Wizard : MonoBehaviour, IDamagable
     {
         foreach (var spell in spells)
         {
-            Debug.Log("lvl " + level + ", lvlreq: "+ spell.lvlRequired);
+            //Debug.Log("lvl " + level + ", lvlreq: "+ spell.lvlRequired);
             if (spell.lvlRequired == this.level)
             {
                 this.exp += spell.Cast(enemyPos);
-                Debug.Log("Wizard has " + exp + " Total Exp");
+                //Debug.Log("Wizard has " + exp + " Total Exp");
 
                 spellEffect = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 spellEffect.transform.position =
@@ -83,7 +83,7 @@ public class Wizard : MonoBehaviour, IDamagable
                 spellEffect.transform.localScale =
                         new Vector3(spell.spellRadius, spell.spellRadius, spell.spellRadius);
                 UtilityHelper.ChangeColor(spellEffect, spell.spellColor);
-                StartCoroutine(SpellEffectAnimation(spellEffect, spell.spellCD));//, spellEffect.transform.position, enemyPos));
+                StartCoroutine(SpellEffectAnimation(spellEffect, spell.spellCD, spellEffect.transform.position, enemyPos));
 
                 return spell.spellDmg;
             }
@@ -92,16 +92,18 @@ public class Wizard : MonoBehaviour, IDamagable
         return 0;
     }
 
-    IEnumerator SpellEffectAnimation(GameObject Effect, float CD)//, Vector3 origin, Vector3 destination)
+    IEnumerator SpellEffectAnimation(GameObject Effect, float CD, Vector3 origin, Vector3 destination)
     {
-            yield return new WaitForSeconds(CD);
-            /*while(origin != destination)
-            {
-                Vector3 toFace = destination - origin;
-                Effect.transform.Translate(toFace);
-                yield return new WaitForEndOfFrame();
-            }*/
-            Destroy(Effect);
+        //yield return new WaitForSeconds(CD);
+        while(Effect.transform.position.y >= destination.y)
+        {
+            Vector3 toFace = destination - origin;
+            Effect.transform.Translate(new Vector3(0, -0.05f, 0));//toFace);
+            yield return new WaitForEndOfFrame();
+            //Debug.Log("mid, Effect.transform.position.y" + Effect.transform.position.y + " <= destination.y" + destination.y);
+            if (Effect.transform.position.y <= destination.y)
+                Destroy(Effect);
+        }
     }
 
     public void Damage(int dmgAmount)
