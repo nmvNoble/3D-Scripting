@@ -21,6 +21,7 @@ public class UIManager : MonoSingleton<UIManager>
     {
         Wizard.OnDamage += UpdatePlayerHealth;
         Wizard.OnLvlUp += UpdatePlayerLevel;
+        Wizard.OnCast += UpdateWizardSpell;
         Player.onDeath += UpdatePlayerDeath;
     }
 
@@ -43,6 +44,11 @@ public class UIManager : MonoSingleton<UIManager>
     public void UpdatePlayerLevel(int lvl, string spell)
     {
         playerLevelText.text = "Level: " + lvl;
-        wizardSpellText.text = "Current Spell\n"+spell;
-}
+        wizardSpellText.text = "Current Spell\n" + spell;
+    }
+
+    public void UpdateWizardSpell(string spell)
+    {
+        wizardSpellText.text = "Current Spell\n" + spell;
+    }
 }

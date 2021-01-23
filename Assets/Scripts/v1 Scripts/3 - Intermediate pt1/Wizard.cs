@@ -15,6 +15,7 @@ public class Wizard : MonoBehaviour, IDamagable
     public int Health { get; set; }
     public static Action<int> OnDamage;
     public static Action<int, string> OnLvlUp;
+    public static Action<string> OnCast;
 
     private Color defaultColor;
     private GameObject spellEffect;
@@ -94,15 +95,25 @@ public class Wizard : MonoBehaviour, IDamagable
                 }
             }
             Debug.Log("The Wizard does not have a Cast-able Spell!!!");
+            OnCast?.Invoke("Nothing!!!");
             return 0;
-        }
+        } else 
         Debug.Log("The Wizard is on Cool Down! They cannot Cast yet.");
+        OnCast?.Invoke("On Cool Down!");
         return 0;
     }
 
     IEnumerator SpellCoolDownTimer(float spellCD)
     {
+        OnCast?.Invoke("On Cool Down!");
         yield return new WaitForSeconds(spellCD);
+        foreach (var spell in spells)
+        {
+            if (spell.lvlRequired == this.level)
+            {
+                OnCast?.Invoke(spell.name);
+            }
+        }
         isOnSpellCD = false;
     }
 
