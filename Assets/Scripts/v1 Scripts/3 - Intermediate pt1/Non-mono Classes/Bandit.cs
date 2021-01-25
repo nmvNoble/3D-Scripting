@@ -19,12 +19,19 @@ public class Bandit : Enemy, IDamagable
         return transform.position;
     }
 
+    public Color RetColor()
+    {
+        return this.GetComponent<MeshRenderer>().material.color;
+    }
+    
+
     public void Damage(int dmgAmount)
     {
         if(dmgAmount > 0)
         {
             GetComponent<MeshRenderer>().material.color = Color.magenta;
             Health -= dmgAmount;
+            //Debug.Log("Bandit Damage Taken: " + dmgAmount);
             Debug.Log("Bandit - Magenta! HP: " + Health);
             if (Health <= 0)
             {

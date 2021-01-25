@@ -8,5 +8,7 @@ public interface IDamagable
 
     Vector3 RetPos();
 
+    Color RetColor();
+
     void Damage(int dmgAmount);
 }

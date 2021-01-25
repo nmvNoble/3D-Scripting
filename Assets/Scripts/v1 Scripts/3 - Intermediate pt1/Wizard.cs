@@ -69,7 +69,12 @@ public class Wizard : MonoBehaviour, IDamagable
         return transform.position;
     }
 
-    public int Cast(Vector3 enemyPos)
+    public Color RetColor()
+    {
+        return this.GetComponent<MeshRenderer>().material.color;
+    }
+
+    public int Cast(Vector3 enemyPos, Color enemyElement)
     {
         if (!isOnSpellCD)
         {
@@ -91,7 +96,8 @@ public class Wizard : MonoBehaviour, IDamagable
                     StartCoroutine(SpellEffectAnimation(spellEffect, spell.spellCD, spellEffect.transform.position, enemyPos));
                     isOnSpellCD = true;
                     StartCoroutine(SpellCoolDownTimer(spell.spellCD));
-                    return spell.spellDmg;
+                    //Debug.Log("Spell Damage: " + spell.spellDmg);
+                    return Mathf.CeilToInt(spell.spellDmg * UtilityHelper.GetElementMod(enemyElement, spell.spellColor));
                 }
             }
             Debug.Log("The Wizard does not have a Cast-able Spell!!!");

@@ -25,7 +25,7 @@ public class RayMain : MonoBehaviour
                 if (obj != null)
                 {
                     
-                    obj.Damage(wiz.Cast(obj.RetPos()));
+                    obj.Damage(wiz.Cast(obj.RetPos(), obj.RetColor()));
                 }
                 
             }
