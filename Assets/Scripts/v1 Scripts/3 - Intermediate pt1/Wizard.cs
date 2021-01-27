@@ -21,6 +21,15 @@ public class Wizard : MonoBehaviour, IDamagable
     private GameObject spellEffect;
     private bool isOnSpellCD = false;
 
+    public enum Element
+    {
+        Red,
+        Blue,
+        Green
+    }
+
+    public Element currentElement = Element.Red;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,12 +55,32 @@ public class Wizard : MonoBehaviour, IDamagable
             DisplayStats();
         }
 
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            currentElement = Element.Red;
+            UtilityHelper.ChangeColor(this.gameObject, Color.red);
+        }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            currentElement = Element.Green;
+            UtilityHelper.ChangeColor(this.gameObject, Color.green);
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            currentElement = Element.Blue;
+            UtilityHelper.ChangeColor(this.gameObject, Color.blue);
+        }
+
+
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             _iDB.AddRune(0, this);
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.V))
         {
             _iDB.RemoveRune(0, this);
         }
@@ -91,11 +120,18 @@ public class Wizard : MonoBehaviour, IDamagable
                             new Vector3(enemyPos.x, enemyPos.y + spell.spellRadius, enemyPos.z);
                     spellEffect.transform.localScale =
                             new Vector3(spell.spellRadius, spell.spellRadius, spell.spellRadius);
-                    UtilityHelper.ChangeColor(spellEffect, spell.spellColor);
 
                     StartCoroutine(SpellEffectAnimation(spellEffect, spell.spellCD, spellEffect.transform.position, enemyPos));
                     isOnSpellCD = true;
                     StartCoroutine(SpellCoolDownTimer(spell.spellCD));
+
+                    //UtilityHelper.ChangeColor(spellEffect, spell.spellColor);
+                    if (currentElement == Element.Red)
+                        UtilityHelper.ChangeColor(spellEffect, Color.red);
+                    else if (currentElement == Element.Green)
+                        UtilityHelper.ChangeColor(spellEffect, Color.green);
+                    else if (currentElement == Element.Blue)
+                        UtilityHelper.ChangeColor(spellEffect, Color.blue);
                     //Debug.Log("Spell Damage: " + spell.spellDmg);
                     return Mathf.CeilToInt(spell.spellDmg * UtilityHelper.GetElementMod(enemyElement, spell.spellColor));
                 }

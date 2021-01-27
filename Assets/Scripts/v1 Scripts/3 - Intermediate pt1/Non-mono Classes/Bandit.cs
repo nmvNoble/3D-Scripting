@@ -7,7 +7,15 @@ public class Bandit : Enemy, IDamagable
     //private UIManager _ui;
 
     public int Health { get; set; }
+    [SerializeField]
     private Color defaultColor;
+
+    private void Start()
+    {
+
+        UtilityHelper.ChangeColor(this.gameObject, Color.red);
+        defaultColor = GetComponent<MeshRenderer>().material.color;
+    }
 
     public override void Attack()
     {
@@ -29,7 +37,7 @@ public class Bandit : Enemy, IDamagable
     {
         if(dmgAmount > 0)
         {
-            GetComponent<MeshRenderer>().material.color = Color.magenta;
+            //GetComponent<MeshRenderer>().material.color = Color.magenta;
             Health -= dmgAmount;
             //Debug.Log("Bandit Damage Taken: " + dmgAmount);
             Debug.Log("Bandit - Magenta! HP: " + Health);
