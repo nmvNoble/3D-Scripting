@@ -127,13 +127,27 @@ public class Wizard : MonoBehaviour, IDamagable
 
                     //UtilityHelper.ChangeColor(spellEffect, spell.spellColor);
                     if (currentElement == Element.Red)
+                    {
                         UtilityHelper.ChangeColor(spellEffect, Color.red);
+                        return Mathf.CeilToInt(spell.spellDmg * UtilityHelper.GetElementMod(enemyElement, Color.red));
+                    }
                     else if (currentElement == Element.Green)
+                    {
                         UtilityHelper.ChangeColor(spellEffect, Color.green);
+                        return Mathf.CeilToInt(spell.spellDmg * UtilityHelper.GetElementMod(enemyElement, Color.green));
+                    }
                     else if (currentElement == Element.Blue)
+                    {
                         UtilityHelper.ChangeColor(spellEffect, Color.blue);
+                        return Mathf.CeilToInt(spell.spellDmg * UtilityHelper.GetElementMod(enemyElement, Color.blue));
+                    }
                     //Debug.Log("Spell Damage: " + spell.spellDmg);
-                    return Mathf.CeilToInt(spell.spellDmg * UtilityHelper.GetElementMod(enemyElement, spell.spellColor));
+                    else
+                    {
+                        Debug.Log("none"); 
+                        return Mathf.CeilToInt(spell.spellDmg * UtilityHelper.GetElementMod(enemyElement, spell.spellColor));
+
+                    }
                 }
             }
             Debug.Log("The Wizard does not have a Cast-able Spell!!!");

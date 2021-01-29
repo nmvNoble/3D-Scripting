@@ -24,19 +24,21 @@ public static class UtilityHelper
     public static float GetElementMod(Color target, Color spell, bool rand = false)
     {
         Debug.Log("Elements. T: " + target.ToString() + ", S: " + spell);
-        if (target.ToString() == "RGBA(1.000, 0.000, 0.000, 1.000)")
+        if (target == Color.red)
         {
-            if (spell.ToString() == "RGBA(1.000, 0.000, 0.000, 0.000)")
+            if (spell == Color.red)
             {
                 Debug.Log("R-R Modifier: 1");
                 return 1f;
             }
-            else if (spell.ToString() == "Green")
+            else if (spell == Color.green)
             {
+                Debug.Log("R-G Modifier: 0.5");
                 return 0.5f;
             }
-            else if (spell.ToString() == "Blue")
+            else if (spell == Color.blue)
             {
+                Debug.Log("R-B Modifier: 1.5");
                 return 1.5f;
             }
             else

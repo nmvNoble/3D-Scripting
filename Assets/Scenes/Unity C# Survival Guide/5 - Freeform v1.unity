@@ -1647,21 +1647,21 @@ MonoBehaviour:
     spellCD: 0.5
     spellDmg: 1
     spellRadius: 1
-    spellColor: {r: 1, g: 0, b: 0, a: 0}
+    spellColor: {r: 1, g: 0, b: 0, a: 1}
   - name: Burning Hands
     lvlRequired: 2
     expGained: 5
     spellCD: 1
     spellDmg: 2
     spellRadius: 2
-    spellColor: {r: 1, g: 0, b: 0, a: 0}
+    spellColor: {r: 1, g: 0, b: 0, a: 1}
   - name: Scorching Ray
     lvlRequired: 3
     expGained: 10
     spellCD: 2
     spellDmg: 3
     spellRadius: 3
-    spellColor: {r: 1, g: 0, b: 0, a: 0}
+    spellColor: {r: 1, g: 0, b: 0, a: 1}
   runes:
   - name: 
     id: 0
@@ -1711,6 +1711,7 @@ MonoBehaviour:
   level: 1
   exp: 0
   expCap: 10
+  currentElement: 0
 --- !u!65 &578191417
 BoxCollider:
   m_ObjectHideFlags: 0
