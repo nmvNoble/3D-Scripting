@@ -19,6 +19,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     public static int enemyCount;
     public bool isGameOver = false;
     public int time;
+    public int RedCounter = 0, GreenCounter = 0, BlueCounter = 0, four =0;
 
     // Start is called before the first frame update
     void Start()
@@ -69,6 +70,21 @@ public class SpawnManager : MonoSingleton<SpawnManager>
             if(bandit.activeInHierarchy == false)
             {
                 bandit.SetActive(true);
+                switch ((int)Random.Range(1, 4))
+                {
+                    case 1:
+                        //RedCounter++;
+                        UtilityHelper.ChangeColor(bandit, Color.red);
+                        break;
+                    case 2:
+                        //GreenCounter++;
+                        UtilityHelper.ChangeColor(bandit, Color.green);
+                        break;
+                    case 3:
+                        //BlueCounter++;
+                        UtilityHelper.ChangeColor(bandit, Color.blue);
+                        break;
+                }
                 return bandit;
             }
         }

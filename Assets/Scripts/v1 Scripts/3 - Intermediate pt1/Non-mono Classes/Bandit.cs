@@ -53,7 +53,7 @@ public class Bandit : Enemy, IDamagable
     public override void Die()
     {
         Health = 10;
-        GetComponent<MeshRenderer>().material.color = defaultColor;
+        //GetComponent<MeshRenderer>().material.color = defaultColor;
         Debug.Log("Bandit Dying");
         this.gameObject.SetActive(false);
     }
@@ -66,7 +66,7 @@ public class Bandit : Enemy, IDamagable
         //_ui.UpdateEnemyCount();
         UIManager.Instance.UpdateEnemyCount();
         Invoke("Die", Random.Range(2, 6));
-        defaultColor = GetComponent<MeshRenderer>().material.color;
+        //defaultColor = GetComponent<MeshRenderer>().material.color;
     }
 
     public void OnDisable()

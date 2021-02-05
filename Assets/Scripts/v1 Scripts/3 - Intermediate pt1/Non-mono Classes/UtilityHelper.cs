@@ -28,17 +28,17 @@ public static class UtilityHelper
         {
             if (spell == Color.red)
             {
-                Debug.Log("R-R Modifier: 1");
+                Debug.Log("R->R Modifier: 1");
                 return 1f;
             }
             else if (spell == Color.green)
             {
-                Debug.Log("R-G Modifier: 0.5");
+                Debug.Log("G->R Modifier: 0.5");
                 return 0.5f;
             }
             else if (spell == Color.blue)
             {
-                Debug.Log("R-B Modifier: 1.5");
+                Debug.Log("B->R Modifier: 1.5");
                 return 1.5f;
             }
             else
@@ -47,18 +47,21 @@ public static class UtilityHelper
                 return 0f;
             }
         }
-        else if (target.ToString() == "Green")
+        else if (target == Color.green)
         {
-            if (spell.ToString() == "Red")
+            if (spell == Color.red)
             {
+                Debug.Log("R->G Modifier: 1.5");
                 return 1.5f;
             }
-            else if (spell.ToString() == "Green")
+            else if (spell == Color.green)
             {
+                Debug.Log("G->G Modifier: 1");
                 return 1f;
             }
-            else if (spell.ToString() == "Blue")
+            else if (spell == Color.blue)
             {
+                Debug.Log("G->B Modifier: 0.5");
                 return .5f;
             }
             else
@@ -67,18 +70,21 @@ public static class UtilityHelper
                 return 0f;
             }
         }
-        else if (target.ToString() == "Blue")
+        else if (target == Color.blue)
         {
-            if (spell.ToString() == "Red")
+            if (spell == Color.red)
             {
+                Debug.Log("R->B Modifier: 0.5");
                 return .5f;
             }
-            else if (spell.ToString() == "Green")
+            else if (spell == Color.green)
             {
+                Debug.Log("G->B Modifier: 1.5");
                 return 1.5f;
             }
-            else if (spell.ToString() == "Blue")
+            else if (spell == Color.blue)
             {
+                Debug.Log("B->B Modifier: 1");
                 return 1f;
             }
             else
