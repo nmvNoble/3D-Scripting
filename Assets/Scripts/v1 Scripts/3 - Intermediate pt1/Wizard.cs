@@ -72,6 +72,15 @@ public class Wizard : MonoBehaviour, IDamagable
             currentElement = Element.Blue;
             UtilityHelper.ChangeColor(this.gameObject, Color.blue);
         }
+        if(!isOnSpellCD)
+            foreach (var spell in spells)
+            {
+                if (spell.lvlRequired == this.level)
+                {
+                    OnCast?.Invoke(currentElement.ToString() + " " + level);//spell.name);
+                }
+            }
+        
 
 
 
@@ -167,7 +176,7 @@ public class Wizard : MonoBehaviour, IDamagable
         {
             if (spell.lvlRequired == this.level)
             {
-                OnCast?.Invoke(spell.name);
+                OnCast?.Invoke(currentElement.ToString() + " " + level);//spell.name);
             }
         }
         isOnSpellCD = false;
@@ -205,7 +214,7 @@ public class Wizard : MonoBehaviour, IDamagable
             foreach (var spell in spells)
             {
                 if (spell.lvlRequired == this.level)
-                    OnLvlUp(level, spell.name);
+                    OnLvlUp(level, currentElement.ToString() + " " + level);//spell.name);
             }
         }
         if (OnDamage != null)
