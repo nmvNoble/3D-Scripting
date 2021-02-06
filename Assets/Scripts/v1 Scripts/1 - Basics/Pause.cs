@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class Pause : MonoBehaviour
 {
     [SerializeField] private Text PauseBtn;
+    [SerializeField] private GameObject PauseMenu;
 
     // Start is called before the first frame update
     void Start()
@@ -24,13 +28,23 @@ public class Pause : MonoBehaviour
     {
         if (Time.timeScale == 1)
         {
+            PauseMenu.SetActive(true);
             Time.timeScale = 0;
             PauseBtn.text = "Resume";
         }
         else if (Time.timeScale == 0)
         {
+            PauseMenu.SetActive(false);
             Time.timeScale = 1;
             PauseBtn.text = "Pause";
         }
+    }
+    public void ExitGame()
+    {
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
+		    Application.Quit();
+#endif
     }
 }
