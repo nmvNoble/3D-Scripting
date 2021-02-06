@@ -4,12 +4,13 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-    public int speed, health, exp;
+    public int exp;
+    public float speed;
 
     public abstract void Attack();
     public virtual void Die()
     {
-        Destroy(this.gameObject, Random.Range(2, 6));
+        Destroy(this.gameObject);//, Random.Range(2, 6));
     }
 }
 

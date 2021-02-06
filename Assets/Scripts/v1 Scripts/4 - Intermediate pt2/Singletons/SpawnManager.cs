@@ -42,7 +42,6 @@ public class SpawnManager : MonoSingleton<SpawnManager>
             if (time%3 == 0)
             {
                 GameObject bandit = spawnBandit();
-                bandit.transform.position = new Vector3(Random.Range(-7, 7), Random.Range(0, 7), 7);
             }
             //_timeText.text = "Time: " + time;
         }
@@ -69,6 +68,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         {
             if(bandit.activeInHierarchy == false)
             {
+                bandit.transform.position = new Vector3(Random.Range(-7, 7), Random.Range(0, 7), 7);
                 bandit.SetActive(true);
                 switch ((int)Random.Range(1, 4))
                 {

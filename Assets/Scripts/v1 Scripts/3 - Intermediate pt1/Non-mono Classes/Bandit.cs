@@ -10,11 +10,26 @@ public class Bandit : Enemy, IDamagable
     [SerializeField]
     private Color defaultColor;
 
+    private GameObject target;
+    private Vector3 initialPos;
+    public float step=0;
+
     private void Start()
     {
-
         UtilityHelper.ChangeColor(this.gameObject, Color.red);
         defaultColor = GetComponent<MeshRenderer>().material.color;
+        target = GameObject.Find("Wizard");
+        speed = .01f;
+        initialPos = transform.position;
+    }
+
+    private void Update()
+    {
+        step += Time.deltaTime * speed;
+        // Moves the object to target position
+        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, step);
+        if (Vector3.Distance(transform.position, target.transform.position) < 0.001f)
+            Die();
     }
 
     public override void Attack()
@@ -40,7 +55,7 @@ public class Bandit : Enemy, IDamagable
             //GetComponent<MeshRenderer>().material.color = Color.magenta;
             Health -= dmgAmount;
             //Debug.Log("Bandit Damage Taken: " + dmgAmount);
-            Debug.Log("Bandit - Magenta! HP: " + Health);
+            Debug.Log("Bandit HP: " + Health);
             if (Health <= 0)
             {
                 //Destroy(this.gameObject);
@@ -52,7 +67,8 @@ public class Bandit : Enemy, IDamagable
 
     public override void Die()
     {
-        Health = 10;
+        Health = 10; 
+        step = 0;
         //GetComponent<MeshRenderer>().material.color = defaultColor;
         Debug.Log("Bandit Dying");
         this.gameObject.SetActive(false);
@@ -65,8 +81,9 @@ public class Bandit : Enemy, IDamagable
         //_ui = GameObject.Find("UI Manager").GetComponent<UIManager>();
         //_ui.UpdateEnemyCount();
         UIManager.Instance.UpdateEnemyCount();
-        Invoke("Die", Random.Range(2, 6));
+        //Invoke("Die", Random.Range(2, 6));
         //defaultColor = GetComponent<MeshRenderer>().material.color;
+        initialPos = transform.position;
     }
 
     public void OnDisable()

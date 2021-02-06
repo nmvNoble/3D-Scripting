@@ -198,7 +198,7 @@ public class Wizard : MonoBehaviour, IDamagable
 
     public void Damage(int dmgAmount)
     {
-        GetComponent<MeshRenderer>().material.color = Color.yellow;
+        //GetComponent<MeshRenderer>().material.color = Color.yellow;
         Health -= dmgAmount;
         if (OnDamage != null)
         {
