@@ -55,23 +55,25 @@ public class Wizard : MonoBehaviour, IDamagable
             DisplayStats();
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            currentElement = Element.Red;
-            UtilityHelper.ChangeColor(this.gameObject, Color.red);
+            if (currentElement == Element.Red)
+            {
+                currentElement = Element.Green;
+                UtilityHelper.ChangeColor(this.gameObject, Color.green);
+            }
+            else if (currentElement == Element.Green)
+            {
+                currentElement = Element.Blue;
+                UtilityHelper.ChangeColor(this.gameObject, Color.blue);
+            }
+            else if (currentElement == Element.Blue)
+            {
+                currentElement = Element.Red;
+                UtilityHelper.ChangeColor(this.gameObject, Color.red);
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            currentElement = Element.Green;
-            UtilityHelper.ChangeColor(this.gameObject, Color.green);
-        }
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            currentElement = Element.Blue;
-            UtilityHelper.ChangeColor(this.gameObject, Color.blue);
-        }
         if(!isOnSpellCD)
             foreach (var spell in spells)
             {
