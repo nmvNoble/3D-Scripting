@@ -11,7 +11,7 @@ public class Bandit : Enemy, IDamagable
     private Color defaultColor;
 
     private GameObject target;
-    private Vector3 initialPos;
+    private Vector3 lookAt;
     public float step=0;
 
     private void Start()
@@ -19,22 +19,26 @@ public class Bandit : Enemy, IDamagable
         UtilityHelper.ChangeColor(this.gameObject, Color.red);
         defaultColor = GetComponent<MeshRenderer>().material.color;
         target = GameObject.Find("Wizard");
-        speed = .01f;
-        initialPos = transform.position;
+        speed = 3f;//.01f;
+        damage = 1;
+        //initialPos = transform.position;
     }
 
     private void Update()
     {
-        step += Time.deltaTime * speed;
-        // Moves the object to target position
-        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, step);
-        if (Vector3.Distance(transform.position, target.transform.position) < 0.001f)
-            Die();
+        //step += Time.deltaTime * speed;
+        //// Moves the object to target position
+        //transform.position = Vector3.MoveTowards(transform.position, target.transform.position, step);
+
+        lookAt = (target.transform.position - transform.position).normalized;
+        transform.Translate(lookAt * Time.deltaTime * speed);
+        //if (Vector3.Distance(transform.position, target.transform.position) < .75f)
+            //Die();
     }
 
-    public override void Attack()
+    public override void Attack(IDamagable taget)
     {
-        throw new System.NotImplementedException();
+        taget.Damage(damage);
     }
 
     public Vector3 RetPos()
@@ -83,7 +87,7 @@ public class Bandit : Enemy, IDamagable
         UIManager.Instance.UpdateEnemyCount();
         //Invoke("Die", Random.Range(2, 6));
         //defaultColor = GetComponent<MeshRenderer>().material.color;
-        initialPos = transform.position;
+        //initialPos = transform.position;
     }
 
     public void OnDisable()

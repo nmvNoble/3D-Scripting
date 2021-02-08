@@ -204,7 +204,7 @@ public class Wizard : MonoBehaviour, IDamagable
         {
             OnDamage(Health);
         }
-        Debug.Log("Quack! The Wizard Hit himself! HP: " + Health);
+        //Debug.Log("Quack! The Wizard Hit himself! HP: " + Health);
     }
 
     public void DisplayStats()
@@ -235,6 +235,17 @@ public class Wizard : MonoBehaviour, IDamagable
         if (OnDamage != null)
         {
             OnDamage(Health);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Wizard: OnTriggerEnter");
+        if (other.tag == "Enemy")
+        {
+            Debug.Log("Enemy hit Wizard");
+            other.GetComponent<Bandit>().Attack(this);
+            other.GetComponent<Bandit>().Die();
         }
     }
 }
