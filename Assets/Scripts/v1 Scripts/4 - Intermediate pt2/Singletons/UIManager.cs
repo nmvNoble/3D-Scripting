@@ -15,6 +15,7 @@ public class UIManager : MonoSingleton<UIManager>
     public Text playerHealthText;
     public Text playerLevelText;
     public Text wizardSpellText;
+    public GameObject gameOverMenu;
     private int _playerDeaths = 0;
 
     public void OnEnable()
@@ -23,6 +24,7 @@ public class UIManager : MonoSingleton<UIManager>
         Wizard.OnLvlUp += UpdatePlayerLevel;
         Wizard.OnCast += UpdateWizardSpell;
         Player.onDeath += UpdatePlayerDeath;
+        GameManager.OnGameOver += GameOverMenu;
     }
 
     public void UpdateEnemyCount()
@@ -50,5 +52,10 @@ public class UIManager : MonoSingleton<UIManager>
     public void UpdateWizardSpell(string spell)
     {
         wizardSpellText.text = "Current Spell\n" + spell;
+    }
+
+    public void GameOverMenu()
+    {
+        gameOverMenu.gameObject.SetActive(true);
     }
 }
