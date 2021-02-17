@@ -17,13 +17,16 @@ public class UIManager : MonoSingleton<UIManager>
     public Text wizardSpellText;
     public GameObject gameOverMenu;
     private int _playerDeaths = 0;
-
+    private void Start()
+    {
+        gameOverMenu.gameObject.SetActive(false);
+    }
     public void OnEnable()
     {
         Wizard.OnDamage += UpdatePlayerHealth;
         Wizard.OnLvlUp += UpdatePlayerLevel;
         Wizard.OnCast += UpdateWizardSpell;
-        Player.onDeath += UpdatePlayerDeath;
+        Player.OnDeath += UpdatePlayerDeath;
         GameManager.OnGameOver += GameOverMenu;
     }
 
@@ -57,5 +60,11 @@ public class UIManager : MonoSingleton<UIManager>
     public void GameOverMenu()
     {
         gameOverMenu.gameObject.SetActive(true);
+    }
+
+    public void ResetGame()
+    {
+        _playerDeaths = 0;
+        gameOverMenu.gameObject.SetActive(false);
     }
 }

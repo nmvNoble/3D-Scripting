@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/Unity C# Survival Guide/5 - Freeform v1.unity
+- path: Assets/Scenes/6 - RGB Wizard v1.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

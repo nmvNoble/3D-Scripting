@@ -12,7 +12,7 @@ public class V0GameManager : V0MonoSingleton<V0GameManager>
     public V0Wizard wizard;
     private void OnEnable()
     {
-        Player.onDeath += ResetPlayer;
+        Player.OnDeath += ResetPlayer;
     }
 
     public void ResetPlayer()

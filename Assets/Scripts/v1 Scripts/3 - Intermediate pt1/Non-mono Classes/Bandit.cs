@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bandit : Enemy, IDamagable
 {
-    //private UIManager _ui;
+    private UIManager _ui;
 
     public int Health { get; set; }
     [SerializeField]
@@ -22,6 +22,7 @@ public class Bandit : Enemy, IDamagable
         speed = 3f;//.01f;
         damage = 1;
         //initialPos = transform.position;
+        //_ui = GameObject.Find("UI Manager").GetComponent<UIManager>();
     }
 
     private void Update()
@@ -59,7 +60,7 @@ public class Bandit : Enemy, IDamagable
             //GetComponent<MeshRenderer>().material.color = Color.magenta;
             Health -= dmgAmount;
             //Debug.Log("Bandit Damage Taken: " + dmgAmount);
-            Debug.Log("Bandit HP: " + Health);
+            //Debug.Log("Bandit HP: " + Health);
             if (Health <= 0)
             {
                 //Destroy(this.gameObject);
@@ -74,7 +75,7 @@ public class Bandit : Enemy, IDamagable
         Health = 10; 
         step = 0;
         //GetComponent<MeshRenderer>().material.color = defaultColor;
-        Debug.Log("Bandit Dying");
+        //Debug.Log("Bandit Dying");
         this.gameObject.SetActive(false);
     }
 
@@ -82,9 +83,9 @@ public class Bandit : Enemy, IDamagable
     {
         Health = 10;
         SpawnManager.enemyCount++;
-        //_ui = GameObject.Find("UI Manager").GetComponent<UIManager>();
         //_ui.UpdateEnemyCount();
         UIManager.Instance.UpdateEnemyCount();
+
         //Invoke("Die", Random.Range(2, 6));
         //defaultColor = GetComponent<MeshRenderer>().material.color;
         //initialPos = transform.position;

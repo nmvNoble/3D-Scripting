@@ -34,7 +34,7 @@ public class Wizard : MonoBehaviour, IDamagable
     void Start()
     {
         _iDB = GameObject.Find("ItemDB").GetComponent<ItemDB>();
-        Health = 10;
+        Health = 1;//10;
         defaultColor = GetComponent<MeshRenderer>().material.color;
         DisplayStats();
     }
@@ -49,6 +49,7 @@ public class Wizard : MonoBehaviour, IDamagable
 
         if (this.exp == expCap)
         {
+            //Debug.Log("lvlup");
             this.level++;
             expCap *= 10;
             Health += 10;
@@ -96,10 +97,8 @@ public class Wizard : MonoBehaviour, IDamagable
             _iDB.RemoveRune(0, this);
         }
 
-        if (Health <= 0)
+        if (Health <= 0 && level > 0)
         {
-            Debug.Log("The Wizard has fallen!");
-            this.gameObject.SetActive(false);
             //Destroy(this.gameObject);
         }
     }
@@ -189,6 +188,7 @@ public class Wizard : MonoBehaviour, IDamagable
         //yield return new WaitForSeconds(CD);
         while (Effect.transform.position.y >= destination.y)
         {
+            if (level <= 0) yield break;
             Vector3 toFace = destination - origin;
             Effect.transform.Translate(new Vector3(0, -0.05f, 0));//toFace);
             yield return new WaitForEndOfFrame();
@@ -211,6 +211,7 @@ public class Wizard : MonoBehaviour, IDamagable
 
     public void DisplayStats()
     {
+        //Debug.Log("display");
         if (OnLvlUp != null)
         {
             foreach (var spell in spells)
@@ -227,25 +228,31 @@ public class Wizard : MonoBehaviour, IDamagable
 
     public void ResetWizard()
     {
-        level = 1;
-        exp = 0;
-        expCap = 10;
-        Health = 10;
-        runes = null;
-        GetComponent<MeshRenderer>().material.color = defaultColor;
-        this.gameObject.SetActive(true);
-        if (OnDamage != null)
+        if (!GameManager.Instance.isGameOver)
         {
-            OnDamage(Health);
+            if (level == 1)
+                StopAllCoroutines();
+            level--;
+        }
+        else
+        {
+            level = 1;
+            exp = 0;
+            expCap = 10;
+            Health = 10;
+            runes = null;
+            GetComponent<MeshRenderer>().material.color = defaultColor;
+            this.gameObject.SetActive(true);
+            DisplayStats();
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Wizard: OnTriggerEnter");
+        //Debug.Log("Wizard: OnTriggerEnter");
         if (other.tag == "Enemy")
         {
-            Debug.Log("Enemy hit Wizard");
+            //Debug.Log("Enemy hit Wizard");
             other.GetComponent<Bandit>().Attack(this);
             other.GetComponent<Bandit>().Die();
         }

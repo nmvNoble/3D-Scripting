@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T>
 {
     private static T _instance;
+    private static MonoSingleton<T> _MSTinstance;
     public static T Instance
     {
         get
@@ -23,6 +24,15 @@ public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T
 
     public virtual void Init()
     {
-        //optional
+        DontDestroyOnLoad(this.gameObject);
+
+        if (_MSTinstance == null)
+        {
+            _MSTinstance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }

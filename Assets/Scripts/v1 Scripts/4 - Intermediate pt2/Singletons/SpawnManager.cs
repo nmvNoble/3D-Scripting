@@ -39,7 +39,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         {
             yield return new WaitForSeconds(1.0f);
             time++;
-            if (time%3 == 0)
+            if (time%1 == 0)
             {
                 GameObject bandit = spawnBandit();
             }
@@ -96,5 +96,12 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         return newBandit;
     }
 
+    public void ResetGame()
+    {
+        foreach (var bandit in _banditPool)
+        {
+            bandit.SetActive(false);
+        }
+    }
 
 }
