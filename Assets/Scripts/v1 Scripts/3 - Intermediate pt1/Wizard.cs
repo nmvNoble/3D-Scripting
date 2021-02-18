@@ -229,6 +229,11 @@ public class Wizard : MonoBehaviour, IDamagable
             if (level == 1)
                 StopAllCoroutines();
             level--;
+            Health = level * 10;
+            expCap /= 10;
+            exp = expCap / 10;
+            this.gameObject.SetActive(true);
+            DisplayStats();
         }
         else
         {
