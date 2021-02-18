@@ -42,19 +42,6 @@ public class Wizard : MonoBehaviour, IDamagable
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    Cast();
-        //}
-
-        if (this.exp == expCap)
-        {
-            //Debug.Log("lvlup");
-            this.level++;
-            expCap *= 10;
-            Health += 10;
-            DisplayStats();
-        }
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
@@ -224,6 +211,15 @@ public class Wizard : MonoBehaviour, IDamagable
         {
             OnDamage(Health);
         }
+    }
+
+    public void LevelUp()
+    {
+        //Debug.Log("lvlup");
+        this.level++;
+        expCap *= 10;
+        Health += 10;
+        DisplayStats();
     }
 
     public void ResetWizard()

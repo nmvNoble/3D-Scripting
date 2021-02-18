@@ -10,6 +10,7 @@ public class UIManager : MonoSingleton<UIManager>
         base.Init();
     }
 
+    public Text waveCountText;
     public Text activeEnemiesText;
     public Text playerDeathsText;
     public Text playerHealthText;
@@ -28,6 +29,11 @@ public class UIManager : MonoSingleton<UIManager>
         Wizard.OnCast += UpdateWizardSpell;
         Player.OnDeath += UpdatePlayerDeath;
         GameManager.OnGameOver += GameOverMenu;
+    }
+
+    public void UpdateWave(string waveCount)
+    {
+        waveCountText.text = "Wave: " + waveCount;
     }
 
     public void UpdateEnemyCount()

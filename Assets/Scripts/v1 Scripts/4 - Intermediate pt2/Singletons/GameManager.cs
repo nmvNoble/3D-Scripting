@@ -9,6 +9,8 @@ public class GameManager : MonoSingleton<GameManager>
     public static Action OnGameOver;
     public Wizard wizard;
     public bool isGameOver, isPlayerResetting;
+    public int score, wave;
+    private bool _isNewWave;
 
     public override void Init()
     {
@@ -19,6 +21,9 @@ public class GameManager : MonoSingleton<GameManager>
         Time.timeScale = 1;
         isGameOver = false;
         isPlayerResetting = false;
+
+        wave = 1;
+        _isNewWave = true;
     }
 
     private void Update()
@@ -26,6 +31,14 @@ public class GameManager : MonoSingleton<GameManager>
         if (wizard.Health <= 0 && wizard.level > 0)
         {
             ResetPlayer();
+        }
+        if (_isNewWave == true && wizard.exp == wizard.expCap)
+        {
+            _isNewWave = false;
+            wave++;
+            wizard.LevelUp();
+            UIManager.Instance.UpdateWave(wave.ToString());
+            _isNewWave = true;
         }
 
         if (wizard.level <= 0)
@@ -71,6 +84,7 @@ public class GameManager : MonoSingleton<GameManager>
         wizard.ResetWizard();
         Time.timeScale = 1;
         isGameOver = false;
+        wave = 1;
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
