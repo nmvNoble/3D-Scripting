@@ -52,7 +52,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         for (int i=0; i<amount; i++)
         {
             GameObject bandit = Instantiate(_enemyPrefab,
-                new Vector3(Random.Range(-7, 7), Random.Range(0, 7), 7),
+                new Vector3(Random.Range(-6, 6), 2, 7),
                 Quaternion.identity);
             bandit.transform.parent = _banditContainer.transform;
             bandit.SetActive(false);
@@ -68,7 +68,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         {
             if(bandit.activeInHierarchy == false)
             {
-                bandit.transform.position = new Vector3(Random.Range(-7, 7), Random.Range(0, 7), 7);
+                bandit.transform.position = new Vector3(Random.Range(-6, 6), 2, 7);
                 bandit.SetActive(true);
                 switch ((int)Random.Range(1, 4))
                 {

@@ -19,7 +19,7 @@ public class Bandit : Enemy, IDamagable
         UtilityHelper.ChangeColor(this.gameObject, Color.red);
         defaultColor = GetComponent<MeshRenderer>().material.color;
         target = GameObject.Find("Wizard");
-        speed = .01f;
+        speed = 3f;//.01f;
         damage = 1;
         //initialPos = transform.position;
         //_ui = GameObject.Find("UI Manager").GetComponent<UIManager>();

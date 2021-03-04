@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1612547001947452155}
   - component: {fileID: 1612547001947452154}
   - component: {fileID: 4847748536324615233}
+  - component: {fileID: -6954028110964548100}
   m_Layer: 0
   m_Name: Bandit
   m_TagString: Enemy
@@ -114,3 +115,19 @@ MonoBehaviour:
   speed: 0
   defaultColor: {r: 0, g: 0, b: 0, a: 0}
   step: 0
+--- !u!54 &-6954028110964548100
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1612547001947452149}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

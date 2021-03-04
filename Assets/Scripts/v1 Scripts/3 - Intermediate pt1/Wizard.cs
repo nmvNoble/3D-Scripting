@@ -34,7 +34,7 @@ public class Wizard : MonoBehaviour, IDamagable
     void Start()
     {
         _iDB = GameObject.Find("ItemDB").GetComponent<ItemDB>();
-        Health = 1;//10;
+        Health = 11111;//10;
         defaultColor = GetComponent<MeshRenderer>().material.color;
         DisplayStats();
     }
@@ -70,8 +70,15 @@ public class Wizard : MonoBehaviour, IDamagable
                     OnCast?.Invoke(currentElement.ToString() + " " + level);//spell.name);
                 }
             }
-        
 
+        if (transform.position.z < -6.5f)
+            transform.position = new Vector3(RetPos().x, RetPos().y, -6.5f);
+        if (transform.position.z > 5f)
+            transform.position = new Vector3(RetPos().x, RetPos().y, 5f);
+        if (transform.position.x < -5f)
+            transform.position = new Vector3(-5f, RetPos().y, RetPos().z);
+        if (transform.position.x > 5f)
+            transform.position = new Vector3(5f, RetPos().y, RetPos().z);
 
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
