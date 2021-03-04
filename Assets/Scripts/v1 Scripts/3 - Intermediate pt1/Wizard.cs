@@ -7,6 +7,7 @@ public class Wizard : MonoBehaviour, IDamagable
 {
     private ItemDB _iDB;
     public Spell[] spells;
+    public Spell currSpell;
     public Item[] runes = new Item[9];
 
     public int level = 1;
@@ -37,11 +38,26 @@ public class Wizard : MonoBehaviour, IDamagable
         Health = 11111;//10;
         defaultColor = GetComponent<MeshRenderer>().material.color;
         DisplayStats();
+        currSpell = spells[0];
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (transform.position.z < -6.5f)
+            transform.position = new Vector3(RetPos().x, RetPos().y, -6.5f);
+        if (transform.position.z > 5f)
+            transform.position = new Vector3(RetPos().x, RetPos().y, 5f);
+        if (transform.position.x < -5f)
+            transform.position = new Vector3(-5f, RetPos().y, RetPos().z);
+        if (transform.position.x > 5f)
+            transform.position = new Vector3(5f, RetPos().y, RetPos().z);
+
+        if (isOnSpellCD)
+        {
+            Debug.Log("The Wizard is on Cool Down! They cannot Cast yet.");
+            OnCast?.Invoke("On Cool Down!");
+        }
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
@@ -62,26 +78,15 @@ public class Wizard : MonoBehaviour, IDamagable
             }
         }
 
-        if(!isOnSpellCD)
-            foreach (var spell in spells)
-            {
-                if (spell.lvlRequired == this.level)
-                {
-                    OnCast?.Invoke(currentElement.ToString() + " " + level);//spell.name);
-                }
-            }
-
-        if (transform.position.z < -6.5f)
-            transform.position = new Vector3(RetPos().x, RetPos().y, -6.5f);
-        if (transform.position.z > 5f)
-            transform.position = new Vector3(RetPos().x, RetPos().y, 5f);
-        if (transform.position.x < -5f)
-            transform.position = new Vector3(-5f, RetPos().y, RetPos().z);
-        if (transform.position.x > 5f)
-            transform.position = new Vector3(5f, RetPos().y, RetPos().z);
-
-
         if (Input.GetKeyDown(KeyCode.Alpha1))
+            SetCurrentSpell(1);
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            SetCurrentSpell(2);
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            SetCurrentSpell(3);
+
+
+        if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             _iDB.AddRune(0, this);
         }
@@ -107,73 +112,76 @@ public class Wizard : MonoBehaviour, IDamagable
         return this.GetComponent<MeshRenderer>().material.color;
     }
 
+    private void SetCurrentSpell(int spellKey)
+    {
+        foreach (var spell in spells)
+        {
+            //Debug.Log("lvl " + level + ", lvlreq: "+ spell.lvlRequired);
+            if (spell.lvlRequired == spellKey && spell.lvlRequired <= this.level)
+            {
+                currSpell = spell;
+                Debug.Log("current spell: " + currSpell.name);
+                OnCast?.Invoke(currentElement.ToString() + " " + currSpell.lvlRequired);//level);//spell.name);
+
+            }
+        }
+    }
+
     public int Cast(Vector3 enemyPos, Color enemyElement)
     {
         if (!isOnSpellCD)
         {
-            foreach (var spell in spells)
+            Debug.Log("Casting: " + currSpell.name);
+            this.exp += currSpell.Cast(enemyPos);
+            //Debug.Log("Wizard has " + exp + " Total Exp");
+
+            spellEffect = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            spellEffect.transform.position =
+                    new Vector3(enemyPos.x, enemyPos.y + currSpell.spellRadius, enemyPos.z);
+            spellEffect.transform.localScale =
+                    new Vector3(currSpell.spellRadius, currSpell.spellRadius, currSpell.spellRadius);
+
+            StartCoroutine(SpellEffectAnimation(spellEffect, currSpell.spellCD, spellEffect.transform.position, enemyPos));
+            isOnSpellCD = true;
+            StartCoroutine(SpellCoolDownTimer(currSpell.spellCD));
+
+            //UtilityHelper.ChangeColor(spellEffect, spell.spellColor);
+            if (currentElement == Element.Red)
             {
-                //Debug.Log("lvl " + level + ", lvlreq: "+ spell.lvlRequired);
-                if (spell.lvlRequired == this.level)
-                {
-                    this.exp += spell.Cast(enemyPos);
-                    //Debug.Log("Wizard has " + exp + " Total Exp");
-
-                    spellEffect = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                    spellEffect.transform.position =
-                            new Vector3(enemyPos.x, enemyPos.y + spell.spellRadius, enemyPos.z);
-                    spellEffect.transform.localScale =
-                            new Vector3(spell.spellRadius, spell.spellRadius, spell.spellRadius);
-
-                    StartCoroutine(SpellEffectAnimation(spellEffect, spell.spellCD, spellEffect.transform.position, enemyPos));
-                    isOnSpellCD = true;
-                    StartCoroutine(SpellCoolDownTimer(spell.spellCD));
-
-                    //UtilityHelper.ChangeColor(spellEffect, spell.spellColor);
-                    if (currentElement == Element.Red)
-                    {
-                        UtilityHelper.ChangeColor(spellEffect, Color.red);
-                        return Mathf.CeilToInt(spell.spellDmg * UtilityHelper.GetElementMod(enemyElement, Color.red));
-                    }
-                    else if (currentElement == Element.Green)
-                    {
-                        UtilityHelper.ChangeColor(spellEffect, Color.green);
-                        return Mathf.CeilToInt(spell.spellDmg * UtilityHelper.GetElementMod(enemyElement, Color.green));
-                    }
-                    else if (currentElement == Element.Blue)
-                    {
-                        UtilityHelper.ChangeColor(spellEffect, Color.blue);
-                        return Mathf.CeilToInt(spell.spellDmg * UtilityHelper.GetElementMod(enemyElement, Color.blue));
-                    }
-                    //Debug.Log("Spell Damage: " + spell.spellDmg);
-                    else
-                    {
-                        Debug.Log("none"); 
-                        return Mathf.CeilToInt(spell.spellDmg * UtilityHelper.GetElementMod(enemyElement, spell.spellColor));
-
-                    }
-                }
+                UtilityHelper.ChangeColor(spellEffect, Color.red);
+                return Mathf.CeilToInt(currSpell.spellDmg * UtilityHelper.GetElementMod(enemyElement, Color.red));
             }
-            Debug.Log("The Wizard does not have a Cast-able Spell!!!");
-            OnCast?.Invoke("Nothing!!!");
+            else if (currentElement == Element.Green)
+            {
+                UtilityHelper.ChangeColor(spellEffect, Color.green);
+                return Mathf.CeilToInt(currSpell.spellDmg * UtilityHelper.GetElementMod(enemyElement, Color.green));
+            }
+            else if (currentElement == Element.Blue)
+            {
+                UtilityHelper.ChangeColor(spellEffect, Color.blue);
+                return Mathf.CeilToInt(currSpell.spellDmg * UtilityHelper.GetElementMod(enemyElement, Color.blue));
+            }
+            //Debug.Log("Spell Damage: " + spell.spellDmg);
+            else
+            {
+                Debug.Log("none");
+                return Mathf.CeilToInt(currSpell.spellDmg * UtilityHelper.GetElementMod(enemyElement, currSpell.spellColor));
+            }
+        }
+        else
+        {
+            Debug.Log("The Wizard is on Cool Down! They cannot Cast yet.");
+            OnCast?.Invoke("On Cool Down!");
             return 0;
-        } else 
-        Debug.Log("The Wizard is on Cool Down! They cannot Cast yet.");
-        OnCast?.Invoke("On Cool Down!");
-        return 0;
+        }
+        
     }
 
     IEnumerator SpellCoolDownTimer(float spellCD)
     {
         OnCast?.Invoke("On Cool Down!");
         yield return new WaitForSeconds(spellCD);
-        foreach (var spell in spells)
-        {
-            if (spell.lvlRequired == this.level)
-            {
-                OnCast?.Invoke(currentElement.ToString() + " " + level);//spell.name);
-            }
-        }
+        OnCast?.Invoke(currentElement.ToString() + " " + currSpell.lvlRequired);//level);//spell.name);
         isOnSpellCD = false;
     }
 
@@ -227,6 +235,8 @@ public class Wizard : MonoBehaviour, IDamagable
         expCap *= 10;
         Health += 10;
         DisplayStats();
+        if (level <= 3)
+            SetCurrentSpell(level);
     }
 
     public void ResetWizard()
