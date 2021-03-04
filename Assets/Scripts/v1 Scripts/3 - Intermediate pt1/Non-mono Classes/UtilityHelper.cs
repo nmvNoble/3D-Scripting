@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ public static class UtilityHelper
         if (rand == true)
         {
             obj.GetComponent<MeshRenderer>().material.color =
-                    new Color(Random.value, Random.value, Random.value);
+                    new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
         }
 
     }

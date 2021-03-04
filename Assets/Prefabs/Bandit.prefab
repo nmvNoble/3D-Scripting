@@ -109,6 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49541d75d73cb4e4d9cd697c51115b64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
   exp: 0
   speed: 0
   defaultColor: {r: 0, g: 0, b: 0, a: 0}

@@ -18,7 +18,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
 
     public static int enemyCount;
     public bool isGameOver = false;
-    public int time;
+    public int time, wave;
     public int RedCounter = 0, GreenCounter = 0, BlueCounter = 0, four =0;
 
     // Start is called before the first frame update

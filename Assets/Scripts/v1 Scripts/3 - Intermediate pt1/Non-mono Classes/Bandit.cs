@@ -19,7 +19,7 @@ public class Bandit : Enemy, IDamagable
         UtilityHelper.ChangeColor(this.gameObject, Color.red);
         defaultColor = GetComponent<MeshRenderer>().material.color;
         target = GameObject.Find("Wizard");
-        speed = 3f;//.01f;
+        speed = .01f;
         damage = 1;
         //initialPos = transform.position;
         //_ui = GameObject.Find("UI Manager").GetComponent<UIManager>();
@@ -60,7 +60,7 @@ public class Bandit : Enemy, IDamagable
             //GetComponent<MeshRenderer>().material.color = Color.magenta;
             Health -= dmgAmount;
             //Debug.Log("Bandit Damage Taken: " + dmgAmount);
-            //Debug.Log("Bandit HP: " + Health);
+            Debug.Log("Bandit HP: " + Health);
             if (Health <= 0)
             {
                 //Destroy(this.gameObject);
