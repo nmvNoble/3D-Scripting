@@ -19,7 +19,7 @@ public class Wizard : MonoBehaviour, IDamagable
     public static Action<string> OnCast;
 
     private Color defaultColor;
-    private GameObject spellEffect;
+    private GameObject spellObject;
     private bool isOnSpellCD = false;
 
     public enum Element
@@ -53,11 +53,11 @@ public class Wizard : MonoBehaviour, IDamagable
         if (transform.position.x > 5f)
             transform.position = new Vector3(5f, RetPos().y, RetPos().z);
 
-        if (isOnSpellCD)
-        {
-            Debug.Log("The Wizard is on Cool Down! They cannot Cast yet.");
-            OnCast?.Invoke("On Cool Down!");
-        }
+        //if (isOnSpellCD)
+        //{
+        //    Debug.Log("The Wizard is on Cool Down! They cannot Cast yet.");
+        //    OnCast?.Invoke("On Cool Down!");
+        //}
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
@@ -121,13 +121,14 @@ public class Wizard : MonoBehaviour, IDamagable
             {
                 currSpell = spell;
                 Debug.Log("current spell: " + currSpell.name);
-                OnCast?.Invoke(currentElement.ToString() + " " + currSpell.lvlRequired);//level);//spell.name);
+                if(!isOnSpellCD)
+                    OnCast?.Invoke(currentElement.ToString() + " " + currSpell.lvlRequired);//level);//spell.name);
 
             }
         }
     }
 
-    public int Cast(Vector3 enemyPos, Color enemyElement)
+    public void Cast(Vector3 enemyPos, Color enemyElement)
     {
         if (!isOnSpellCD)
         {
@@ -135,44 +136,51 @@ public class Wizard : MonoBehaviour, IDamagable
             this.exp += currSpell.Cast(enemyPos);
             //Debug.Log("Wizard has " + exp + " Total Exp");
 
-            spellEffect = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            spellEffect.transform.position =
-                    new Vector3(enemyPos.x, enemyPos.y + currSpell.spellRadius, enemyPos.z);
-            spellEffect.transform.localScale =
-                    new Vector3(currSpell.spellRadius, currSpell.spellRadius, currSpell.spellRadius);
+            spellObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            spellObject.AddComponent<SpellEffect>();
 
-            StartCoroutine(SpellEffectAnimation(spellEffect, currSpell.spellCD, spellEffect.transform.position, enemyPos));
-            isOnSpellCD = true;
-            StartCoroutine(SpellCoolDownTimer(currSpell.spellCD));
-
-            //UtilityHelper.ChangeColor(spellEffect, spell.spellColor);
             if (currentElement == Element.Red)
             {
-                UtilityHelper.ChangeColor(spellEffect, Color.red);
-                return Mathf.CeilToInt(currSpell.spellDmg * UtilityHelper.GetElementMod(enemyElement, Color.red));
+                UtilityHelper.ChangeColor(spellObject, Color.red);
+                spellObject.GetComponent<SpellEffect>().spellElement = Color.red;
+                //return Mathf.CeilToInt(currSpell.spellDmg * UtilityHelper.GetElementMod(enemyElement, Color.red));
             }
             else if (currentElement == Element.Green)
             {
-                UtilityHelper.ChangeColor(spellEffect, Color.green);
-                return Mathf.CeilToInt(currSpell.spellDmg * UtilityHelper.GetElementMod(enemyElement, Color.green));
+                UtilityHelper.ChangeColor(spellObject, Color.green);
+                spellObject.GetComponent<SpellEffect>().spellElement = Color.green;
+                //return Mathf.CeilToInt(currSpell.spellDmg * UtilityHelper.GetElementMod(enemyElement, Color.green));
             }
             else if (currentElement == Element.Blue)
             {
-                UtilityHelper.ChangeColor(spellEffect, Color.blue);
-                return Mathf.CeilToInt(currSpell.spellDmg * UtilityHelper.GetElementMod(enemyElement, Color.blue));
+                UtilityHelper.ChangeColor(spellObject, Color.blue);
+                spellObject.GetComponent<SpellEffect>().spellElement = Color.blue;
+                //return Mathf.CeilToInt(currSpell.spellDmg * UtilityHelper.GetElementMod(enemyElement, Color.blue));
             }
             //Debug.Log("Spell Damage: " + spell.spellDmg);
             else
             {
                 Debug.Log("none");
-                return Mathf.CeilToInt(currSpell.spellDmg * UtilityHelper.GetElementMod(enemyElement, currSpell.spellColor));
+                //return 0;//Mathf.CeilToInt(currSpell.spellDmg * UtilityHelper.GetElementMod(enemyElement, currSpell.spellColor));
             }
+
+            spellObject.GetComponent<SpellEffect>().SetCurrentSpell(currSpell);
+            spellObject.transform.position =
+                    new Vector3(enemyPos.x, enemyPos.y + currSpell.spellRadius, enemyPos.z);
+            spellObject.transform.localScale =
+                    new Vector3(currSpell.spellRadius, currSpell.spellRadius, currSpell.spellRadius);
+
+            StartCoroutine(SpellEffectAnimation(spellObject, currSpell.spellCD, spellObject.transform.position, enemyPos));
+            isOnSpellCD = true;
+            StartCoroutine(SpellCoolDownTimer(currSpell.spellCD));
+
+            //UtilityHelper.ChangeColor(spellObject, spell.spellColor);
         }
         else
         {
             Debug.Log("The Wizard is on Cool Down! They cannot Cast yet.");
             OnCast?.Invoke("On Cool Down!");
-            return 0;
+            //return 0;
         }
         
     }

@@ -21,10 +21,11 @@ public class PlayerInput : MonoBehaviour
                 //hitInfo.collider.GetComponent<Bandit>().Damage(1);
                 if (obj != null)
                 {
-                    
-                    obj.Damage(wiz.Cast(obj.RetPos(), obj.RetColor()));
+
+                    //obj.Damage(wiz.Cast(obj.RetPos(), obj.RetColor()));
+                    wiz.Cast(obj.RetPos(), obj.RetColor());
                 }
-                
+
             }
         }
     }

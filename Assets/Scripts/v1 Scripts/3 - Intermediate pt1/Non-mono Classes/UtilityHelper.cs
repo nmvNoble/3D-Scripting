@@ -24,27 +24,27 @@ public static class UtilityHelper
 
     public static float GetElementMod(Color target, Color spell, bool rand = false)
     {
-        Debug.Log("Elements. T: " + target.ToString() + ", S: " + spell);
+        //Debug.Log("Elements. T: " + target.ToString() + ", S: " + spell);
         if (target == Color.red)
         {
             if (spell == Color.red)
             {
-                Debug.Log("R->R Modifier: 1");
+                //Debug.Log("R->R Modifier: 1");
                 return 1f;
             }
             else if (spell == Color.green)
             {
-                Debug.Log("G->R Modifier: 0.5");
+                //Debug.Log("G->R Modifier: 0.5");
                 return 0.5f;
             }
             else if (spell == Color.blue)
             {
-                Debug.Log("B->R Modifier: 1.5");
+                //Debug.Log("B->R Modifier: 1.5");
                 return 1.5f;
             }
             else
             {
-                Debug.Log("Target has no Element!");
+                //Debug.Log("Target has no Element!");
                 return 0f;
             }
         }
@@ -52,22 +52,22 @@ public static class UtilityHelper
         {
             if (spell == Color.red)
             {
-                Debug.Log("R->G Modifier: 1.5");
+                //Debug.Log("R->G Modifier: 1.5");
                 return 1.5f;
             }
             else if (spell == Color.green)
             {
-                Debug.Log("G->G Modifier: 1");
+                //Debug.Log("G->G Modifier: 1");
                 return 1f;
             }
             else if (spell == Color.blue)
             {
-                Debug.Log("G->B Modifier: 0.5");
+                //Debug.Log("G->B Modifier: 0.5");
                 return .5f;
             }
             else
             {
-                Debug.Log("Target has no Element!");
+                //Debug.Log("Target has no Element!");
                 return 0f;
             }
         }
@@ -75,22 +75,22 @@ public static class UtilityHelper
         {
             if (spell == Color.red)
             {
-                Debug.Log("R->B Modifier: 0.5");
+                //Debug.Log("R->B Modifier: 0.5");
                 return .5f;
             }
             else if (spell == Color.green)
             {
-                Debug.Log("G->B Modifier: 1.5");
+                //Debug.Log("G->B Modifier: 1.5");
                 return 1.5f;
             }
             else if (spell == Color.blue)
             {
-                Debug.Log("B->B Modifier: 1");
+                //Debug.Log("B->B Modifier: 1");
                 return 1f;
             }
             else
             {
-                Debug.Log("Target has no Element!");
+                //Debug.Log("Target has no Element!");
                 return 0f;
             }
         }

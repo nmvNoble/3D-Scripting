@@ -12,7 +12,6 @@ public class Bandit : Enemy, IDamagable
 
     private GameObject target;
     private Vector3 lookAt;
-    public float step=0;
 
     private void Start()
     {
@@ -73,7 +72,6 @@ public class Bandit : Enemy, IDamagable
     public override void Die()
     {
         Health = 10; 
-        step = 0;
         //GetComponent<MeshRenderer>().material.color = defaultColor;
         //Debug.Log("Bandit Dying");
         this.gameObject.SetActive(false);
@@ -96,5 +94,22 @@ public class Bandit : Enemy, IDamagable
         SpawnManager.enemyCount--;
         //_ui.UpdateEnemyCount();
         UIManager.Instance.UpdateEnemyCount();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //Debug.Log(other.name + " hit Bandit(OnTriggerEnter)");
+        if (other.name == "Sphere")
+        {
+            //Debug.Log("===Bandit(OnTriggerEnter) hit by Spell AoE");
+            Damage(Mathf.CeilToInt(
+                other.GetComponent<SpellEffect>().currentSpell.spellDmg * 
+                        UtilityHelper.GetElementMod(RetColor(),
+                                other.GetComponent<SpellEffect>().currentSpell.spellColor)));
+            //Damage(other.GetComponent<SpellEffect>().currentSpell.spellDmg);
+
+            //other.GetComponent<Bandit>().Attack(this);
+            //other.GetComponent<Bandit>().Die();
+        }
     }
 }
