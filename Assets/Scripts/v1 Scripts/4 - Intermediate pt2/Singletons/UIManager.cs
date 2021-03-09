@@ -16,7 +16,7 @@ public class UIManager : MonoSingleton<UIManager>
     public Text playerHealthText;
     public Text playerLevelText;
     public Text wizardSpellText;
-    public GameObject gameOverMenu;
+    public GameObject gameOverMenu, waveEndMenu;
     private int _playerDeaths = 0;
     private void Start()
     {
@@ -29,6 +29,7 @@ public class UIManager : MonoSingleton<UIManager>
         Wizard.OnCast += UpdateWizardSpell;
         Player.OnDeath += UpdatePlayerDeath;
         GameManager.OnGameOver += GameOverMenu;
+        GameManager.OnWaveStatusChange += UpdateWaveMenu;
     }
 
     public void UpdateWave(string waveCount)
@@ -66,6 +67,11 @@ public class UIManager : MonoSingleton<UIManager>
     public void GameOverMenu()
     {
         gameOverMenu.gameObject.SetActive(true);
+    }
+
+    public void UpdateWaveMenu(bool menuStatus)
+    {
+        waveEndMenu.gameObject.SetActive(menuStatus);
     }
 
     public void ResetGame()

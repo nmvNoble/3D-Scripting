@@ -6,11 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    public static Action OnGameOver;
+    public static Action OnGameOver; 
+    public static Action<bool> OnWaveStatusChange;
     public Wizard wizard;
     public bool isGameOver, isPlayerResetting;
     public int score, wave;
-    private bool _isNewWave;
+    private bool _isWaveOngoing;
 
     public override void Init()
     {
@@ -23,7 +24,7 @@ public class GameManager : MonoSingleton<GameManager>
         isPlayerResetting = false;
 
         wave = 1;
-        _isNewWave = true;
+        _isWaveOngoing = true;
     }
 
     private void Update()
@@ -32,13 +33,9 @@ public class GameManager : MonoSingleton<GameManager>
         {
             ResetPlayer();
         }
-        if (_isNewWave == true && wizard.exp == wizard.expCap)
+        if (_isWaveOngoing == true && wizard.exp == wizard.expCap)
         {
-            _isNewWave = false;
-            wave++;
-            wizard.LevelUp();
-            UIManager.Instance.UpdateWave(wave.ToString());
-            _isNewWave = true;
+            WaveStatusChange(_isWaveOngoing);
         }
 
         if (wizard.level <= 0)
@@ -64,6 +61,27 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
+    public void WaveStatusChange(bool ongoingWave)
+    {
+        if (OnWaveStatusChange != null)
+        {
+            OnWaveStatusChange(ongoingWave);
+        }
+        if (ongoingWave)
+        {
+            _isWaveOngoing = false;
+            wave++;
+            wizard.LevelUp();
+            UIManager.Instance.UpdateWave(wave.ToString());
+            Time.timeScale = 0;
+        }
+        else
+        {
+            _isWaveOngoing = true;
+            Time.timeScale = 1;
+        }
+    }
+
     // Stop game, bring up game over text and restart button
     public void GameOver()
     {
@@ -73,7 +91,6 @@ public class GameManager : MonoSingleton<GameManager>
         {
             OnGameOver();
         }
-
     }
 
     public void ResetGame()
