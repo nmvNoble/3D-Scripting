@@ -22,8 +22,8 @@ public class ItemDB : MonoBehaviour
         }
     }
 
-    private Dictionary<int, Item> _runes;
-    public Dictionary<int, Item> Runes
+    private Dictionary<int, Rune> _runes;
+    public Dictionary<int, Rune> Runes
     {
         get
         {
@@ -41,23 +41,23 @@ public class ItemDB : MonoBehaviour
 
     [SerializeField]
     Item note1, note2;
-    Item Rr, Ro, Rw, Rb;
+    Rune rKnowledge, rQuickness, rDestruction, rRange;
 
     // Start is called before the first frame update
     void Start()
     {
-        note1 = new Item("note 1", 0, "sword is Sharp boi.");
-        note2 = CreateItem("note 2", 1, "staff is Bonky boi.");
-        Rr = CreateItem("Rune-Red", 0, "A Warm Rune.", 1);
-        Ro = CreateItem("Rune-Orange", 1, "A Hot Rune.", 1);
-        Rw = CreateItem("Rune-White", 2, "A Scalding Rune.", 1);
-        Rb = CreateItem("Rune-Blue", 3, "A Searing Rune.", 1);
-        Runes = new Dictionary<int, Item>
+        note1 = new Item("note 1", 0, "sword is Sharp boi.", 2);
+        note2 = CreateItem("note 2", 1, "staff is Bonky boi.", 2);
+        rKnowledge = CreateRune("Rune of Knowledge", 0, "You Gain More Experience when a spell has this rune.", 0, 2f);
+        rQuickness = CreateRune("Rune of Quickness", 1, "You Cast Quicker when a spell has this rune.", 1, 2f);
+        rDestruction = CreateRune("Rune of Destruction", 2, "Your spells Deal More Damage when a spell has this rune.", 2, 2f);
+        rRange = CreateRune("Rune of Range", 3, "Your spells Reach Farther when a spell has this rune.", 3, 2f);
+        Runes = new Dictionary<int, Rune>
         {
-            { Rr.id, Rr },
-            { Ro.id, Ro },
-            { Rw.id, Rw },
-            { Rb.id, Rb }
+            { rKnowledge.id, rKnowledge },
+            { rQuickness.id, rQuickness },
+            { rDestruction.id, rDestruction },
+            { rRange.id, rRange }
         };
     }
 
@@ -95,10 +95,11 @@ public class ItemDB : MonoBehaviour
 
     }
 
-    private Item CreateItem(string name, int id, string desc)
+    private Rune CreateRune(string name, int id, string description,
+            int spellStat, float runeEffect)
     {
-        var item = new Item(name, id, desc);
-        return item;
+        var rune = new Rune(name, id, description, spellStat, runeEffect);
+        return rune;
     }
     private Item CreateItem(string name, int id, string desc, int type)
     {
@@ -108,17 +109,17 @@ public class ItemDB : MonoBehaviour
 
     public void AddItem(int index, Wizard player)
     {
-        foreach (var rune in _items)
+        foreach (var item in _items)
         {
-            if (index == rune.id)
+            if (index == item.id)
             {
-                if (rune != null && player.runes[index].name == rune.name)
+                if (item != null && player.runes[index].name == item.name)
                 {
                     Debug.Log("Rune already aquired!");
                     return;
                 } else
-                player.runes[index] = rune;
-                Debug.Log("Aquired " + rune.name);
+                player.items[index] = item;
+                Debug.Log("Aquired " + item.name);
             }
         }
     }

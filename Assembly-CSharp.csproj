@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{6E2B4580-6074-761C-72CC-5FE2017CCF67}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -131,6 +130,7 @@
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\3 - Intermediate pt1\V0ItemDB.cs" />
     <Compile Include="Assets\Scripts\v1 Scripts\4 - Intermediate pt2\Singletons\GameManager.cs" />
     <Compile Include="Assets\Scripts\v1 Scripts\3 - Intermediate pt1\SpellEffect.cs" />
+    <Compile Include="Assets\Scripts\v1 Scripts\3 - Intermediate pt1\Non-mono Classes\Rune.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

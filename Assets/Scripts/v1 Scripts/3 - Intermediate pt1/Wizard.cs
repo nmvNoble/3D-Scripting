@@ -8,7 +8,8 @@ public class Wizard : MonoBehaviour, IDamagable
     private ItemDB _iDB;
     public Spell[] spells;
     public Spell currSpell;
-    public Item[] runes = new Item[9];
+    public Rune[] runes = new Rune[4];
+    public Item[] items = new Item[3];
 
     public int level = 1;
     public int exp;
@@ -24,9 +25,9 @@ public class Wizard : MonoBehaviour, IDamagable
 
     public enum Element
     {
-        Red,
-        Blue,
-        Green
+        Red, 
+        Green,
+        Blue
     }
 
     public Element currentElement = Element.Red;
@@ -38,6 +39,10 @@ public class Wizard : MonoBehaviour, IDamagable
         Health = 11111;//10;
         defaultColor = GetComponent<MeshRenderer>().material.color;
         DisplayStats();
+        foreach(Spell spell in spells)
+        {
+            spell.SetDefaultSpellStats();
+        }
         currSpell = spells[0];
     }
 
@@ -89,6 +94,8 @@ public class Wizard : MonoBehaviour, IDamagable
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             _iDB.AddRune(0, this);
+            spells[0].runeSlot = runes[0];
+            currSpell.ApplyRune();
         }
 
         if (Input.GetKeyDown(KeyCode.V))
@@ -166,13 +173,14 @@ public class Wizard : MonoBehaviour, IDamagable
 
             spellObject.GetComponent<SpellEffect>().SetCurrentSpell(currSpell);
             spellObject.transform.position =
-                    new Vector3(enemyPos.x, enemyPos.y + currSpell.spellRadius, enemyPos.z);
+                    new Vector3(enemyPos.x, enemyPos.y + currSpell.spellDiameter, enemyPos.z);
             spellObject.transform.localScale =
-                    new Vector3(currSpell.spellRadius, currSpell.spellRadius, currSpell.spellRadius);
+                    new Vector3(currSpell.spellDiameter, currSpell.spellDiameter, currSpell.spellDiameter);
 
             StartCoroutine(SpellEffectAnimation(spellObject, currSpell.spellCD, spellObject.transform.position, enemyPos));
             isOnSpellCD = true;
             StartCoroutine(SpellCoolDownTimer(currSpell.spellCD));
+            Debug.Log("Spell Rune: " + currSpell.runeSlot.name);
 
             //UtilityHelper.ChangeColor(spellObject, spell.spellColor);
         }
@@ -189,8 +197,8 @@ public class Wizard : MonoBehaviour, IDamagable
     {
         OnCast?.Invoke("On Cool Down!");
         yield return new WaitForSeconds(spellCD);
-        OnCast?.Invoke(currentElement.ToString() + " " + currSpell.lvlRequired);//level);//spell.name);
         isOnSpellCD = false;
+        OnCast?.Invoke(currentElement.ToString() + " " + currSpell.lvlRequired);//level);//spell.name);
     }
 
     IEnumerator SpellEffectAnimation(GameObject Effect, float CD, Vector3 origin, Vector3 destination)
