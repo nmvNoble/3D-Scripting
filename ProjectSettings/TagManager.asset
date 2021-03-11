@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Objects
   - Command Pattern
+  - Enemy
   layers:
   - Default
   - TransparentFX

@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/6 - RGB Wizard v1.unity
+    guid: 467c5a96503a2194cb05f559702e9bcc
   m_configObjects: {}
