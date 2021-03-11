@@ -251,7 +251,12 @@ public class Wizard : MonoBehaviour, IDamagable
     {
         //Debug.Log("lvlup");
         this.level++;
-        expCap *= 10;
+        if (level == 2)
+            expCap = 50;
+        else if (level == 3)
+            expCap = 100;
+        else if (level > 3)
+            expCap += 100;
         Health += 10;
         DisplayStats();
         if (level <= 3)
@@ -266,6 +271,14 @@ public class Wizard : MonoBehaviour, IDamagable
             if (level == 1)
                 StopAllCoroutines();
             Health = level * 10;
+            if (level == 1)
+                expCap = 10;
+            else if (level == 2)
+                expCap = 50;
+            else if (level == 3)
+                expCap = 100;
+            else if (level > 3)
+                expCap -= 100;
             expCap /= 10;
             exp = expCap / 10;
             if (currSpell.lvlRequired > level && level > 1)

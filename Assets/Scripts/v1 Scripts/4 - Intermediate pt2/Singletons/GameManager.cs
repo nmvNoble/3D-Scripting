@@ -29,7 +29,7 @@ public class GameManager : MonoSingleton<GameManager>
         {
             ResetPlayer();
         }
-        if (_isWaveOngoing == true && wizard.exp == wizard.expCap)
+        if (_isWaveOngoing == true && wizard.exp >= wizard.expCap)
         {
             WaveStatusChange(_isWaveOngoing);
         }
