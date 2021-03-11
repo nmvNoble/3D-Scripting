@@ -36,7 +36,7 @@ public class Wizard : MonoBehaviour, IDamagable
     void Start()
     {
         _iDB = GameObject.Find("ItemDB").GetComponent<ItemDB>();
-        Health = 22;//10;
+        Health = 10;//10;
         defaultColor = GetComponent<MeshRenderer>().material.color;
         DisplayStats();
         foreach(Spell spell in spells)
@@ -87,9 +87,9 @@ public class Wizard : MonoBehaviour, IDamagable
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
             SetCurrentSpell(1);
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2) && level <= 2)
             SetCurrentSpell(2);
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.Alpha3) && level <= 3)
             SetCurrentSpell(3);
 
 
@@ -259,16 +259,25 @@ public class Wizard : MonoBehaviour, IDamagable
 
     public void ResetWizard()
     {
+        isOnSpellCD = false;
         if (!GameManager.Instance.isGameOver)
         {
+            level--;
             if (level == 1)
                 StopAllCoroutines();
-            level--;
+            else if(level > 1)
+            {
             Health = level * 10;
             expCap /= 10;
             exp = expCap / 10;
             this.gameObject.SetActive(true);
+            if (currSpell.lvlRequired > level && level != 1)
+            {
+                currSpell = spells[level - 1];
+                StopCoroutine(SpellCoolDownTimer(0));
+            }
             DisplayStats();
+            }
         }
         else
         {

@@ -50,7 +50,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         if (!isGameOver)
         {
-            Debug.Log("The Wizard has fallen!");
+            Debug.Log("The Wizard has fallen at Lvl: " + wizard.level + "!");
             wizard.gameObject.SetActive(false);
             //Debug.Log("Resetting Player");
             wizard.ResetWizard();
