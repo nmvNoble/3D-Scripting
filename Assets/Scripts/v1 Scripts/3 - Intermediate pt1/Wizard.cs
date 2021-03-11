@@ -43,7 +43,7 @@ public class Wizard : MonoBehaviour, IDamagable
         {
             spell.SetDefaultSpellStats();
         }
-        currSpell = spells[0];
+        SetCurrentSpell(1);
     }
 
     // Update is called once per frame
@@ -147,23 +147,30 @@ public class Wizard : MonoBehaviour, IDamagable
 
             spellObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             spellObject.AddComponent<SpellEffect>();
+            spellObject.GetComponent<SpellEffect>().currentWizLevel = level;
+
+            spellObject.GetComponent<SpellEffect>().SetCurrentSpell(currSpell);
+            spellObject.transform.position =
+                    new Vector3(enemyPos.x, enemyPos.y + currSpell.spellDiameter, enemyPos.z);
+            spellObject.transform.localScale =
+                    new Vector3(currSpell.spellDiameter, currSpell.spellDiameter, currSpell.spellDiameter);
 
             if (currentElement == Element.Red)
             {
                 UtilityHelper.ChangeColor(spellObject, Color.red);
-                spellObject.GetComponent<SpellEffect>().spellElement = Color.red;
+                spellObject.GetComponent<SpellEffect>().currentSpell.spellColor = Color.red;
                 //return Mathf.CeilToInt(currSpell.spellDmg * UtilityHelper.GetElementMod(enemyElement, Color.red));
             }
             else if (currentElement == Element.Green)
             {
                 UtilityHelper.ChangeColor(spellObject, Color.green);
-                spellObject.GetComponent<SpellEffect>().spellElement = Color.green;
+                spellObject.GetComponent<SpellEffect>().currentSpell.spellColor = Color.green;
                 //return Mathf.CeilToInt(currSpell.spellDmg * UtilityHelper.GetElementMod(enemyElement, Color.green));
             }
             else if (currentElement == Element.Blue)
             {
                 UtilityHelper.ChangeColor(spellObject, Color.blue);
-                spellObject.GetComponent<SpellEffect>().spellElement = Color.blue;
+                spellObject.GetComponent<SpellEffect>().currentSpell.spellColor = Color.blue;
                 //return Mathf.CeilToInt(currSpell.spellDmg * UtilityHelper.GetElementMod(enemyElement, Color.blue));
             }
             //Debug.Log("Spell Damage: " + spell.spellDmg);
@@ -173,16 +180,10 @@ public class Wizard : MonoBehaviour, IDamagable
                 //return 0;//Mathf.CeilToInt(currSpell.spellDmg * UtilityHelper.GetElementMod(enemyElement, currSpell.spellColor));
             }
 
-            spellObject.GetComponent<SpellEffect>().SetCurrentSpell(currSpell);
-            spellObject.transform.position =
-                    new Vector3(enemyPos.x, enemyPos.y + currSpell.spellDiameter, enemyPos.z);
-            spellObject.transform.localScale =
-                    new Vector3(currSpell.spellDiameter, currSpell.spellDiameter, currSpell.spellDiameter);
-
             StartCoroutine(SpellEffectAnimation(spellObject, currSpell.spellCD, spellObject.transform.position, enemyPos));
             isOnSpellCD = true;
             StartCoroutine(SpellCoolDownTimer(currSpell.spellCD));
-            Debug.Log("Spell Rune: " + currSpell.runeSlot.name);
+            //Debug.Log("Spell Rune: " + currSpell.runeSlot.name);
 
             //UtilityHelper.ChangeColor(spellObject, spell.spellColor);
         }

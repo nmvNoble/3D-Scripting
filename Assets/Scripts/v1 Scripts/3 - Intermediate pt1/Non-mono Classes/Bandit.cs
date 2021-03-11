@@ -53,7 +53,18 @@ public class Bandit : Enemy, IDamagable
         return this.GetComponent<MeshRenderer>().material.color;
     }
     
+    public void HitBySpell(SpellEffect spellEffect)
+    {
+        Debug.Log("Dmg breakdown: ("+ spellEffect.currentSpell.spellDmg+" + "+ spellEffect.currentWizLevel+") * "+
+                UtilityHelper.GetElementMod(RetColor(), spellEffect.currentSpell.spellColor));
+        Damage(Mathf.CeilToInt(
+            (spellEffect.currentSpell.spellDmg + spellEffect.currentWizLevel) *
+                    UtilityHelper.GetElementMod(RetColor(), spellEffect.currentSpell.spellColor)));
+        //Damage(other.GetComponent<SpellEffect>().currentSpell.spellDmg);
 
+        //other.GetComponent<Bandit>().Attack(this);
+        //other.GetComponent<Bandit>().Die();
+    }
     public void Damage(float dmgAmount)
     {
         if(dmgAmount > 0)
@@ -61,7 +72,7 @@ public class Bandit : Enemy, IDamagable
             //GetComponent<MeshRenderer>().material.color = Color.magenta;
             Health -= dmgAmount;
             //Debug.Log("Bandit Damage Taken: " + dmgAmount);
-            Debug.Log("Bandit HP: " + Health);
+            //Debug.Log("Bandit HP: " + Health);
             if (Health <= 0)
             {
                 //Destroy(this.gameObject);
@@ -81,7 +92,8 @@ public class Bandit : Enemy, IDamagable
 
     public void OnEnable()
     {
-        Health = 10; //GameManager.Instance.wave + (GameManager.Instance.wave / 2);
+        Health = GameManager.Instance.wave + (GameManager.Instance.wave / 2);
+        speed = 2f + (GameManager.Instance.wave * .01f);
         SpawnManager.enemyCount++;
         //_ui.UpdateEnemyCount();
         UIManager.Instance.UpdateEnemyCount();
@@ -103,15 +115,7 @@ public class Bandit : Enemy, IDamagable
         //Debug.Log(other.name + " hit Bandit(OnTriggerEnter)");
         if (other.name == "Sphere")
         {
-            //Debug.Log("===Bandit(OnTriggerEnter) hit by Spell AoE");
-            Damage(Mathf.CeilToInt(
-                other.GetComponent<SpellEffect>().currentSpell.spellDmg * 
-                        UtilityHelper.GetElementMod(RetColor(),
-                                other.GetComponent<SpellEffect>().currentSpell.spellColor)));
-            //Damage(other.GetComponent<SpellEffect>().currentSpell.spellDmg);
-
-            //other.GetComponent<Bandit>().Attack(this);
-            //other.GetComponent<Bandit>().Die();
+            HitBySpell(other.GetComponent<SpellEffect>());
         }
     }
 }

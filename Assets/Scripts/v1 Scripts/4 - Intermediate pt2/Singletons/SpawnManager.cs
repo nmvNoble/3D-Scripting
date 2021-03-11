@@ -96,7 +96,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         return newBandit;
     }
 
-    public void ResetGame()
+    public void ResetBandits()
     {
         foreach (var bandit in _banditPool)
         {

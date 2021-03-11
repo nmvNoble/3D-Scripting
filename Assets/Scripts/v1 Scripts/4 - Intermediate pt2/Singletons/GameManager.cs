@@ -66,10 +66,11 @@ public class GameManager : MonoSingleton<GameManager>
         if (ongoingWave)
         {
             _isWaveOngoing = false;
-            wave++;
-            wizard.LevelUp();
-            UIManager.Instance.UpdateWave(wave.ToString());
             Time.timeScale = 0;
+            wizard.LevelUp();
+            wave++;
+            UIManager.Instance.UpdateWave(wave.ToString());
+            SpawnManager.Instance.ResetBandits();
         }
         else
         {
@@ -109,7 +110,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         Debug.Log("Reset Game");
         UIManager.Instance.ResetGame();
-        SpawnManager.Instance.ResetGame();
+        SpawnManager.Instance.ResetBandits();
         wizard.ResetWizard();
         Time.timeScale = 1;
         isGameOver = false;

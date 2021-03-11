@@ -5,7 +5,8 @@ using UnityEngine;
 public class SpellEffect : MonoBehaviour
 {
     public Spell currentSpell;
-    public Color spellElement;
+    public int currentWizLevel;
+    //public Color spellElement;
 
     // Start is called before the first frame update
     void Start()
