@@ -50,7 +50,7 @@ public class UIManager : MonoSingleton<UIManager>
         playerDeathsText.text = "Player Deaths: " + _playerDeaths;
     }
 
-    public void UpdatePlayerHealth(int Health)
+    public void UpdatePlayerHealth(float Health)
     {
         playerHealthText.text = "Health: " + Health;
     }

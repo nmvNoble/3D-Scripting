@@ -14,8 +14,8 @@ public class Wizard : MonoBehaviour, IDamagable
     public int level = 1;
     public int exp;
     public int expCap = 10;
-    public int Health { get; set; }
-    public static Action<int> OnDamage;
+    public float Health { get; set; }
+    public static Action<float> OnDamage;
     public static Action<int, string> OnLvlUp;
     public static Action<string> OnCast;
 
@@ -218,7 +218,7 @@ public class Wizard : MonoBehaviour, IDamagable
         }
     }
 
-    public void Damage(int dmgAmount)
+    public void Damage(float dmgAmount)
     {
         //GetComponent<MeshRenderer>().material.color = Color.yellow;
         Health -= dmgAmount;

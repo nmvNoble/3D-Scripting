@@ -9,8 +9,7 @@ public class Spell
     public int lvlRequired;
     public int expGained;
 
-    public float spellCD;
-    public int spellDmg, spellDiameter;
+    public float spellCD, spellDmg, spellDiameter;
     public Color spellColor;
     public Rune runeSlot = null;
     private Spell defaultSpellStats;
@@ -70,12 +69,12 @@ public class Spell
                     break;
                 case 2:
                     Debug.Log("Stat before: " + spellDmg);
-                    spellDmg = (int)((float)spellDmg * runeSlot.runeEffect);
+                    spellDmg *= runeSlot.runeEffect;
                     Debug.Log("Stat after: " + spellDmg);
                     break;
                 case 3:
                     Debug.Log("Stat before: " + spellDiameter);
-                    spellDiameter = (int)((float)spellDiameter * runeSlot.runeEffect);
+                    spellDiameter *= runeSlot.runeEffect;
                     Debug.Log("Stat after: " + spellDiameter);
                     break;
             }

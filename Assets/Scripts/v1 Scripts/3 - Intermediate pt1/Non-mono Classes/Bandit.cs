@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Bandit : Enemy, IDamagable
 {
     private UIManager _ui;
 
-    public int Health { get; set; }
+    public float Health { get; set; }
     [SerializeField]
+    private TextMesh HpText;
     private Color defaultColor;
 
     private GameObject target;
@@ -29,7 +31,7 @@ public class Bandit : Enemy, IDamagable
         //step += Time.deltaTime * speed;
         //// Moves the object to target position
         //transform.position = Vector3.MoveTowards(transform.position, target.transform.position, step);
-
+        HpText.text = Health.ToString();
         lookAt = (target.transform.position - transform.position).normalized;
         transform.Translate(lookAt * Time.deltaTime * speed);
         //if (Vector3.Distance(transform.position, target.transform.position) < .75f)
@@ -52,7 +54,7 @@ public class Bandit : Enemy, IDamagable
     }
     
 
-    public void Damage(int dmgAmount)
+    public void Damage(float dmgAmount)
     {
         if(dmgAmount > 0)
         {
@@ -71,7 +73,7 @@ public class Bandit : Enemy, IDamagable
 
     public override void Die()
     {
-        Health = 10; 
+        //Health = GameManager.Instance.wave + (GameManager.Instance.wave/2); 
         //GetComponent<MeshRenderer>().material.color = defaultColor;
         //Debug.Log("Bandit Dying");
         this.gameObject.SetActive(false);
@@ -79,7 +81,7 @@ public class Bandit : Enemy, IDamagable
 
     public void OnEnable()
     {
-        Health = 10;
+        Health = 10; //GameManager.Instance.wave + (GameManager.Instance.wave / 2);
         SpawnManager.enemyCount++;
         //_ui.UpdateEnemyCount();
         UIManager.Instance.UpdateEnemyCount();

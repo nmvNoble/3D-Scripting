@@ -4,11 +4,11 @@ using UnityEngine;
 
 public interface IDamagable
 {
-    int Health { get; set; }
+    float Health { get; set; }
 
     Vector3 RetPos();
 
     Color RetColor();
 
-    void Damage(int dmgAmount);
+    void Damage(float dmgAmount);
 }
