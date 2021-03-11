@@ -9,7 +9,7 @@ public class GameManager : MonoSingleton<GameManager>
     public static Action OnGameOver; 
     public static Action<bool> OnWaveStatusChange;
     public Wizard wizard;
-    public bool isGameOver, isPlayerResetting;
+    public bool isGameOver, isPlayerResetting, isFirstRun;
     public int score, wave;
     private bool _isWaveOngoing;
 
@@ -19,12 +19,8 @@ public class GameManager : MonoSingleton<GameManager>
     }
     private void Start()
     {
-        Time.timeScale = 1;
-        isGameOver = false;
-        isPlayerResetting = false;
-
-        wave = 1;
-        _isWaveOngoing = true;
+        Time.timeScale = 0;
+        isFirstRun = true;
     }
 
     private void Update()
@@ -80,6 +76,22 @@ public class GameManager : MonoSingleton<GameManager>
             _isWaveOngoing = true;
             Time.timeScale = 1;
         }
+    }
+
+    public void StartGame()
+    {
+        Time.timeScale = 1;
+        if (isFirstRun)
+        {
+            isFirstRun = false;
+            UIManager.Instance.DisableGameStartMenu();
+        }
+
+        isGameOver = false;
+        isPlayerResetting = false;
+
+        wave = 1;
+        _isWaveOngoing = true;
     }
 
     // Stop game, bring up game over text and restart button

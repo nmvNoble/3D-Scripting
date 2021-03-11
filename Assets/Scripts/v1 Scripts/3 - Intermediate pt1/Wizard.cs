@@ -36,7 +36,7 @@ public class Wizard : MonoBehaviour, IDamagable
     void Start()
     {
         _iDB = GameObject.Find("ItemDB").GetComponent<ItemDB>();
-        Health = 11111;//10;
+        Health = 22;//10;
         defaultColor = GetComponent<MeshRenderer>().material.color;
         DisplayStats();
         foreach(Spell spell in spells)
@@ -81,6 +81,8 @@ public class Wizard : MonoBehaviour, IDamagable
                 currentElement = Element.Red;
                 UtilityHelper.ChangeColor(this.gameObject, Color.red);
             }
+            if (!isOnSpellCD)
+                OnCast?.Invoke(currentElement.ToString() + " " + currSpell.lvlRequired);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
