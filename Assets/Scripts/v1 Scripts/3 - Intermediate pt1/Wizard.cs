@@ -22,6 +22,7 @@ public class Wizard : MonoBehaviour, IDamagable
     private Color defaultColor;
     private GameObject spellObject;
     private bool isOnSpellCD = false;
+    private Vector3 startingPos;
 
     public enum Element
     {
@@ -36,7 +37,7 @@ public class Wizard : MonoBehaviour, IDamagable
     void Start()
     {
         _iDB = GameObject.Find("ItemDB").GetComponent<ItemDB>();
-        Health = 10;//10;
+        Health = 9;//10;
         defaultColor = GetComponent<MeshRenderer>().material.color;
         DisplayStats();
         foreach(Spell spell in spells)
@@ -44,6 +45,7 @@ public class Wizard : MonoBehaviour, IDamagable
             spell.SetDefaultSpellStats();
         }
         SetCurrentSpell(1);
+        startingPos = RetPos();
     }
 
     // Update is called once per frame
@@ -57,12 +59,6 @@ public class Wizard : MonoBehaviour, IDamagable
             transform.position = new Vector3(-5f, RetPos().y, RetPos().z);
         if (transform.position.x > 5f)
             transform.position = new Vector3(5f, RetPos().y, RetPos().z);
-
-        //if (isOnSpellCD)
-        //{
-        //    Debug.Log("The Wizard is on Cool Down! They cannot Cast yet.");
-        //    OnCast?.Invoke("On Cool Down!");
-        //}
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
@@ -85,11 +81,21 @@ public class Wizard : MonoBehaviour, IDamagable
                 OnCast?.Invoke(currentElement.ToString() + " " + currSpell.lvlRequired);
         }
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (currSpell.lvlRequired == 1 && level >= 2)
+                SetCurrentSpell(2);
+            else if (currSpell.lvlRequired == 2 && level >= 3)
+                SetCurrentSpell(3);
+            else
+                SetCurrentSpell(1);
+        }
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
             SetCurrentSpell(1);
-        if (Input.GetKeyDown(KeyCode.Alpha2) && level <= 2)
+        if (Input.GetKeyDown(KeyCode.Alpha2) && level >= 2)
             SetCurrentSpell(2);
-        if (Input.GetKeyDown(KeyCode.Alpha3) && level <= 3)
+        if (Input.GetKeyDown(KeyCode.Alpha3) && level >= 3)
             SetCurrentSpell(3);
 
 
@@ -143,12 +149,12 @@ public class Wizard : MonoBehaviour, IDamagable
         {
             Debug.Log("Casting: " + currSpell.name);
             this.exp += currSpell.Cast(enemyPos);
+            UIManager.Instance.UpdatePlayerExp(exp, expCap);
             //Debug.Log("Wizard has " + exp + " Total Exp");
 
             spellObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             spellObject.AddComponent<SpellEffect>();
             spellObject.GetComponent<SpellEffect>().currentWizLevel = level;
-
             spellObject.GetComponent<SpellEffect>().SetCurrentSpell(currSpell);
             spellObject.transform.position =
                     new Vector3(enemyPos.x, enemyPos.y + currSpell.spellDiameter, enemyPos.z);
@@ -159,26 +165,19 @@ public class Wizard : MonoBehaviour, IDamagable
             {
                 UtilityHelper.ChangeColor(spellObject, Color.red);
                 spellObject.GetComponent<SpellEffect>().currentSpell.spellColor = Color.red;
-                //return Mathf.CeilToInt(currSpell.spellDmg * UtilityHelper.GetElementMod(enemyElement, Color.red));
             }
             else if (currentElement == Element.Green)
             {
                 UtilityHelper.ChangeColor(spellObject, Color.green);
                 spellObject.GetComponent<SpellEffect>().currentSpell.spellColor = Color.green;
-                //return Mathf.CeilToInt(currSpell.spellDmg * UtilityHelper.GetElementMod(enemyElement, Color.green));
             }
             else if (currentElement == Element.Blue)
             {
                 UtilityHelper.ChangeColor(spellObject, Color.blue);
                 spellObject.GetComponent<SpellEffect>().currentSpell.spellColor = Color.blue;
-                //return Mathf.CeilToInt(currSpell.spellDmg * UtilityHelper.GetElementMod(enemyElement, Color.blue));
             }
-            //Debug.Log("Spell Damage: " + spell.spellDmg);
             else
-            {
                 Debug.Log("none");
-                //return 0;//Mathf.CeilToInt(currSpell.spellDmg * UtilityHelper.GetElementMod(enemyElement, currSpell.spellColor));
-            }
 
             StartCoroutine(SpellEffectAnimation(spellObject, currSpell.spellCD, spellObject.transform.position, enemyPos));
             isOnSpellCD = true;
@@ -245,6 +244,7 @@ public class Wizard : MonoBehaviour, IDamagable
         {
             OnDamage(Health);
         }
+        UIManager.Instance.UpdatePlayerExp(exp, expCap);
     }
 
     public void LevelUp()
@@ -260,24 +260,18 @@ public class Wizard : MonoBehaviour, IDamagable
 
     public void ResetWizard()
     {
-        isOnSpellCD = false;
         if (!GameManager.Instance.isGameOver)
         {
             level--;
             if (level == 1)
                 StopAllCoroutines();
-            else if(level > 1)
-            {
             Health = level * 10;
             expCap /= 10;
             exp = expCap / 10;
-            this.gameObject.SetActive(true);
-            if (currSpell.lvlRequired > level && level != 1)
+            if (currSpell.lvlRequired > level && level > 1)
             {
                 currSpell = spells[level - 1];
                 StopCoroutine(SpellCoolDownTimer(0));
-            }
-            DisplayStats();
             }
         }
         else
@@ -288,9 +282,11 @@ public class Wizard : MonoBehaviour, IDamagable
             Health = 10;
             runes = null;
             GetComponent<MeshRenderer>().material.color = defaultColor;
-            this.gameObject.SetActive(true);
-            DisplayStats();
+            this.gameObject.transform.position = startingPos;
         }
+        isOnSpellCD = false;
+        this.gameObject.SetActive(true);
+        DisplayStats();
     }
 
     private void OnTriggerEnter(Collider other)
