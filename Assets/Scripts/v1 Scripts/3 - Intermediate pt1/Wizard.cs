@@ -76,7 +76,7 @@ public class Wizard : MonoBehaviour, IDamagable
                 UtilityHelper.ChangeColor(this.gameObject, Color.red);
             }
             if (!isOnSpellCD)
-                OnCast?.Invoke(currentElement.ToString() + " " + currSpell.lvlRequired);
+                DisplaySpell();
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -102,24 +102,28 @@ public class Wizard : MonoBehaviour, IDamagable
             _iDB.AddRune(0, this);
             currSpell.runeSlot = runes[0];
             currSpell.ApplyRune();
+            DisplaySpell();
         }
         if (Input.GetKeyDown(KeyCode.Alpha7))
         {
             _iDB.AddRune(1, this);
             currSpell.runeSlot = runes[1];
             currSpell.ApplyRune();
+            DisplaySpell();
         }
         if (Input.GetKeyDown(KeyCode.Alpha8))
         {
             _iDB.AddRune(2, this);
             currSpell.runeSlot = runes[2];
             currSpell.ApplyRune();
+            DisplaySpell();
         }
         if (Input.GetKeyDown(KeyCode.Alpha9))
         {
             _iDB.AddRune(3, this);
             currSpell.runeSlot = runes[3];
             currSpell.ApplyRune();
+            DisplaySpell();
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha0))
@@ -131,6 +135,7 @@ public class Wizard : MonoBehaviour, IDamagable
             runes[2] = null;
             runes[3] = null;
             currSpell.RemoveRune();
+            DisplaySpell();
         }
 
         if (Health <= 0 && level > 0)
@@ -158,9 +163,8 @@ public class Wizard : MonoBehaviour, IDamagable
             {
                 currSpell = spell;
                 Debug.Log("current spell: " + currSpell.name);
-                if(!isOnSpellCD)
-                    OnCast?.Invoke(currentElement.ToString() + " " + currSpell.lvlRequired);//level);//spell.name);
-
+                if (!isOnSpellCD)
+                    DisplaySpell();
             }
         }
     }
@@ -217,12 +221,21 @@ public class Wizard : MonoBehaviour, IDamagable
         
     }
 
+    private void DisplaySpell()
+    {
+        if (currSpell.runeSlot.itemType == Item.ItemType.Rune)
+            OnCast?.Invoke(currSpell.name + " " + currentElement.ToString() + "\n" +
+                    currSpell.runeSlot.name + " " + currSpell.runeSlot.itemType.ToString());
+        else
+            OnCast?.Invoke(currSpell.name + " " + currentElement.ToString());
+    }
+
     IEnumerator SpellCoolDownTimer(float spellCD)
     {
         OnCast?.Invoke("On Cool Down!");
         yield return new WaitForSeconds(spellCD);
         isOnSpellCD = false;
-        OnCast?.Invoke(currentElement.ToString() + " " + currSpell.lvlRequired);//level);//spell.name);
+        DisplaySpell();
     }
 
     IEnumerator SpellEffectAnimation(GameObject Effect, float CD, Vector3 origin, Vector3 destination)
