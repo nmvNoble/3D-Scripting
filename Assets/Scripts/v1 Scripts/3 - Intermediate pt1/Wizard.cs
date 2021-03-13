@@ -37,13 +37,11 @@ public class Wizard : MonoBehaviour, IDamagable
     void Start()
     {
         _iDB = GameObject.Find("ItemDB").GetComponent<ItemDB>();
-        Health = 9;//10;
+        Health = 10;
         defaultColor = GetComponent<MeshRenderer>().material.color;
         DisplayStats();
         foreach(Spell spell in spells)
-        {
             spell.SetDefaultSpellStats();
-        }
         SetCurrentSpell(1);
         startingPos = RetPos();
     }
@@ -99,16 +97,40 @@ public class Wizard : MonoBehaviour, IDamagable
             SetCurrentSpell(3);
 
 
-        if (Input.GetKeyDown(KeyCode.Alpha0))
+        if (Input.GetKeyDown(KeyCode.Alpha6))
         {
             _iDB.AddRune(0, this);
-            spells[0].runeSlot = runes[0];
+            currSpell.runeSlot = runes[0];
+            currSpell.ApplyRune();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            _iDB.AddRune(1, this);
+            currSpell.runeSlot = runes[1];
+            currSpell.ApplyRune();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            _iDB.AddRune(2, this);
+            currSpell.runeSlot = runes[2];
+            currSpell.ApplyRune();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            _iDB.AddRune(3, this);
+            currSpell.runeSlot = runes[3];
             currSpell.ApplyRune();
         }
 
-        if (Input.GetKeyDown(KeyCode.V))
+        if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-            _iDB.RemoveRune(0, this);
+            foreach (Spell spell in spells)
+                spell.RemoveRune();
+            runes[0] = null;
+            runes[1] = null;
+            runes[2] = null;
+            runes[3] = null;
+            currSpell.RemoveRune();
         }
 
         if (Health <= 0 && level > 0)

@@ -49,35 +49,46 @@ public class Spell
 
     public void ApplyRune()
     {
-        expGained = defaultSpellStats.expGained;
-        spellCD = defaultSpellStats.spellCD;
-        spellDmg = defaultSpellStats.spellDmg;
-        spellDiameter = defaultSpellStats.spellDiameter;
+        ResetSpellStats();
         if (runeSlot != null)
         {
             switch (runeSlot.spellStat)
             {
                 case 0:
-                    Debug.Log("Stat before: " + expGained);
+                    //Debug.Log("Stat before: " + expGained);
                     expGained = (int)((float)expGained * runeSlot.runeEffect);
-                    Debug.Log("Stat after: " + expGained);
+                    //Debug.Log("Stat after: " + expGained);
                     break;
                 case 1:
-                    Debug.Log("Stat before: " + spellCD);
-                    spellCD *= runeSlot.runeEffect;
-                    Debug.Log("Stat after: " + spellCD);
+                    //Debug.Log("Stat before: " + spellCD);
+                    spellCD /= runeSlot.runeEffect;
+                    //Debug.Log("Stat after: " + spellCD);
                     break;
                 case 2:
-                    Debug.Log("Stat before: " + spellDmg);
+                    //Debug.Log("Stat before: " + spellDmg);
                     spellDmg *= runeSlot.runeEffect;
-                    Debug.Log("Stat after: " + spellDmg);
+                    //Debug.Log("Stat after: " + spellDmg);
                     break;
                 case 3:
-                    Debug.Log("Stat before: " + spellDiameter);
+                    //Debug.Log("Stat before: " + spellDiameter);
                     spellDiameter *= runeSlot.runeEffect;
-                    Debug.Log("Stat after: " + spellDiameter);
+                    //Debug.Log("Stat after: " + spellDiameter);
                     break;
             }
         }
+    }
+
+    public void RemoveRune()
+    {
+        ResetSpellStats();
+        runeSlot = null;
+    }
+
+    public void ResetSpellStats()
+    {
+        expGained = defaultSpellStats.expGained;
+        spellCD = defaultSpellStats.spellCD;
+        spellDmg = defaultSpellStats.spellDmg;
+        spellDiameter = defaultSpellStats.spellDiameter;
     }
 }

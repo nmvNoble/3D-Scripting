@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\v1 Scripts\4 - Intermediate pt2\Commands\ClickCommand.cs" />
     <Compile Include="Assets\Scripts\v1 Scripts\4 - Intermediate pt2\Singletons\MonoSingleton.cs" />
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\3 - Intermediate pt1\V0Enemy.cs" />
+    <Compile Include="Assets\Scripts\v1 Scripts\3 - Intermediate pt1\Non-mono Classes\Rune.cs" />
     <Compile Include="Assets\Scripts\v1 Scripts\3 - Intermediate pt1\Non-mono Classes\Item.cs" />
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\3 - Intermediate pt1\V0Player.cs" />
     <Compile Include="Assets\Scripts\v1 Scripts\3 - Intermediate pt1\Enemy.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Assets\Scripts\v1 Scripts\4 - Intermediate pt2\DontDestroy.cs" />
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\3 - Intermediate pt1\V0Pet.cs" />
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\4 - Intermediate pt2\Singletons\V0PoolManager.cs" />
+    <Compile Include="Assets\Scripts\v1 Scripts\3 - Intermediate pt1\SpellEffect.cs" />
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\1 - Basics\V0Collectable.cs" />
     <Compile Include="Assets\Scripts\v1 Scripts\4 - Intermediate pt2\Interfaces\ICommand.cs" />
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\1 - Basics\V0Movement.cs" />
@@ -129,8 +131,6 @@
     <Compile Include="Assets\Scripts\v1 Scripts\3 - Intermediate pt1\Non-mono Classes\Duck.cs" />
     <Compile Include="Assets\Scripts\Unity C# Survival Guide\3 - Intermediate pt1\V0ItemDB.cs" />
     <Compile Include="Assets\Scripts\v1 Scripts\4 - Intermediate pt2\Singletons\GameManager.cs" />
-    <Compile Include="Assets\Scripts\v1 Scripts\3 - Intermediate pt1\SpellEffect.cs" />
-    <Compile Include="Assets\Scripts\v1 Scripts\3 - Intermediate pt1\Non-mono Classes\Rune.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
