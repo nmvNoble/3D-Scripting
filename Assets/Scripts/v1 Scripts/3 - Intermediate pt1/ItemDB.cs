@@ -50,7 +50,7 @@ public class ItemDB : MonoBehaviour
         note1 = new Item("note 1", 0, "sword is Sharp boi.", 2);
         note2 = CreateItem("note 2", 1, "staff is Bonky boi.", 2);
         rKnowledge = CreateRune("Knowledge", 0, "You Gain More Experience when a spell has this rune.", 0, 2f);
-        rQuickness = CreateRune("Quickness", 1, "You Cast Quicker when a spell has this rune.", 1, 2f);
+        rQuickness = CreateRune("Quickness", 1, "You Cast Quicker when a spell has this rune.", 1, .5f);
         rDestruction = CreateRune("Destruction", 2, "Your spells Deal More Damage when a spell has this rune.", 2, 2f);
         rRange = CreateRune("Range", 3, "Your spells Reach Farther when a spell has this rune.", 3, 2f);
         Runes = new Dictionary<int, Rune>

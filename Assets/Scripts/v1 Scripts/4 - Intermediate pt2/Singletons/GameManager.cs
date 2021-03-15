@@ -6,11 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    public static Action OnGameOver; 
+    private ItemDB _iDB;
+    public static Action OnGameOver;
     public static Action<bool> OnWaveStatusChange;
-    public Wizard wizard;
+    public static Action<bool, Rune> OnRuneChange;
+    [SerializeField]
+     Wizard wizard;
     public bool isGameOver, isPlayerResetting, isFirstRun;
-    public int score, wave;
+    public int wave;
     private bool _isWaveOngoing;
 
     public override void Init()
@@ -19,6 +22,7 @@ public class GameManager : MonoSingleton<GameManager>
     }
     private void Start()
     {
+        _iDB = GameObject.Find("ItemDB").GetComponent<ItemDB>();
         Time.timeScale = 0;
         isFirstRun = true;
     }
@@ -63,6 +67,31 @@ public class GameManager : MonoSingleton<GameManager>
         {
             OnWaveStatusChange(ongoingWave);
         }
+        if (OnWaveStatusChange != null && wave+1 >= 2)
+        {
+            _iDB.AddRune(1, wizard); //UnityEngine.Random.Range(0, 4), wizard);
+            wizard.currSpell.runeSlot = wizard.runes[1];
+            wizard.currSpell.ApplyRune();
+            OnRuneChange(ongoingWave, wizard.runes[1]);
+        }
+        if (ongoingWave)
+        {
+            _isWaveOngoing = false;
+            Time.timeScale = 0;
+            wizard.LevelUp();
+            wave++;
+            UIManager.Instance.UpdateWave(wave.ToString());
+            SpawnManager.Instance.ResetBandits();
+        }
+        else
+        {
+            _isWaveOngoing = true;
+            Time.timeScale = 1;
+        }
+    }
+
+    public void WaveRuneChange(bool ongoingWave)
+    {
         if (ongoingWave)
         {
             _isWaveOngoing = false;

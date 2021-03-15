@@ -9,6 +9,7 @@ public class Wizard : MonoBehaviour, IDamagable
     public Spell[] spells;
     public Spell currSpell;
     public Rune[] runes = new Rune[4];
+    //public List<Rune> runes;
     public Item[] items = new Item[3];
 
     public int level = 1;
@@ -37,7 +38,7 @@ public class Wizard : MonoBehaviour, IDamagable
     void Start()
     {
         _iDB = GameObject.Find("ItemDB").GetComponent<ItemDB>();
-        Health = 10;
+        Health = 100;
         defaultColor = GetComponent<MeshRenderer>().material.color;
         DisplayStats();
         foreach(Spell spell in spells)
@@ -130,10 +131,10 @@ public class Wizard : MonoBehaviour, IDamagable
         {
             foreach (Spell spell in spells)
                 spell.RemoveRune();
-            runes[0] = null;
-            runes[1] = null;
-            runes[2] = null;
-            runes[3] = null;
+            for (int i = 0; i <= (runes.Length-1); i++)
+            {
+                runes[i] = null;
+            }
             currSpell.RemoveRune();
             DisplaySpell();
         }
@@ -223,7 +224,7 @@ public class Wizard : MonoBehaviour, IDamagable
 
     private void DisplaySpell()
     {
-        if (currSpell.runeSlot.itemType == Item.ItemType.Rune)
+        if (currSpell.runeSlot != null && currSpell.runeSlot.itemType == Item.ItemType.Rune)
             OnCast?.Invoke(currSpell.name + " " + currentElement.ToString() + "\n" +
                     currSpell.runeSlot.name + " " + currSpell.runeSlot.itemType.ToString());
         else

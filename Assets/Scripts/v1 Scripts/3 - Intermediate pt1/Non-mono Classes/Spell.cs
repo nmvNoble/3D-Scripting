@@ -61,7 +61,7 @@ public class Spell
                     break;
                 case 1:
                     //Debug.Log("Stat before: " + spellCD);
-                    spellCD /= runeSlot.runeEffect;
+                    spellCD *= runeSlot.runeEffect;
                     //Debug.Log("Stat after: " + spellCD);
                     break;
                 case 2:

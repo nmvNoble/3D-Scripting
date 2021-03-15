@@ -10,14 +10,10 @@ public class UIManager : MonoSingleton<UIManager>
         base.Init();
     }
 
-    public Text waveCountText;
-    public Text activeEnemiesText;
-    public Text playerDeathsText;
-    public Text playerHealthText;
-    public Text playerLevelText;
-    public Text playerExpText;
-    public Text wizardSpellText;
-    public GameObject gameStartMenu, gameOverMenu, waveEndMenu;
+    public Text waveCountText, activeEnemiesText;
+    public Text playerDeathsText, playerHealthText, playerLevelText, playerExpText, wizardSpellText;
+    public Text runeTitle, runeDesc, runeSpellModd, runeStatModr;
+    public GameObject gameStartMenu, gameOverMenu, waveEndMenu, runeMenu;
     public GameObject introMenu, iMenuHealth, iMenuElements, iMenuControls, iMenuSpellInfo, iMenuWaves;
     private int _playerDeaths = 0;
     private void Start()
@@ -33,6 +29,7 @@ public class UIManager : MonoSingleton<UIManager>
         Player.OnDeath += UpdatePlayerDeath;
         GameManager.OnGameOver += EnableGameOverMenu;
         GameManager.OnWaveStatusChange += ToggleWaveMenu;
+        GameManager.OnRuneChange += ToggleRuneText;
     }
 
     public void UpdateWave(string waveCount)
@@ -85,6 +82,30 @@ public class UIManager : MonoSingleton<UIManager>
     public void ToggleWaveMenu(bool menuStatus)
     {
         waveEndMenu.gameObject.SetActive(menuStatus);
+    }
+
+    public void ToggleRuneText(bool menuStatus, Rune rune=null)
+    {
+        ToggleRuneMenu(menuStatus);
+        if(rune != null)
+        {
+            runeTitle.text = "Your Rune changes form...\nRune of " + rune.name;
+            runeDesc.text = "\"" + rune.description + "\"";
+            runeStatModr.text = rune.runeEffect.ToString();
+            if(rune.spellStat == 0)
+                runeSpellModd.text = "Experience";
+            else if(rune.spellStat == 1)
+                runeSpellModd.text = "Cooldown";
+            else if(rune.spellStat == 2)
+                runeSpellModd.text = "Damage";
+            else if(rune.spellStat == 3)
+                runeSpellModd.text = "Diameter";
+        }
+    }
+
+    public void ToggleRuneMenu(bool menuStatus)
+    {
+        runeMenu.gameObject.SetActive(menuStatus);
     }
 
     public void ToggleIntroMenu(bool menuStatus)
