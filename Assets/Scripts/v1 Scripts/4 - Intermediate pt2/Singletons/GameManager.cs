@@ -6,15 +6,17 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    private ItemDB _iDB;
     public static Action OnGameOver;
     public static Action<bool> OnWaveStatusChange;
     public static Action<bool, Rune> OnRuneChange;
-    [SerializeField]
-     Wizard wizard;
     public bool isGameOver, isPlayerResetting, isFirstRun;
     public int wave;
-    private bool _isWaveOngoing;
+
+    [SerializeField]
+    private Wizard wizard;
+    private ItemDB _iDB;
+    private int runeGained;
+    private bool _isWaveOngoing, lastRune = false;
 
     public override void Init()
     {
@@ -67,13 +69,6 @@ public class GameManager : MonoSingleton<GameManager>
         {
             OnWaveStatusChange(ongoingWave);
         }
-        if (OnWaveStatusChange != null && wave+1 >= 2)
-        {
-            _iDB.AddRune(1, wizard); //UnityEngine.Random.Range(0, 4), wizard);
-            wizard.currSpell.runeSlot = wizard.runes[1];
-            wizard.currSpell.ApplyRune();
-            OnRuneChange(ongoingWave, wizard.runes[1]);
-        }
         if (ongoingWave)
         {
             _isWaveOngoing = false;
@@ -82,6 +77,17 @@ public class GameManager : MonoSingleton<GameManager>
             wave++;
             UIManager.Instance.UpdateWave(wave.ToString());
             SpawnManager.Instance.ResetBandits();
+            if (wave >= 2)
+            {
+                wizard.ResetRunes();
+                runeGained = UnityEngine.Random.Range(0, 4);
+                _iDB.AddRune(runeGained, wizard); //UnityEngine.Random.Range(0, 4), wizard);
+                                                  //wizard.currSpell.runeSlot = wizard.runes[runeGained;
+                                                  //wizard.currSpell.ApplyRune();
+                OnRuneChange(ongoingWave, wizard.runes[runeGained]);
+                if (lastRune)
+                    UIManager.Instance.ToggleRuneMenu(false);
+            }
         }
         else
         {
@@ -90,22 +96,10 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    public void WaveRuneChange(bool ongoingWave)
+    public void PlayerGainRune(int runeSpellType)
     {
-        if (ongoingWave)
-        {
-            _isWaveOngoing = false;
-            Time.timeScale = 0;
-            wizard.LevelUp();
-            wave++;
-            UIManager.Instance.UpdateWave(wave.ToString());
-            SpawnManager.Instance.ResetBandits();
-        }
-        else
-        {
-            _isWaveOngoing = true;
-            Time.timeScale = 1;
-        }
+        wizard.ApplyRune(runeGained, runeSpellType);
+            UIManager.Instance.ToggleRuneMenu(false);
     }
 
     public void StartGame()

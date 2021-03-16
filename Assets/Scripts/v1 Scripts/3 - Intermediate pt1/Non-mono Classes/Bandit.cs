@@ -55,8 +55,8 @@ public class Bandit : Enemy, IDamagable
     
     public void HitBySpell(SpellEffect spellEffect)
     {
-        Debug.Log("Dmg breakdown: ("+ spellEffect.currentSpell.spellDmg+" + "+ spellEffect.currentWizLevel+") * "+
-                UtilityHelper.GetElementMod(RetColor(), spellEffect.currentSpell.spellColor));
+        //Debug.Log("Dmg breakdown: ("+ spellEffect.currentSpell.spellDmg+" + "+ spellEffect.currentWizLevel+") * "+
+          //      UtilityHelper.GetElementMod(RetColor(), spellEffect.currentSpell.spellColor));
         Damage(Mathf.CeilToInt(
             (spellEffect.currentSpell.spellDmg + spellEffect.currentWizLevel) *
                     UtilityHelper.GetElementMod(RetColor(), spellEffect.currentSpell.spellColor)));

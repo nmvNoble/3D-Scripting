@@ -142,10 +142,13 @@ public class ItemDB : MonoBehaviour
         {
             if (index == rune.Key) //.id)
             {
-                if (rune.Value != null && player.runes[index].name == rune.Value.name)
+                if(rune.Value != null && player.runes[index] != null)
                 {
-                    Debug.Log("Rune already aquired!");
-                    return;
+                    if (player.runes[index].name == rune.Value.name)
+                    {
+                        Debug.Log("Rune already aquired!");
+                        return;
+                    }
                 }
                 else
                     player.runes[index] = rune.Value;

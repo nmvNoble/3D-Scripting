@@ -12,7 +12,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public Text waveCountText, activeEnemiesText;
     public Text playerDeathsText, playerHealthText, playerLevelText, playerExpText, wizardSpellText;
-    public Text runeTitle, runeDesc, runeSpellModd, runeStatModr;
+    public Text runeTitle, runeDesc, runeStatMod, runeStatMul;
     public GameObject gameStartMenu, gameOverMenu, waveEndMenu, runeMenu;
     public GameObject introMenu, iMenuHealth, iMenuElements, iMenuControls, iMenuSpellInfo, iMenuWaves;
     private int _playerDeaths = 0;
@@ -89,17 +89,17 @@ public class UIManager : MonoSingleton<UIManager>
         ToggleRuneMenu(menuStatus);
         if(rune != null)
         {
-            runeTitle.text = "Your Rune changes form...\nRune of " + rune.name;
+            runeTitle.text = "Your Rune changes form...\n-Rune of " + rune.name+"-";
             runeDesc.text = "\"" + rune.description + "\"";
-            runeStatModr.text = rune.runeEffect.ToString();
+            runeStatMul.text = rune.runeEffect.ToString();
             if(rune.spellStat == 0)
-                runeSpellModd.text = "Experience";
+                runeStatMod.text = "Experience";
             else if(rune.spellStat == 1)
-                runeSpellModd.text = "Cooldown";
+                runeStatMod.text = "Cooldown";
             else if(rune.spellStat == 2)
-                runeSpellModd.text = "Damage";
+                runeStatMod.text = "Damage";
             else if(rune.spellStat == 3)
-                runeSpellModd.text = "Diameter";
+                runeStatMod.text = "Diameter";
         }
     }
 
