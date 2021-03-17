@@ -273,7 +273,7 @@ public class Wizard : MonoBehaviour, IDamagable
             foreach (var spell in spells)
             {
                 if (spell.lvlRequired == this.level)
-                    OnLvlUp(level, currentElement.ToString() + " " + level);//spell.name);
+                    OnLvlUp(level, currSpell.name + " " + currentElement.ToString());
             }
         }
         if (OnDamage != null)

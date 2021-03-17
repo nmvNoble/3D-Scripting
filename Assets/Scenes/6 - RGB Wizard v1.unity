@@ -1012,7 +1012,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'You have 1 Rune that activates at Wave 2.
+  m_Text: 'You have 1 Rune that activates at Wave 4.
 
     Runes modify a Spell''s
     Stats by Multiplying it to a value that the Rune inately has.

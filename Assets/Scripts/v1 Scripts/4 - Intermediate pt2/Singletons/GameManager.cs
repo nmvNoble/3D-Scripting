@@ -77,10 +77,10 @@ public class GameManager : MonoSingleton<GameManager>
             wave++;
             UIManager.Instance.UpdateWave(wave.ToString());
             SpawnManager.Instance.ResetBandits();
-            if (wave >= 2)
+            if (wave >= 4)
             {
                 wizard.ResetRunes();
-                runeGained = UnityEngine.Random.Range(0, 4);
+                runeGained = UnityEngine.Random.Range(1, 4);
                 _iDB.AddRune(runeGained, wizard); //UnityEngine.Random.Range(0, 4), wizard);
                                                   //wizard.currSpell.runeSlot = wizard.runes[runeGained;
                                                   //wizard.currSpell.ApplyRune();
