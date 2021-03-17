@@ -19,7 +19,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     public static int enemyCount;
     public bool isGameOver = false;
     public int time, wave;
-    public int RedCounter = 0, GreenCounter = 0, BlueCounter = 0, four =0;
+    public int RedCounter = 0, GreenCounter = 0, BlueCounter = 0, enemyColorCounter = 0, randColor = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +42,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
             if (time%1 == 0)
             {
                 GameObject bandit = spawnBandit();
+                bandit.SetActive(true);
             }
             //_timeText.text = "Time: " + time;
         }
@@ -56,6 +57,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
                 Quaternion.identity);
             bandit.transform.parent = _banditContainer.transform;
             bandit.SetActive(false);
+            ChangeColor(bandit);
             _banditPool.Add(bandit);
         }
         
@@ -68,23 +70,8 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         {
             if(bandit.activeInHierarchy == false)
             {
+                ChangeColor(bandit);
                 bandit.transform.position = new Vector3(Random.Range(-6, 6), 2, 7);
-                bandit.SetActive(true);
-                switch ((int)Random.Range(1, 4))
-                {
-                    case 1:
-                        //RedCounter++;
-                        UtilityHelper.ChangeColor(bandit, Color.red);
-                        break;
-                    case 2:
-                        //GreenCounter++;
-                        UtilityHelper.ChangeColor(bandit, Color.green);
-                        break;
-                    case 3:
-                        //BlueCounter++;
-                        UtilityHelper.ChangeColor(bandit, Color.blue);
-                        break;
-                }
                 return bandit;
             }
         }
@@ -94,6 +81,32 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         newBandit.transform.parent = _banditContainer.transform;
         _banditPool.Add(newBandit);
         return newBandit;
+    }
+    private void ChangeColor(GameObject bandit)
+    {
+        do
+        {
+            randColor = (int)Random.Range(1, 4);
+        }
+        while (randColor == enemyColorCounter);
+        switch (randColor)
+        {
+            case 1:
+                //RedCounter++;
+                enemyColorCounter = 1;
+                UtilityHelper.ChangeColor(bandit, Color.red);
+                break;
+            case 2:
+                //GreenCounter++;
+                enemyColorCounter = 2;
+                UtilityHelper.ChangeColor(bandit, Color.green);
+                break;
+            case 3:
+                //BlueCounter++;
+                enemyColorCounter = 3;
+                UtilityHelper.ChangeColor(bandit, Color.blue);
+                break;
+        }
     }
 
     public void ResetBandits()
