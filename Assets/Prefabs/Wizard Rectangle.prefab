@@ -1,0 +1,252 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7944184866492569969
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7944184866492569978}
+  - component: {fileID: 7944184866492569981}
+  - component: {fileID: 7944184866492569980}
+  - component: {fileID: 7944184866492569983}
+  - component: {fileID: 7944184866492569982}
+  - component: {fileID: 7944184866492569979}
+  - component: {fileID: 7944184866492569976}
+  m_Layer: 0
+  m_Name: Wizard Rectangle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &7944184866492569978
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7944184866492569969}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &7944184866492569981
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7944184866492569969}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &7944184866492569980
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7944184866492569969}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: c30d0803d03211c429edfce7866dc9f8, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7944184866492569983
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7944184866492569969}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8, y: 0.8, z: 0.8}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7944184866492569982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7944184866492569969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e86b016ebbd52ee4eb77b57924caed3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spells:
+  - name: Light
+    lvlRequired: 1
+    expGained: 1
+    spellCD: 0.5
+    spellDmg: 1
+    spellDiameter: 1
+    spellColor: {r: 1, g: 0, b: 0, a: 1}
+    runeSlot:
+      name: 
+      id: 0
+      description: 
+      icon: {fileID: 0}
+      itemType: 0
+      spellStat: 0
+      runeEffect: 0
+  - name: Normal
+    lvlRequired: 2
+    expGained: 3
+    spellCD: 1
+    spellDmg: 2
+    spellDiameter: 2
+    spellColor: {r: 1, g: 0, b: 0, a: 1}
+    runeSlot:
+      name: 
+      id: 0
+      description: 
+      icon: {fileID: 0}
+      itemType: 0
+      spellStat: 0
+      runeEffect: 0
+  - name: Heavy
+    lvlRequired: 3
+    expGained: 5
+    spellCD: 2
+    spellDmg: 3
+    spellDiameter: 3
+    spellColor: {r: 1, g: 0, b: 0, a: 1}
+    runeSlot:
+      name: 
+      id: 0
+      description: 
+      icon: {fileID: 0}
+      itemType: 0
+      spellStat: 0
+      runeEffect: 0
+  currSpell:
+    name: 
+    lvlRequired: 0
+    expGained: 0
+    spellCD: 0
+    spellDmg: 0
+    spellDiameter: 0
+    spellColor: {r: 0, g: 0, b: 0, a: 0}
+    runeSlot:
+      name: 
+      id: 0
+      description: 
+      icon: {fileID: 0}
+      itemType: 0
+      spellStat: 0
+      runeEffect: 0
+  runes:
+  - name: 
+    id: 0
+    description: 
+    icon: {fileID: 0}
+    itemType: 0
+    spellStat: 0
+    runeEffect: 0
+  - name: 
+    id: 0
+    description: 
+    icon: {fileID: 0}
+    itemType: 0
+    spellStat: 0
+    runeEffect: 0
+  - name: 
+    id: 0
+    description: 
+    icon: {fileID: 0}
+    itemType: 0
+    spellStat: 0
+    runeEffect: 0
+  - name: 
+    id: 0
+    description: 
+    icon: {fileID: 0}
+    itemType: 0
+    spellStat: 0
+    runeEffect: 0
+  items:
+  - name: 
+    id: 0
+    description: 
+    icon: {fileID: 0}
+    itemType: 0
+  - name: 
+    id: 0
+    description: 
+    icon: {fileID: 0}
+    itemType: 0
+  - name: 
+    id: 0
+    description: 
+    icon: {fileID: 0}
+    itemType: 0
+  level: 1
+  exp: 0
+  expCap: 10
+  currentElement: 0
+--- !u!54 &7944184866492569979
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7944184866492569969}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &7944184866492569976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7944184866492569969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c33036e1ccac15418affeeee56c1db0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 3

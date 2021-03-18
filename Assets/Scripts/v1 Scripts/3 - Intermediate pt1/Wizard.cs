@@ -39,6 +39,7 @@ public class Wizard : MonoBehaviour, IDamagable
     {
         _iDB = GameObject.Find("ItemDB").GetComponent<ItemDB>();
         Health = 10;
+        UtilityHelper.ChangeColor(this.gameObject, Color.red);
         defaultColor = GetComponent<MeshRenderer>().material.color;
         DisplayStats();
         foreach(Spell spell in spells)
