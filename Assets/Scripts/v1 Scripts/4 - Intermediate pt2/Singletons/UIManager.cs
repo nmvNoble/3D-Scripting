@@ -26,7 +26,7 @@ public class UIManager : MonoSingleton<UIManager>
         Wizard.OnDamage += UpdatePlayerHealth;
         Wizard.OnLvlUp += UpdatePlayerLevel;
         Wizard.OnCast += UpdateWizardSpell;
-        Player.OnDeath += UpdatePlayerDeath;
+        Wizard.OnDeath += UpdatePlayerDeath;
         GameManager.OnGameOver += EnableGameOverMenu;
         GameManager.OnWaveStatusChange += ToggleWaveMenu;
         GameManager.OnRuneChange += ToggleRuneText;
@@ -173,7 +173,8 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void ResetGame()
     {
-        _playerDeaths = 0;
+        _playerDeaths = -1;
+        UpdatePlayerDeath();
         gameOverMenu.gameObject.SetActive(false);
     }
 }

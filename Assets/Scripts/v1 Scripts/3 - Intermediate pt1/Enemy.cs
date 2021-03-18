@@ -6,8 +6,7 @@ public class Enemy : MonoBehaviour, IDamagable
 {
     public float Health { get; set; }
 
-    public int damage, exp;
-    public float speed;
+    public float damage, speed;
 
     [SerializeField]
     private TextMesh HpText;
@@ -19,7 +18,7 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         target = GameObject.Find("Wizard");
         speed = 2f;
-        damage = 1;
+        damage = 1f;
     }
 
     private void Update()
@@ -27,7 +26,6 @@ public class Enemy : MonoBehaviour, IDamagable
         HpText.text = Health.ToString();
         lookAt = (target.transform.position - transform.position).normalized;
         transform.Translate(lookAt * Time.deltaTime * speed);
-
         /*speed = .01f;
         step += Time.deltaTime * speed;
         // Moves the object to target position
@@ -38,6 +36,7 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         Health = GameManager.Instance.wave + (GameManager.Instance.wave / 2);
         speed += (GameManager.Instance.wave * .01f);
+        damage = 1;
         UIManager.Instance.UpdateEnemyCount();
     }
 
@@ -49,6 +48,11 @@ public class Enemy : MonoBehaviour, IDamagable
     public Color RetColor()
     {
         return this.GetComponent<MeshRenderer>().material.color;
+    }
+
+    public virtual void Attack(IDamagable taget)
+    {
+        taget.Damage(damage);
     }
 
     public void Damage(float dmgAmount)
@@ -64,11 +68,6 @@ public class Enemy : MonoBehaviour, IDamagable
         }
     }
 
-    public virtual void Attack(IDamagable taget)
-    {
-        taget.Damage(damage);
-    }
-
     public virtual void Die()
     {
         this.gameObject.SetActive(false);
@@ -79,6 +78,11 @@ public class Enemy : MonoBehaviour, IDamagable
         if (other.name == "Sphere")
         {
             HitBySpell(other.GetComponent<SpellEffect>());
+        }
+        if (other.name == "Wizard")
+        {
+            Attack(other.GetComponent<IDamagable>());
+            Die();
         }
     }
 

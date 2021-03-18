@@ -16,6 +16,7 @@ public class Wizard : MonoBehaviour, IDamagable
     public int exp;
     public int expCap = 10;
     public float Health { get; set; }
+    public static Action OnDeath;
     public static Action<float> OnDamage;
     public static Action<int, string> OnLvlUp;
     public static Action<string> OnCast;
@@ -114,11 +115,6 @@ public class Wizard : MonoBehaviour, IDamagable
 
         if (Input.GetKeyDown(KeyCode.Alpha0))
             ResetRunes();
-
-        if (Health <= 0 && level > 0)
-        {
-            //Destroy(this.gameObject);
-        }
     }
 
     public Vector3 RetPos()
@@ -129,6 +125,14 @@ public class Wizard : MonoBehaviour, IDamagable
     public Color RetColor()
     {
         return this.GetComponent<MeshRenderer>().material.color;
+    }
+
+    public void Die()
+    {
+        if (OnDeath != null)
+        {
+            OnDeath();
+        }
     }
 
     private void SetCurrentSpell(int spellKey)
@@ -259,11 +263,11 @@ public class Wizard : MonoBehaviour, IDamagable
     {
         //GetComponent<MeshRenderer>().material.color = Color.yellow;
         Health -= dmgAmount;
+        //Debug.Log("Quack! The Wizard Hit himself2! HP: " + Health);
         if (OnDamage != null)
         {
             OnDamage(Health);
         }
-        //Debug.Log("Quack! The Wizard Hit himself! HP: " + Health);
     }
 
     public void DisplayStats()
@@ -337,16 +341,5 @@ public class Wizard : MonoBehaviour, IDamagable
         isOnSpellCD = false;
         this.gameObject.SetActive(true);
         DisplayStats();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        //Debug.Log("Wizard: OnTriggerEnter");
-        if (other.tag == "Enemy")
-        {
-            //Debug.Log("Enemy hit Wizard");
-            other.GetComponent<Bandit>().Attack(this);
-            other.GetComponent<Bandit>().Die();
-        }
     }
 }

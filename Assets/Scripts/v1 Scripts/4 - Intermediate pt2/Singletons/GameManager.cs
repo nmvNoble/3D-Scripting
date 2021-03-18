@@ -35,28 +35,29 @@ public class GameManager : MonoSingleton<GameManager>
         {
             ResetPlayer();
         }
-        if (_isWaveOngoing == true && wizard.exp >= wizard.expCap)
-        {
-            WaveStatusChange(_isWaveOngoing);
-        }
-
         if (wizard.level <= 0)
         {
             wizard.DisplayStats();
             GameOver();
         }
+        if (_isWaveOngoing == true && wizard.exp >= wizard.expCap)
+        {
+            WaveStatusChange(_isWaveOngoing);
+        }
+
     }
 
     private void OnEnable()
     {
-        Player.OnDeath += ResetPlayer;
+        //Wizard.OnDeath += ResetPlayer;
     }
 
     public void ResetPlayer()
     {
         if (!isGameOver)
         {
-            Debug.Log("The Wizard has fallen at Lvl: " + wizard.level + "!");
+            //Debug.Log("The Wizard has fallen at Lvl: " + wizard.level + "!");
+            wizard.Die();
             wizard.gameObject.SetActive(false);
             //Debug.Log("Resetting Player");
             wizard.ResetWizard();
@@ -138,6 +139,7 @@ public class GameManager : MonoSingleton<GameManager>
         Time.timeScale = 1;
         isGameOver = false;
         wave = 1;
+        UIManager.Instance.UpdateWave(wave.ToString());
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
