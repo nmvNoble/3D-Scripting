@@ -42,7 +42,11 @@ public class GameManager : MonoSingleton<GameManager>
         }
         if (_isWaveOngoing == true && wizard.exp >= wizard.expCap)
         {
-            WaveStatusChange(_isWaveOngoing);
+            wizard.LevelUp();
+            if(wizard.level >= wave)
+            {
+                WaveStatusChange(_isWaveOngoing);
+            }
         }
 
     }
@@ -74,7 +78,6 @@ public class GameManager : MonoSingleton<GameManager>
         {
             _isWaveOngoing = false;
             Time.timeScale = 0;
-            wizard.LevelUp();
             wave++;
             UIManager.Instance.UpdateWave(wave.ToString());
             SpawnManager.Instance.ResetEnemies();

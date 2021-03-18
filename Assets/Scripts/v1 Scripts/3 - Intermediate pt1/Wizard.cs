@@ -320,7 +320,6 @@ public class Wizard : MonoBehaviour, IDamagable
                 expCap = 100;
             else if (level > 3)
                 expCap -= 100;
-            expCap /= 10;
             exp = expCap / 10;
             if (currSpell.lvlRequired > level && level > 1)
             {

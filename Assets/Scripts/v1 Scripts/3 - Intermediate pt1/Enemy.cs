@@ -12,13 +12,16 @@ public class Enemy : MonoBehaviour, IDamagable
     private TextMesh HpText;
     private GameObject target;
     private Vector3 lookAt;
+    private float defaultDamage, defaultSpeed;
 
 
     private void Start()
     {
         target = GameObject.Find("Wizard");
         speed = 2f;
+        defaultSpeed = speed;
         damage = 1f;
+        defaultDamage = damage;
     }
 
     private void Update()
@@ -35,8 +38,8 @@ public class Enemy : MonoBehaviour, IDamagable
     public virtual void OnEnable()
     {
         Health = GameManager.Instance.wave + (GameManager.Instance.wave / 2);
-        speed += (GameManager.Instance.wave * .01f);
-        damage = 1;
+        speed = defaultSpeed + (GameManager.Instance.wave * .01f);
+        damage = defaultDamage + (GameManager.Instance.wave / 2);
         UIManager.Instance.UpdateEnemyCount();
     }
 
