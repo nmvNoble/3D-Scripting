@@ -10,11 +10,11 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     }
 
     [SerializeField]
-    private GameObject _banditContainer;
+    private GameObject _enemyContainer;
     [SerializeField]
     private GameObject _enemyPrefab;
     [SerializeField]
-    private List<GameObject> _banditPool;
+    private List<GameObject> _enemyPool;
 
     public static int enemyCount;
     public bool isGameOver = false;
@@ -24,7 +24,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     // Start is called before the first frame update
     void Start()
     {
-        _banditPool = GenerateBandits(10);
+        _enemyPool = GenerateEnemies(10);
         StartCoroutine(StartTimer());
     }
 
@@ -41,48 +41,48 @@ public class SpawnManager : MonoSingleton<SpawnManager>
             time++;
             if (time%1 == 0)
             {
-                GameObject bandit = spawnBandit();
-                bandit.SetActive(true);
+                GameObject enemy = spawnEnemy();
+                enemy.SetActive(true);
             }
             //_timeText.text = "Time: " + time;
         }
     }
 
-    List<GameObject> GenerateBandits(int amount)
+    List<GameObject> GenerateEnemies(int amount)
     {
         for (int i=0; i<amount; i++)
         {
-            GameObject bandit = Instantiate(_enemyPrefab,
+            GameObject enemy = Instantiate(_enemyPrefab,
                 new Vector3(Random.Range(-6, 6), 2, 7),
                 Quaternion.identity);
-            bandit.transform.parent = _banditContainer.transform;
-            bandit.SetActive(false);
-            ChangeColor(bandit);
-            _banditPool.Add(bandit);
+            enemy.transform.parent = _enemyContainer.transform;
+            enemy.SetActive(false);
+            ChangeColor(enemy);
+            _enemyPool.Add(enemy);
         }
         
-        return _banditPool;
+        return _enemyPool;
     }
 
-    public GameObject spawnBandit()
+    public GameObject spawnEnemy()
     {
-        foreach(var bandit in _banditPool)
+        foreach(var enemy in _enemyPool)
         {
-            if(bandit.activeInHierarchy == false)
+            if(enemy.activeInHierarchy == false)
             {
-                ChangeColor(bandit);
-                bandit.transform.position = new Vector3(Random.Range(-6, 6), 2, 7);
-                return bandit;
+                ChangeColor(enemy);
+                enemy.transform.position = new Vector3(Random.Range(-6, 6), 2, 7);
+                return enemy;
             }
         }
-        var newBandit = Instantiate(_enemyPrefab,
+        var newEnemy = Instantiate(_enemyPrefab,
                 new Vector3(Random.Range(-7, 7), Random.Range(0, 7), 7),
                 Quaternion.identity);
-        newBandit.transform.parent = _banditContainer.transform;
-        _banditPool.Add(newBandit);
-        return newBandit;
+        newEnemy.transform.parent = _enemyContainer.transform;
+        _enemyPool.Add(newEnemy);
+        return newEnemy;
     }
-    private void ChangeColor(GameObject bandit)
+    private void ChangeColor(GameObject enemy)
     {
         do
         {
@@ -94,26 +94,26 @@ public class SpawnManager : MonoSingleton<SpawnManager>
             case 1:
                 //RedCounter++;
                 enemyColorCounter = 1;
-                UtilityHelper.ChangeColor(bandit, Color.red);
+                UtilityHelper.ChangeColor(enemy, Color.red);
                 break;
             case 2:
                 //GreenCounter++;
                 enemyColorCounter = 2;
-                UtilityHelper.ChangeColor(bandit, Color.green);
+                UtilityHelper.ChangeColor(enemy, Color.green);
                 break;
             case 3:
                 //BlueCounter++;
                 enemyColorCounter = 3;
-                UtilityHelper.ChangeColor(bandit, Color.blue);
+                UtilityHelper.ChangeColor(enemy, Color.blue);
                 break;
         }
     }
 
-    public void ResetBandits()
+    public void ResetEnemies()
     {
-        foreach (var bandit in _banditPool)
+        foreach (var enemy in _enemyPool)
         {
-            bandit.SetActive(false);
+            enemy.SetActive(false);
         }
     }
 

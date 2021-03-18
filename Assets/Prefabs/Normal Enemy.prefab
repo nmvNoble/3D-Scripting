@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 679518041406233774}
   - component: {fileID: 2618464696170053989}
   - component: {fileID: 6924352849980888891}
-  - component: {fileID: 7199820024710153755}
   - component: {fileID: 3053388585771147266}
+  - component: {fileID: 7199820024710153755}
+  - component: {fileID: -1628830293685186762}
   m_Layer: 0
   m_Name: Normal Enemy
   m_TagString: Enemy
@@ -98,22 +99,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7199820024710153755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5020877030135953565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49541d75d73cb4e4d9cd697c51115b64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  exp: 0
-  speed: 0
-  HpText: {fileID: 8761949709465447280}
 --- !u!54 &3053388585771147266
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -130,6 +115,38 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7199820024710153755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5020877030135953565}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49541d75d73cb4e4d9cd697c51115b64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
+  exp: 0
+  speed: 0
+  HpText: {fileID: 8761949709465447280}
+--- !u!114 &-1628830293685186762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5020877030135953565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09091d9246baa7141a8558e0dba1a0a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
+  exp: 0
+  speed: 0
+  HpText: {fileID: 8761949709465447280}
 --- !u!1 &8390300239694848534
 GameObject:
   m_ObjectHideFlags: 0

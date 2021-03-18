@@ -76,7 +76,7 @@ public class GameManager : MonoSingleton<GameManager>
             wizard.LevelUp();
             wave++;
             UIManager.Instance.UpdateWave(wave.ToString());
-            SpawnManager.Instance.ResetBandits();
+            SpawnManager.Instance.ResetEnemies();
             if (wave >= 4)
             {
                 wizard.ResetRunes();
@@ -133,7 +133,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         Debug.Log("Reset Game");
         UIManager.Instance.ResetGame();
-        SpawnManager.Instance.ResetBandits();
+        SpawnManager.Instance.ResetEnemies();
         wizard.ResetWizard();
         Time.timeScale = 1;
         isGameOver = false;

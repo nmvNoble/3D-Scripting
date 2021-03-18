@@ -330,7 +330,6 @@ public class Wizard : MonoBehaviour, IDamagable
             exp = 0;
             expCap = 10;
             Health = 10;
-            runes = null;
             GetComponent<MeshRenderer>().material.color = defaultColor;
             this.gameObject.transform.position = startingPos;
             ResetRunes();

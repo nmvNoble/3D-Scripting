@@ -11790,9 +11790,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d31d5ce67e74b4b9daacccb65d0718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _banditContainer: {fileID: 132439139}
+  _enemyContainer: {fileID: 132439139}
   _enemyPrefab: {fileID: 5020877030135953565, guid: 9d56b7da0a0386f4c82a5d2b141af2de, type: 3}
-  _banditPool: []
+  _enemyPool: []
   isGameOver: 0
   time: 0
   wave: 0
