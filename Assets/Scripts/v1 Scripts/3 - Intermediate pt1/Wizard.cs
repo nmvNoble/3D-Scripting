@@ -156,13 +156,15 @@ public class Wizard : MonoBehaviour, IDamagable
     {
         if (!isOnSpellCD)
         {
-            //Debug.Log("Casting: " + currSpell.name);
+            //Debug.Log("============================================================Casting: " + currSpell.name);
             this.exp += currSpell.Cast(enemyPos);
             UIManager.Instance.UpdatePlayerExp(exp, expCap);
             //Debug.Log("Wizard has " + exp + " Total Exp");
 
             spellObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             spellObject.AddComponent<SpellEffect>();
+            spellObject.AddComponent<SphereCollider>();
+            spellObject.GetComponent<SphereCollider>().isTrigger = true;
             spellObject.GetComponent<SpellEffect>().currentWizLevel = level;
             spellObject.GetComponent<SpellEffect>().SetCurrentSpell(currSpell);
             spellObject.transform.position =
@@ -197,7 +199,7 @@ public class Wizard : MonoBehaviour, IDamagable
         }
         else
         {
-            Debug.Log("The Wizard is on Cool Down! They cannot Cast yet.");
+            //Debug.Log("The Wizard is on Cool Down! They cannot Cast yet.");
             OnCast?.Invoke("On Cool Down!");
             //return 0;
         }

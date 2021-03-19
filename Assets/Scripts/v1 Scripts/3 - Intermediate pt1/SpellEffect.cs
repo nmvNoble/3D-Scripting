@@ -24,4 +24,15 @@ public class SpellEffect : MonoBehaviour
     {
         currentSpell = newSpell;
     }
+
+    public virtual void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Enemy")
+        {
+        other.GetComponent<Enemy>().Damage(
+            Mathf.CeilToInt(
+                currentSpell.spellDmg + currentWizLevel) *
+                UtilityHelper.GetElementMod(other.GetComponent<Enemy>().RetColor(), currentSpell.spellColor));
+        }
+    }
 }

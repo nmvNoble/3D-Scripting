@@ -11,8 +11,9 @@ public class Enemy : MonoBehaviour, IDamagable
     [SerializeField]
     private TextMesh HpText;
     private GameObject target;
-    private Vector3 lookAt;
+    private Vector3 lookAt, scale;
     private float defaultDamage, defaultSpeed;
+    private bool isBeingDamaged;
 
 
     private void Start()
@@ -26,7 +27,6 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private void Update()
     {
-        HpText.text = Health.ToString();
         lookAt = (target.transform.position - transform.position).normalized;
         transform.Translate(lookAt * Time.deltaTime * speed);
         /*speed = .01f;
@@ -37,10 +37,11 @@ public class Enemy : MonoBehaviour, IDamagable
 
     public virtual void OnEnable()
     {
-        Health = GameManager.Instance.wave + (GameManager.Instance.wave / 2);
-        speed = defaultSpeed + (GameManager.Instance.wave * .01f);
-        damage = defaultDamage + (GameManager.Instance.wave / 2);
         UIManager.Instance.UpdateEnemyCount();
+        Health = GameManager.Instance.wave + (GameManager.Instance.wave / 2);
+        speed = defaultSpeed + (GameManager.Instance.wave * .05f);
+        damage = (GameManager.Instance.wave / 2);
+        HpText.text = Health.ToString();
     }
 
     public Vector3 RetPos()
@@ -63,12 +64,14 @@ public class Enemy : MonoBehaviour, IDamagable
         if (dmgAmount > 0)
         {
             Health -= dmgAmount;
+            HpText.text = Health.ToString();
             if (Health <= 0)
             {
                 this.CancelInvoke();
                 Die();
             }
         }
+        //isBeingDamaged = false;
     }
 
     public virtual void Die()
@@ -78,22 +81,14 @@ public class Enemy : MonoBehaviour, IDamagable
 
     public virtual void OnTriggerEnter(Collider other)
     {
-        if (other.name == "Sphere")
+        if (!isBeingDamaged)
         {
-            HitBySpell(other.GetComponent<SpellEffect>());
+            if (other.name == "Wizard")
+            {
+                Attack(other.GetComponent<IDamagable>());
+                Die();
+            }
         }
-        if (other.name == "Wizard")
-        {
-            Attack(other.GetComponent<IDamagable>());
-            Die();
-        }
-    }
-
-    public void HitBySpell(SpellEffect spellEffect)
-    {
-        Damage(Mathf.CeilToInt(
-            (spellEffect.currentSpell.spellDmg + spellEffect.currentWizLevel) *
-                    UtilityHelper.GetElementMod(RetColor(), spellEffect.currentSpell.spellColor)));
     }
 }
 
