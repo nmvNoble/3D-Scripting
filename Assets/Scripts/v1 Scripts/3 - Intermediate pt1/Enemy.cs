@@ -19,10 +19,10 @@ public class Enemy : MonoBehaviour, IDamagable
     private void Start()
     {
         target = GameObject.Find("Wizard");
-        speed = 2f;
+        /*speed = 2f;
         defaultSpeed = speed;
         damage = 1f;
-        defaultDamage = damage;
+        defaultDamage = damage;*/
     }
 
     private void Update()
@@ -38,10 +38,8 @@ public class Enemy : MonoBehaviour, IDamagable
     public virtual void OnEnable()
     {
         UIManager.Instance.UpdateEnemyCount();
-        Health = GameManager.Instance.wave + (GameManager.Instance.wave / 2);
-        speed = defaultSpeed + (GameManager.Instance.wave * .05f);
-        damage = (GameManager.Instance.wave / 2);
-        HpText.text = Health.ToString();
+        SetEnemyType(Random.Range(1, 4));
+        //Debug.Log("=========type: ^" + ", HP: " + Health + ", speed: " + speed + ", dmg: " + damage);
     }
 
     public Vector3 RetPos()
@@ -52,6 +50,35 @@ public class Enemy : MonoBehaviour, IDamagable
     public Color RetColor()
     {
         return this.GetComponent<MeshRenderer>().material.color;
+    }
+
+    public void SetEnemyType(int type)
+    {
+        switch (type)
+        {
+            case 1:
+                this.transform.position = transform.position + new Vector3(0, .75f, 0);
+                this.transform.localScale = new Vector3(.75f, .75f, .75f);
+                Health = GameManager.Instance.wave;
+                this.speed = 3f + (GameManager.Instance.wave * .1f);
+                this.damage = 1 + (GameManager.Instance.wave / 4);
+                break;
+            case 2:
+                this.transform.localScale = new Vector3(1, 2, 1);
+                Health = GameManager.Instance.wave + (GameManager.Instance.wave / 2);
+                this.speed = 2.5f + (GameManager.Instance.wave * .05f);
+                this.damage = 1 + (GameManager.Instance.wave / 2);
+                break;
+            case 3:
+                this.transform.localScale = new Vector3(2, 2, 2);
+                Health = GameManager.Instance.wave * 2;
+                this.speed = 2f + (GameManager.Instance.wave * .01f);
+                this.damage = 1 + GameManager.Instance.wave;
+                break;
+        }
+        //Debug.Log("type: " + type);// + ", HP: " + Health + ", speed: " + speed + ", dmg: " + damage);
+        //Debug.Log("HP: " + Health.ToString());
+        HpText.text = Health.ToString(); 
     }
 
     public virtual void Attack(IDamagable taget)

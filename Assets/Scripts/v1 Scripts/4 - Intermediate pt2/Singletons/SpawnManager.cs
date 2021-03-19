@@ -42,6 +42,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
             if (time%1 == 0)
             {
                 GameObject enemy = spawnEnemy();
+                //enemy.GetComponent<Enemy>().SetEnemyType(Random.Range(1, 4));
                 enemy.SetActive(true);
             }
             //_timeText.text = "Time: " + time;

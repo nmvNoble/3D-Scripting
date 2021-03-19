@@ -29,10 +29,11 @@ public class SpellEffect : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-        other.GetComponent<Enemy>().Damage(
-            Mathf.CeilToInt(
-                currentSpell.spellDmg + currentWizLevel) *
-                UtilityHelper.GetElementMod(other.GetComponent<Enemy>().RetColor(), currentSpell.spellColor));
+            Debug.Log((currentSpell.spellDmg + currentWizLevel) + " * " + UtilityHelper.GetElementMod(other.GetComponent<Enemy>().RetColor(), currentSpell.spellColor));
+            other.GetComponent<Enemy>().Damage(
+                    Mathf.CeilToInt(
+                    currentSpell.spellDmg + currentWizLevel) *
+                    UtilityHelper.GetElementMod(other.GetComponent<Enemy>().RetColor(), currentSpell.spellColor));
         }
     }
 }
