@@ -29,11 +29,16 @@ public class SpellEffect : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            Debug.Log((currentSpell.spellDmg + currentWizLevel) + " * " + UtilityHelper.GetElementMod(other.GetComponent<Enemy>().RetColor(), currentSpell.spellColor));
-            other.GetComponent<Enemy>().Damage(
-                    Mathf.CeilToInt(
-                    currentSpell.spellDmg + currentWizLevel) *
-                    UtilityHelper.GetElementMod(other.GetComponent<Enemy>().RetColor(), currentSpell.spellColor));
+            //Debug.Log((currentSpell.spellDmg + currentWizLevel) + " * " + UtilityHelper.GetElementMod(other.GetComponent<Enemy>().RetColor(), currentSpell.spellColor));
+
+            //other.gameObject.GetComponent<Enemy>().HitBySpell(this);
+            //other.gameObject.GetComponent<Enemy>().LogStats(other.name+"-----");
+            ////Debug.Log("---------, HP: " + other.gameObject.GetComponent<Enemy>().Health + ", speed: " + other.gameObject.GetComponent<Enemy>().speed + ", dmg: " + other.gameObject.GetComponent<Enemy>().damage);
+            //other.gameObject.GetComponent<Enemy>().HitBySpell(currentSpell.spellDmg, currentWizLevel, currentSpell.spellColor);//.Damage(
+
+            //Mathf.CeilToInt(
+            //currentSpell.spellDmg + currentWizLevel) *
+            //UtilityHelper.GetElementMod(other.GetComponent<Enemy>().RetColor(), currentSpell.spellColor));
         }
     }
 }

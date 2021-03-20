@@ -5,8 +5,8 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, IDamagable
 {
     public float Health { get; set; }
-
-    public float damage, speed;
+    [SerializeField]
+    private float damage, speed;
 
     [SerializeField]
     private TextMesh HpText;
@@ -14,10 +14,13 @@ public class Enemy : MonoBehaviour, IDamagable
     private Vector3 lookAt, scale;
     private float defaultDamage, defaultSpeed;
     private bool isBeingDamaged;
+    [SerializeField]
+    private SpellEffect spellHitBy;
 
 
     private void Start()
     {
+        Health = 1;
         target = GameObject.Find("Wizard");
         /*speed = 2f;
         defaultSpeed = speed;
@@ -29,6 +32,14 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         lookAt = (target.transform.position - transform.position).normalized;
         transform.Translate(lookAt * Time.deltaTime * speed);
+        if (isBeingDamaged)
+        {
+            /*LogStats("update~~~~~~~~~~~");
+            Debug.Log(spellHitBy.currentSpell.spellDmg + spellHitBy.currentWizLevel + " * " +
+                    UtilityHelper.GetElementMod(RetColor(), spellHitBy.currentSpell.spellColor));*/
+            Damage(Mathf.CeilToInt(spellHitBy.currentSpell.spellDmg + spellHitBy.currentWizLevel) *
+                    UtilityHelper.GetElementMod(RetColor(), spellHitBy.currentSpell.spellColor));
+        }
         /*speed = .01f;
         step += Time.deltaTime * speed;
         // Moves the object to target position
@@ -39,7 +50,7 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         UIManager.Instance.UpdateEnemyCount();
         SetEnemyType(Random.Range(1, 4));
-        //Debug.Log("=========type: ^" + ", HP: " + Health + ", speed: " + speed + ", dmg: " + damage);
+        //LogStats(this.gameObject.name + "=====onEnable====type: ^");
     }
 
     public Vector3 RetPos()
@@ -59,19 +70,19 @@ public class Enemy : MonoBehaviour, IDamagable
             case 1:
                 this.transform.position = transform.position + new Vector3(0, .75f, 0);
                 this.transform.localScale = new Vector3(.75f, .75f, .75f);
-                Health = GameManager.Instance.wave;
+                this.Health = GameManager.Instance.wave;
                 this.speed = 3f + (GameManager.Instance.wave * .1f);
                 this.damage = 1 + (GameManager.Instance.wave / 4);
                 break;
             case 2:
                 this.transform.localScale = new Vector3(1, 2, 1);
-                Health = GameManager.Instance.wave + (GameManager.Instance.wave / 2);
+                this.Health = GameManager.Instance.wave + (GameManager.Instance.wave / 2);
                 this.speed = 2.5f + (GameManager.Instance.wave * .05f);
                 this.damage = 1 + (GameManager.Instance.wave / 2);
                 break;
             case 3:
                 this.transform.localScale = new Vector3(2, 2, 2);
-                Health = GameManager.Instance.wave * 2;
+                this.Health = GameManager.Instance.wave * 2;
                 this.speed = 2f + (GameManager.Instance.wave * .01f);
                 this.damage = 1 + GameManager.Instance.wave;
                 break;
@@ -86,11 +97,24 @@ public class Enemy : MonoBehaviour, IDamagable
         taget.Damage(damage);
     }
 
+    public void HitBySpell(SpellEffect spellEffect)//float spellDmg, int wizLvl, Color spellElement)
+    {
+        isBeingDamaged = true;
+        spellHitBy = spellEffect;
+        //LogStats(isBeingDamaged+"|"+spellEffect.name+" ==hitbyspell== ");
+        //Damage(Mathf.CeilToInt(spellDmg + wizLvl) *
+        //        UtilityHelper.GetElementMod(RetColor(), spellElement));
+    }
+
     public void Damage(float dmgAmount)
     {
-        if (dmgAmount > 0)
+        //LogStats(this.gameObject.name + "=====damage====type: ^");
+        if (dmgAmount > 0 && this.damage > 0)
         {
+            //Debug.Log("HP before: " + Health + " - " + dmgAmount + "(dmg)");
             Health -= dmgAmount;
+            //Debug.Log("HP after: " + Health);
+            isBeingDamaged = false;
             HpText.text = Health.ToString();
             if (Health <= 0)
             {
@@ -110,12 +134,24 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         if (!isBeingDamaged)
         {
+            if (other.name == "Sphere")
+            {
+                //isBeingDamaged = true;
+                HitBySpell(other.GetComponent<SpellEffect>());
+                //HitBySpell(other.GetComponent<SpellEffect>().currentSpell.spellDmg,
+                //    other.GetComponent<SpellEffect>().currentWizLevel, other.GetComponent<SpellEffect>().currentSpell.spellColor);
+            }
             if (other.name == "Wizard")
             {
                 Attack(other.GetComponent<IDamagable>());
                 Die();
             }
         }
+    }
+    
+    public void LogStats(string intro = null)
+    {
+        Debug.Log(intro + ", HP: " + Health + ", speed: " + speed + ", dmg: " + damage);
     }
 }
 
