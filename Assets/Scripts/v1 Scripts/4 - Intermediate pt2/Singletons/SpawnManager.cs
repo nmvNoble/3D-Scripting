@@ -9,6 +9,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         base.Init();
     }
 
+    public int t1Count, t2Count, t3Count;
     [SerializeField]
     private GameObject _enemyContainer;
     [SerializeField]
@@ -18,7 +19,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
 
     public static int enemyCount;
     public bool isGameOver = false;
-    public int time, wave;
+    public int time, wave, type;
     public int RedCounter = 0, GreenCounter = 0, BlueCounter = 0, enemyColorCounter = 0, randColor = 0;
 
     // Start is called before the first frame update
@@ -83,6 +84,29 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         _enemyPool.Add(newEnemy);
         return newEnemy;
     }
+    public int DetermineEnemyType()
+    {
+        type = Random.Range(1, 4);
+        if (type == 1 && t1Count > (t2Count+2) && t1Count > (t3Count + 2))
+            if (t2Count < t3Count)
+                type = 2;
+            else
+                type = 3;
+
+        else if (type == 2 && t2Count > (t1Count + 2) && t2Count > (t3Count + 2))
+            if (t1Count < t3Count)
+                type = 1;
+            else
+                type = 3;
+
+        else if (type == 3 && t3Count > (t1Count + 2) && t3Count > (t2Count + 2))
+            if (t1Count < t2Count)
+                type = 1;
+            else
+                type = 2;
+        return type;
+    }
+
     private void ChangeColor(GameObject enemy)
     {
         do

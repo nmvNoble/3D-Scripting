@@ -226,14 +226,14 @@ public class Wizard : MonoBehaviour, IDamagable
     IEnumerator SpellEffectAnimation(GameObject Effect, float CD, Vector3 origin, Vector3 destination)
     {
         //yield return new WaitForSeconds(CD);
-        while (Effect.transform.position.y >= destination.y)
+        while (Effect != null && Effect.transform.position.y >= destination.y)
         {
             if (level <= 0) yield break;
             Vector3 toFace = destination - origin;
             Effect.transform.Translate(new Vector3(0, -0.05f, 0));//toFace);
             yield return new WaitForEndOfFrame();
             //Debug.Log("mid, Effect.transform.position.y" + Effect.transform.position.y + " <= destination.y" + destination.y);
-            if (Effect.transform.position.y <= destination.y)
+            if (Effect != null && Effect.transform.position.y <= destination.y)
                 Destroy(Effect);
         }
     }

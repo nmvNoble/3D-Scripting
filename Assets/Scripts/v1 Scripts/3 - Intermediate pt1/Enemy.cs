@@ -5,16 +5,15 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, IDamagable
 {
     public float Health { get; set; }
-    [SerializeField]
-    private float damage, speed;
 
     [SerializeField]
-    private TextMesh HpText;
-    private GameObject target;
-    private Vector3 lookAt, scale;
-    private float defaultDamage, defaultSpeed;
-    private bool isBeingDamaged;
+    private float damage, speed;
     [SerializeField]
+    private TextMesh HpText;
+
+    private bool isBeingDamaged;
+    private GameObject target;
+    private Vector3 lookAt;
     private SpellEffect spellHitBy;
 
 
@@ -22,10 +21,6 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         Health = 1;
         target = GameObject.Find("Wizard");
-        /*speed = 2f;
-        defaultSpeed = speed;
-        damage = 1f;
-        defaultDamage = damage;*/
     }
 
     private void Update()
@@ -49,7 +44,7 @@ public class Enemy : MonoBehaviour, IDamagable
     public virtual void OnEnable()
     {
         UIManager.Instance.UpdateEnemyCount();
-        SetEnemyType(Random.Range(1, 4));
+        SetEnemyType();
         //LogStats(this.gameObject.name + "=====onEnable====type: ^");
     }
 
@@ -63,9 +58,10 @@ public class Enemy : MonoBehaviour, IDamagable
         return this.GetComponent<MeshRenderer>().material.color;
     }
 
-    public void SetEnemyType(int type)
+    public void SetEnemyType()
     {
-        switch (type)
+
+        switch (SpawnManager.Instance.DetermineEnemyType())
         {
             case 1:
                 this.transform.position = transform.position + new Vector3(0, .75f, 0);
@@ -73,22 +69,24 @@ public class Enemy : MonoBehaviour, IDamagable
                 this.Health = GameManager.Instance.wave;
                 this.speed = 3f + (GameManager.Instance.wave * .1f);
                 this.damage = 1 + (GameManager.Instance.wave / 4);
+                SpawnManager.Instance.t1Count++;
                 break;
             case 2:
                 this.transform.localScale = new Vector3(1, 2, 1);
                 this.Health = GameManager.Instance.wave + (GameManager.Instance.wave / 2);
                 this.speed = 2.5f + (GameManager.Instance.wave * .05f);
                 this.damage = 1 + (GameManager.Instance.wave / 2);
+                SpawnManager.Instance.t2Count++;
                 break;
             case 3:
                 this.transform.localScale = new Vector3(2, 2, 2);
                 this.Health = GameManager.Instance.wave * 2;
                 this.speed = 2f + (GameManager.Instance.wave * .01f);
                 this.damage = 1 + GameManager.Instance.wave;
+                SpawnManager.Instance.t3Count++;
                 break;
         }
         //Debug.Log("type: " + type);// + ", HP: " + Health + ", speed: " + speed + ", dmg: " + damage);
-        //Debug.Log("HP: " + Health.ToString());
         HpText.text = Health.ToString(); 
     }
 
@@ -122,7 +120,6 @@ public class Enemy : MonoBehaviour, IDamagable
                 Die();
             }
         }
-        //isBeingDamaged = false;
     }
 
     public virtual void Die()
