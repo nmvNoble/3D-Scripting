@@ -9,7 +9,7 @@ public class Spell
     public int lvlRequired;
     public int expGained;
 
-    public float spellCD, spellDmg, spellDiameter;
+    public float spellCD, spellDmgMod, spellDiameter;
     public Color spellColor;
     public Rune runeSlot = null;
     private Spell defaultSpellStats;
@@ -26,7 +26,7 @@ public class Spell
         this.lvlRequired = newSpell.lvlRequired;
         this.expGained = newSpell.expGained;
         this.spellCD = newSpell.spellCD;
-        this.spellDmg = newSpell.spellDmg;
+        this.spellDmgMod = newSpell.spellDmgMod;
         this.spellDiameter = newSpell.spellDiameter;
         this.spellColor = newSpell.spellColor;
 }
@@ -43,7 +43,7 @@ public class Spell
         defaultSpellStats = new Spell(this);
         //defaultSpellStats.expGained = expGained;
         //defaultSpellStats.spellCD = spellCD;
-        //defaultSpellStats.spellDmg = spellDmg;
+        //defaultSpellStats.spellDmgMod = spellDmgMod;
         //defaultSpellStats.spellDiameter = spellDiameter;
     }
 
@@ -65,9 +65,9 @@ public class Spell
                     //Debug.Log("Stat after: " + spellCD);
                     break;
                 case 2:
-                    //Debug.Log("Stat before: " + spellDmg);
-                    spellDmg *= runeSlot.runeEffect;
-                    //Debug.Log("Stat after: " + spellDmg);
+                    //Debug.Log("Stat before: " + spellDmgMod);
+                    spellDmgMod += runeSlot.runeEffect;
+                    //Debug.Log("Stat after: " + spellDmgMod);
                     break;
                 case 3:
                     //Debug.Log("Stat before: " + spellDiameter);
@@ -88,7 +88,7 @@ public class Spell
     {
         expGained = defaultSpellStats.expGained;
         spellCD = defaultSpellStats.spellCD;
-        spellDmg = defaultSpellStats.spellDmg;
+        spellDmgMod = defaultSpellStats.spellDmgMod;
         spellDiameter = defaultSpellStats.spellDiameter;
     }
 }

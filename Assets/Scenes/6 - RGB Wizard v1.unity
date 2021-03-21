@@ -3271,7 +3271,7 @@ MonoBehaviour:
     lvlRequired: 1
     expGained: 1
     spellCD: 0.5
-    spellDmg: 1
+    spellDmgMod: 1
     spellDiameter: 1
     spellColor: {r: 1, g: 0, b: 0, a: 1}
     runeSlot:
@@ -3286,7 +3286,7 @@ MonoBehaviour:
     lvlRequired: 2
     expGained: 3
     spellCD: 1
-    spellDmg: 2
+    spellDmgMod: 1.5
     spellDiameter: 2
     spellColor: {r: 1, g: 0, b: 0, a: 1}
     runeSlot:
@@ -3301,7 +3301,7 @@ MonoBehaviour:
     lvlRequired: 3
     expGained: 5
     spellCD: 2
-    spellDmg: 3
+    spellDmgMod: 2
     spellDiameter: 3
     spellColor: {r: 1, g: 0, b: 0, a: 1}
     runeSlot:
@@ -3317,7 +3317,7 @@ MonoBehaviour:
     lvlRequired: 0
     expGained: 0
     spellCD: 0
-    spellDmg: 0
+    spellDmgMod: 0
     spellDiameter: 0
     spellColor: {r: 0, g: 0, b: 0, a: 0}
     runeSlot:
@@ -11790,12 +11790,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d31d5ce67e74b4b9daacccb65d0718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  t1Count: 0
+  t2Count: 0
+  t3Count: 0
   _enemyContainer: {fileID: 132439139}
   _enemyPrefab: {fileID: 5020877030135953565, guid: 9d56b7da0a0386f4c82a5d2b141af2de, type: 3}
   _enemyPool: []
   isGameOver: 0
   time: 0
   wave: 0
+  type: 0
   RedCounter: 0
   GreenCounter: 0
   BlueCounter: 0

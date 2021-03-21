@@ -165,8 +165,9 @@ public class Wizard : MonoBehaviour, IDamagable
             spellObject.AddComponent<SpellEffect>();
             spellObject.AddComponent<SphereCollider>();
             spellObject.GetComponent<SphereCollider>().isTrigger = true;
-            spellObject.GetComponent<SpellEffect>().currentWizLevel = level;
-            spellObject.GetComponent<SpellEffect>().SetCurrentSpell(currSpell);
+            //spellObject.GetComponent<SpellEffect>().currentWizLevel = level;
+            //spellObject.GetComponent<SpellEffect>().SetCurrentSpell(currSpell);
+            spellObject.GetComponent<SpellEffect>().SetSpellEffect(currSpell, level);
             spellObject.transform.position =
                     new Vector3(enemyPos.x, enemyPos.y + currSpell.spellDiameter, enemyPos.z);
             spellObject.transform.localScale =

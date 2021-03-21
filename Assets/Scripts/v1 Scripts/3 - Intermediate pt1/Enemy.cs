@@ -30,9 +30,9 @@ public class Enemy : MonoBehaviour, IDamagable
         if (isBeingDamaged)
         {
             /*LogStats("update~~~~~~~~~~~");
-            Debug.Log(spellHitBy.currentSpell.spellDmg + spellHitBy.currentWizLevel + " * " +
+            Debug.Log(spellHitBy.spellTotalDamage + " * " + //.currentSpell.spellDmg + spellHitBy.currentWizLevel + " * " +
                     UtilityHelper.GetElementMod(RetColor(), spellHitBy.currentSpell.spellColor));*/
-            Damage(Mathf.CeilToInt(spellHitBy.currentSpell.spellDmg + spellHitBy.currentWizLevel) *
+            Damage(Mathf.CeilToInt(spellHitBy.spellTotalDamage) * //.currentSpell.spellDmg + spellHitBy.currentWizLevel) *
                     UtilityHelper.GetElementMod(RetColor(), spellHitBy.currentSpell.spellColor));
         }
         /*speed = .01f;

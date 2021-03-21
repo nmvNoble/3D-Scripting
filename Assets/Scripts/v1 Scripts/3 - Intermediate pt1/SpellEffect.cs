@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpellEffect : MonoBehaviour
 {
     public Spell currentSpell;
-    public int currentWizLevel;
+    public float spellTotalDamage;//currentWizLevel;
     //public Color spellElement;
 
     // Start is called before the first frame update
@@ -17,7 +17,13 @@ public class SpellEffect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    public void SetSpellEffect(Spell newSpell, int wizLevel)
+    {
+        currentSpell = newSpell;
+        spellTotalDamage = currentSpell.spellDmgMod * wizLevel;
     }
 
     public void SetCurrentSpell(Spell newSpell)
