@@ -11,7 +11,8 @@ public class SpellEffect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if(this != null)
+            Destroy(this, 5f);
     }
 
     // Update is called once per frame
