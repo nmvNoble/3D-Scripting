@@ -291,7 +291,7 @@ public class Wizard : MonoBehaviour, IDamagable
         {
             foreach (var spell in spells)
             {
-                if (spell.lvlRequired == this.level)
+                if (spell.lvlRequired <= this.level)
                     OnLvlUp(level, currSpell.name + " " + currentElement.ToString());
             }
         }
@@ -334,7 +334,10 @@ public class Wizard : MonoBehaviour, IDamagable
                 expCap = 100;
             else if (level > 3)
                 expCap -= 100;
-            exp = expCap / 10;
+            if (level < 3)
+                exp = expCap / 10;
+            else if (level >= 3)
+                exp /= 2;
             if (currSpell.lvlRequired > level && level > 1)
             {
                 currSpell = spells[level - 1];
