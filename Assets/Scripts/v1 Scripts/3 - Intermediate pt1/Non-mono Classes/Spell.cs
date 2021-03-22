@@ -35,7 +35,7 @@ public class Spell
     {
         //Debug.Log("Casting: " + this.name);
         //Debug.Log("Wizard gains " + expGained + " Exp");
-        return this.expGained;
+        return 0;//this.expGained;
     }
 
     public void SetDefaultSpellStats()

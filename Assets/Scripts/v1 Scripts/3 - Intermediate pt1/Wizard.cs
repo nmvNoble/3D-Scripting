@@ -117,6 +117,11 @@ public class Wizard : MonoBehaviour, IDamagable
             ResetRunes();
     }
 
+    public void OnEnable()
+    {
+        Enemy.OnEnemyDeath += GainExp;
+    }
+
     public Vector3 RetPos()
     {
         return transform.position;
@@ -205,6 +210,12 @@ public class Wizard : MonoBehaviour, IDamagable
             //return 0;
         }
         
+    }
+
+    public void GainExp(int expGained)
+    {
+        //Debug.Log("Gained Exp: " + expGained);
+        exp += expGained;
     }
 
     private void DisplaySpell()

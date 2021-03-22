@@ -1,11 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamagable
 {
     public float Health { get; set; }
+    public static Action<int> OnEnemyDeath;
 
+    [SerializeField]
+    private int exp;
     [SerializeField]
     private float damage, speed;
     [SerializeField]
@@ -69,6 +73,7 @@ public class Enemy : MonoBehaviour, IDamagable
                 this.Health = GameManager.Instance.wave;
                 this.speed = 3f + (GameManager.Instance.wave * .1f);
                 this.damage = 1 + (GameManager.Instance.wave / 4);
+                this.exp = 1;
                 SpawnManager.Instance.t1Count++;
                 break;
             case 2:
@@ -76,6 +81,7 @@ public class Enemy : MonoBehaviour, IDamagable
                 this.Health = GameManager.Instance.wave + (GameManager.Instance.wave / 2);
                 this.speed = 2.5f + (GameManager.Instance.wave * .05f);
                 this.damage = 1 + (GameManager.Instance.wave / 2);
+                this.exp = 2;
                 SpawnManager.Instance.t2Count++;
                 break;
             case 3:
@@ -83,6 +89,7 @@ public class Enemy : MonoBehaviour, IDamagable
                 this.Health = GameManager.Instance.wave * 2;
                 this.speed = 2f + (GameManager.Instance.wave * .01f);
                 this.damage = 1 + GameManager.Instance.wave;
+                this.exp = 3;
                 SpawnManager.Instance.t3Count++;
                 break;
         }
@@ -118,6 +125,11 @@ public class Enemy : MonoBehaviour, IDamagable
             {
                 this.CancelInvoke();
                 Die();
+                if (OnEnemyDeath != null)
+                {
+                    //Debug.Log("Enemy Died, giving " + exp + " exp");
+                    OnEnemyDeath(exp);
+                }
             }
         }
     }
