@@ -7,6 +7,7 @@ ScriptsOnlyBuild:
     - ColorChanger
     - CommandInput
     - DontDestroy
+    - Enemy
     - GameManager
     - ItemDB
     - Movement
@@ -82,53 +83,55 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11948}
     - Class: 114
-      Script: {instanceID: 12170}
+      Script: {instanceID: 12072}
     - Class: 114
-      Script: {instanceID: 12264}
+      Script: {instanceID: 12172}
     - Class: 114
-      Script: {instanceID: 12414}
+      Script: {instanceID: 12266}
     - Class: 114
-      Script: {instanceID: 12450}
+      Script: {instanceID: 12416}
     - Class: 114
-      Script: {instanceID: 12502}
+      Script: {instanceID: 12452}
     - Class: 114
-      Script: {instanceID: 12510}
+      Script: {instanceID: 12504}
     - Class: 114
-      Script: {instanceID: 12620}
+      Script: {instanceID: 12512}
     - Class: 114
-      Script: {instanceID: 12674}
+      Script: {instanceID: 12622}
     - Class: 114
-      Script: {instanceID: 12726}
+      Script: {instanceID: 12676}
     - Class: 114
-      Script: {instanceID: 12898}
+      Script: {instanceID: 12728}
     - Class: 114
-      Script: {instanceID: 12914}
+      Script: {instanceID: 12902}
     - Class: 114
-      Script: {instanceID: 13320}
+      Script: {instanceID: 12918}
     - Class: 114
-      Script: {instanceID: 13468}
+      Script: {instanceID: 13324}
     - Class: 114
-      Script: {instanceID: 13480}
+      Script: {instanceID: 13472}
     - Class: 114
-      Script: {instanceID: 13482}
+      Script: {instanceID: 13484}
     - Class: 114
-      Script: {instanceID: 13556}
+      Script: {instanceID: 13486}
     - Class: 114
-      Script: {instanceID: 13562}
+      Script: {instanceID: 13560}
     - Class: 114
-      Script: {instanceID: 13686}
+      Script: {instanceID: 13566}
     - Class: 114
-      Script: {instanceID: 13758}
+      Script: {instanceID: 13690}
     - Class: 114
-      Script: {instanceID: 13760}
+      Script: {instanceID: 13762}
     - Class: 114
-      Script: {instanceID: 13818}
+      Script: {instanceID: 13764}
     - Class: 114
-      Script: {instanceID: 13878}
+      Script: {instanceID: 13822}
     - Class: 114
-      Script: {instanceID: 13890}
+      Script: {instanceID: 13882}
     - Class: 114
-      Script: {instanceID: 13918}
+      Script: {instanceID: 13894}
+    - Class: 114
+      Script: {instanceID: 13922}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -296,6 +299,12 @@ ScriptsOnlyBuild:
     className: ContentSizeFitter
   - hash:
       serializedVersion: 2
+      Hash: 677a95b8fa7b80d93f1abb22cab444ed
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Enemy
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -446,13 +455,13 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
-      Hash: ffcfcd6c54e36571c886269e5db4e7fc
+      Hash: 0d5daa23c6cb3314ff44a1d09091a4d0
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: UIManager
   - hash:
       serializedVersion: 2
-      Hash: af93c186c6b3763cf532194bfa24f663
+      Hash: 677a95b8fa7b80d93f1abb22cab444ed
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Bandit
@@ -522,6 +531,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: V0PoolManager
+  - hash:
+      serializedVersion: 2
+      Hash: 39376a4b612240ecdfc71fd7d0baccb2
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SpellEffect
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -680,7 +695,7 @@ ScriptsOnlyBuild:
     className: GraphicRaycaster
   - hash:
       serializedVersion: 2
-      Hash: 437f3086d17aa8eff7aa007e9fa4b145
+      Hash: 740458bbc2a39c9de117e1a2c3dc1994
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SpawnManager
@@ -740,7 +755,7 @@ ScriptsOnlyBuild:
     className: V0Aim
   - hash:
       serializedVersion: 2
-      Hash: 46402f5f7e01391d938c0fc66c87201d
+      Hash: 8ea688c4203f946ab4ef0915ff25b0b0
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Wizard
@@ -854,7 +869,7 @@ ScriptsOnlyBuild:
     className: V0ItemDB
   - hash:
       serializedVersion: 2
-      Hash: f5eff8d81138a21ae91de81bafa2547e
+      Hash: 3dfdc04c1920df49d876e0e222d95575
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -876,13 +891,8 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: fa928d4bf46bfe086b4c00467a35896e
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: SpellEffect
   platform: 5
   scenePathNames:
   - Assets/Scenes/6 - RGB Wizard v1.unity
-  playerPath: D:/Unity Projects/3D Scripting/Build/RGB Wizard/RGB Wizard TEST.exe
+  playerPath: D:/Unity Projects/3D Scripting/Build/RGB Wizard/RGB Wizard v0.2/RGB
+    Wizard TEST v0.2.exe

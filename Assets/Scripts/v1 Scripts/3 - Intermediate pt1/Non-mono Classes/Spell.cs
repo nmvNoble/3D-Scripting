@@ -9,7 +9,7 @@ public class Spell
     public int lvlRequired;
     public int expGained;
 
-    public float spellCD, spellDmg, spellDiameter;
+    public float spellCD, spellDmgMod, spellDiameter;
     public Color spellColor;
     public Rune runeSlot = null;
     private Spell defaultSpellStats;
@@ -26,7 +26,7 @@ public class Spell
         this.lvlRequired = newSpell.lvlRequired;
         this.expGained = newSpell.expGained;
         this.spellCD = newSpell.spellCD;
-        this.spellDmg = newSpell.spellDmg;
+        this.spellDmgMod = newSpell.spellDmgMod;
         this.spellDiameter = newSpell.spellDiameter;
         this.spellColor = newSpell.spellColor;
 }
@@ -35,7 +35,7 @@ public class Spell
     {
         //Debug.Log("Casting: " + this.name);
         //Debug.Log("Wizard gains " + expGained + " Exp");
-        return this.expGained;
+        return 0;//this.expGained;
     }
 
     public void SetDefaultSpellStats()
@@ -43,41 +43,52 @@ public class Spell
         defaultSpellStats = new Spell(this);
         //defaultSpellStats.expGained = expGained;
         //defaultSpellStats.spellCD = spellCD;
-        //defaultSpellStats.spellDmg = spellDmg;
+        //defaultSpellStats.spellDmgMod = spellDmgMod;
         //defaultSpellStats.spellDiameter = spellDiameter;
     }
 
     public void ApplyRune()
     {
-        expGained = defaultSpellStats.expGained;
-        spellCD = defaultSpellStats.spellCD;
-        spellDmg = defaultSpellStats.spellDmg;
-        spellDiameter = defaultSpellStats.spellDiameter;
+        ResetSpellStats();
         if (runeSlot != null)
         {
             switch (runeSlot.spellStat)
             {
                 case 0:
-                    Debug.Log("Stat before: " + expGained);
+                    //Debug.Log("Stat before: " + expGained);
                     expGained = (int)((float)expGained * runeSlot.runeEffect);
-                    Debug.Log("Stat after: " + expGained);
+                    //Debug.Log("Stat after: " + expGained);
                     break;
                 case 1:
-                    Debug.Log("Stat before: " + spellCD);
+                    //Debug.Log("Stat before: " + spellCD);
                     spellCD *= runeSlot.runeEffect;
-                    Debug.Log("Stat after: " + spellCD);
+                    //Debug.Log("Stat after: " + spellCD);
                     break;
                 case 2:
-                    Debug.Log("Stat before: " + spellDmg);
-                    spellDmg *= runeSlot.runeEffect;
-                    Debug.Log("Stat after: " + spellDmg);
+                    //Debug.Log("Stat before: " + spellDmgMod);
+                    spellDmgMod += runeSlot.runeEffect;
+                    //Debug.Log("Stat after: " + spellDmgMod);
                     break;
                 case 3:
-                    Debug.Log("Stat before: " + spellDiameter);
+                    //Debug.Log("Stat before: " + spellDiameter);
                     spellDiameter *= runeSlot.runeEffect;
-                    Debug.Log("Stat after: " + spellDiameter);
+                    //Debug.Log("Stat after: " + spellDiameter);
                     break;
             }
         }
+    }
+
+    public void RemoveRune()
+    {
+        ResetSpellStats();
+        runeSlot = null;
+    }
+
+    public void ResetSpellStats()
+    {
+        expGained = defaultSpellStats.expGained;
+        spellCD = defaultSpellStats.spellCD;
+        spellDmgMod = defaultSpellStats.spellDmgMod;
+        spellDiameter = defaultSpellStats.spellDiameter;
     }
 }

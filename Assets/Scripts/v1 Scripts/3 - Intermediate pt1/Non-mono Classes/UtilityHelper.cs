@@ -19,7 +19,7 @@ public static class UtilityHelper
             obj.GetComponent<MeshRenderer>().material.color =
                     new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
         }
-
+        //Debug.Log("Utility change color: " + obj.GetComponent<MeshRenderer>().material.color);
     }
 
     public static float GetElementMod(Color target, Color spell, bool rand = false)

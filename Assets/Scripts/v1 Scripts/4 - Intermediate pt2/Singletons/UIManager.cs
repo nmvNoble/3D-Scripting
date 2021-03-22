@@ -10,15 +10,11 @@ public class UIManager : MonoSingleton<UIManager>
         base.Init();
     }
 
-    public Text waveCountText;
-    public Text activeEnemiesText;
-    public Text playerDeathsText;
-    public Text playerHealthText;
-    public Text playerLevelText;
-    public Text playerExpText;
-    public Text wizardSpellText;
-    public GameObject gameStartMenu, gameOverMenu, waveEndMenu;
-    public GameObject introMenu, iMenuHealth, iMenuElements, iMenuControls, iMenuSpellInfo, iMenuWaves;
+    public Text waveCountText, activeEnemiesText;
+    public Text playerDeathsText, playerHealthText, playerLevelText, playerExpText, wizardSpellText;
+    public Text runeTitle, runeDesc, runeStatMod, runeStatMul;
+    public GameObject gameStartMenu, gameOverMenu, waveEndMenu, runeMenu;
+    public GameObject introMenu, iMenuHealth, iMenuElements, iMenuControls, iMenuSpellInfo, iMenuRunes, iMenuWaves;
     private int _playerDeaths = 0;
     private void Start()
     {
@@ -30,9 +26,10 @@ public class UIManager : MonoSingleton<UIManager>
         Wizard.OnDamage += UpdatePlayerHealth;
         Wizard.OnLvlUp += UpdatePlayerLevel;
         Wizard.OnCast += UpdateWizardSpell;
-        Player.OnDeath += UpdatePlayerDeath;
+        Wizard.OnDeath += UpdatePlayerDeath;
         GameManager.OnGameOver += EnableGameOverMenu;
         GameManager.OnWaveStatusChange += ToggleWaveMenu;
+        GameManager.OnRuneChange += ToggleRuneText;
     }
 
     public void UpdateWave(string waveCount)
@@ -87,6 +84,30 @@ public class UIManager : MonoSingleton<UIManager>
         waveEndMenu.gameObject.SetActive(menuStatus);
     }
 
+    public void ToggleRuneText(bool menuStatus, Rune rune=null)
+    {
+        ToggleRuneMenu(menuStatus);
+        if(rune != null)
+        {
+            runeTitle.text = "Your Rune changes form...\n-Rune of " + rune.name+"-";
+            runeDesc.text = "\"" + rune.description + "\"";
+            runeStatMul.text = rune.runeEffect.ToString();
+            if(rune.spellStat == 0)
+                runeStatMod.text = "Experience";
+            else if(rune.spellStat == 1)
+                runeStatMod.text = "Cooldown";
+            else if(rune.spellStat == 2)
+                runeStatMod.text = "Damage";
+            else if(rune.spellStat == 3)
+                runeStatMod.text = "Diameter";
+        }
+    }
+
+    public void ToggleRuneMenu(bool menuStatus)
+    {
+        runeMenu.gameObject.SetActive(menuStatus);
+    }
+
     public void ToggleIntroMenu(bool menuStatus)
     {
         introMenu.gameObject.SetActive(menuStatus);
@@ -100,6 +121,7 @@ public class UIManager : MonoSingleton<UIManager>
             iMenuElements.gameObject.SetActive(false);
             iMenuControls.gameObject.SetActive(false);
             iMenuSpellInfo.gameObject.SetActive(false);
+            iMenuRunes.gameObject.SetActive(false);
             iMenuWaves.gameObject.SetActive(false);
         }
         else if (iMenuText.name == "Elements Intro")
@@ -108,6 +130,7 @@ public class UIManager : MonoSingleton<UIManager>
             iMenuElements.gameObject.SetActive(true);
             iMenuControls.gameObject.SetActive(false);
             iMenuSpellInfo.gameObject.SetActive(false);
+            iMenuRunes.gameObject.SetActive(false);
             iMenuWaves.gameObject.SetActive(false);
         }
         else if (iMenuText.name == "Controls Intro")
@@ -116,6 +139,7 @@ public class UIManager : MonoSingleton<UIManager>
             iMenuElements.gameObject.SetActive(false);
             iMenuControls.gameObject.SetActive(true);
             iMenuSpellInfo.gameObject.SetActive(false);
+            iMenuRunes.gameObject.SetActive(false);
             iMenuWaves.gameObject.SetActive(false);
         }
         else if (iMenuText.name == "Spell Info Intro")
@@ -124,6 +148,16 @@ public class UIManager : MonoSingleton<UIManager>
             iMenuElements.gameObject.SetActive(false);
             iMenuControls.gameObject.SetActive(false);
             iMenuSpellInfo.gameObject.SetActive(true);
+            iMenuRunes.gameObject.SetActive(false);
+            iMenuWaves.gameObject.SetActive(false);
+        }
+        else if (iMenuText.name == "Runes Intro")
+        {
+            iMenuHealth.gameObject.SetActive(false);
+            iMenuElements.gameObject.SetActive(false);
+            iMenuControls.gameObject.SetActive(false);
+            iMenuSpellInfo.gameObject.SetActive(false);
+            iMenuRunes.gameObject.SetActive(true);
             iMenuWaves.gameObject.SetActive(false);
         }
         else if (iMenuText.name == "Waves Intro")
@@ -132,13 +166,15 @@ public class UIManager : MonoSingleton<UIManager>
             iMenuElements.gameObject.SetActive(false);
             iMenuControls.gameObject.SetActive(false);
             iMenuSpellInfo.gameObject.SetActive(false);
+            iMenuRunes.gameObject.SetActive(false);
             iMenuWaves.gameObject.SetActive(true);
         }
     }
 
     public void ResetGame()
     {
-        _playerDeaths = 0;
+        _playerDeaths = -1;
+        UpdatePlayerDeath();
         gameOverMenu.gameObject.SetActive(false);
     }
 }

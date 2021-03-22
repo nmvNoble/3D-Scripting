@@ -6,12 +6,17 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    public static Action OnGameOver; 
+    public static Action OnGameOver;
     public static Action<bool> OnWaveStatusChange;
-    public Wizard wizard;
+    public static Action<bool, Rune> OnRuneChange;
     public bool isGameOver, isPlayerResetting, isFirstRun;
-    public int score, wave;
-    private bool _isWaveOngoing;
+    public int wave;
+
+    [SerializeField]
+    private Wizard wizard;
+    private ItemDB _iDB;
+    private int runeGained;
+    private bool _isWaveOngoing, lastRune = false;
 
     public override void Init()
     {
@@ -19,6 +24,7 @@ public class GameManager : MonoSingleton<GameManager>
     }
     private void Start()
     {
+        _iDB = GameObject.Find("ItemDB").GetComponent<ItemDB>();
         Time.timeScale = 0;
         isFirstRun = true;
     }
@@ -29,28 +35,33 @@ public class GameManager : MonoSingleton<GameManager>
         {
             ResetPlayer();
         }
-        if (_isWaveOngoing == true && wizard.exp >= wizard.expCap)
-        {
-            WaveStatusChange(_isWaveOngoing);
-        }
-
         if (wizard.level <= 0)
         {
             wizard.DisplayStats();
             GameOver();
         }
+        if (_isWaveOngoing == true && wizard.exp >= wizard.expCap)
+        {
+            wizard.LevelUp();
+            if(wizard.level >= wave)
+            {
+                WaveStatusChange(_isWaveOngoing);
+            }
+        }
+
     }
 
     private void OnEnable()
     {
-        Player.OnDeath += ResetPlayer;
+        //Wizard.OnDeath += ResetPlayer;
     }
 
     public void ResetPlayer()
     {
         if (!isGameOver)
         {
-            Debug.Log("The Wizard has fallen at Lvl: " + wizard.level + "!");
+            //Debug.Log("The Wizard has fallen at Lvl: " + wizard.level + "!");
+            wizard.Die();
             wizard.gameObject.SetActive(false);
             //Debug.Log("Resetting Player");
             wizard.ResetWizard();
@@ -67,16 +78,32 @@ public class GameManager : MonoSingleton<GameManager>
         {
             _isWaveOngoing = false;
             Time.timeScale = 0;
-            wizard.LevelUp();
             wave++;
             UIManager.Instance.UpdateWave(wave.ToString());
-            SpawnManager.Instance.ResetBandits();
+            SpawnManager.Instance.ResetEnemies();
+            if (wave >= 4)
+            {
+                wizard.ResetRunes();
+                runeGained = UnityEngine.Random.Range(1, 4);
+                _iDB.AddRune(runeGained, wizard); //UnityEngine.Random.Range(0, 4), wizard);
+                                                  //wizard.currSpell.runeSlot = wizard.runes[runeGained;
+                                                  //wizard.currSpell.ApplyRune();
+                OnRuneChange(ongoingWave, wizard.runes[runeGained]);
+                if (lastRune)
+                    UIManager.Instance.ToggleRuneMenu(false);
+            }
         }
         else
         {
             _isWaveOngoing = true;
             Time.timeScale = 1;
         }
+    }
+
+    public void PlayerGainRune(int runeSpellType)
+    {
+        wizard.ApplyRune(runeGained, runeSpellType);
+            UIManager.Instance.ToggleRuneMenu(false);
     }
 
     public void StartGame()
@@ -110,11 +137,12 @@ public class GameManager : MonoSingleton<GameManager>
     {
         Debug.Log("Reset Game");
         UIManager.Instance.ResetGame();
-        SpawnManager.Instance.ResetBandits();
+        SpawnManager.Instance.ResetEnemies();
         wizard.ResetWizard();
         Time.timeScale = 1;
         isGameOver = false;
         wave = 1;
+        UIManager.Instance.UpdateWave(wave.ToString());
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

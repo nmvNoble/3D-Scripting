@@ -15,6 +15,7 @@ public class Rune : Item
         this.name = name;
         this.id = id;
         this.description = description;
+        this.itemType = ItemType.Rune;
         this.spellStat = spellStat;
         this.runeEffect = runeEffect;
     }

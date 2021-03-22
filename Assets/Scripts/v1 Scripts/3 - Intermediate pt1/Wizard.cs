@@ -9,12 +9,14 @@ public class Wizard : MonoBehaviour, IDamagable
     public Spell[] spells;
     public Spell currSpell;
     public Rune[] runes = new Rune[4];
+    //public List<Rune> runes;
     public Item[] items = new Item[3];
 
     public int level = 1;
     public int exp;
     public int expCap = 10;
     public float Health { get; set; }
+    public static Action OnDeath;
     public static Action<float> OnDamage;
     public static Action<int, string> OnLvlUp;
     public static Action<string> OnCast;
@@ -37,13 +39,12 @@ public class Wizard : MonoBehaviour, IDamagable
     void Start()
     {
         _iDB = GameObject.Find("ItemDB").GetComponent<ItemDB>();
-        Health = 9;//10;
+        Health = 10;
+        UtilityHelper.ChangeColor(this.gameObject, Color.red);
         defaultColor = GetComponent<MeshRenderer>().material.color;
         DisplayStats();
         foreach(Spell spell in spells)
-        {
             spell.SetDefaultSpellStats();
-        }
         SetCurrentSpell(1);
         startingPos = RetPos();
     }
@@ -78,7 +79,7 @@ public class Wizard : MonoBehaviour, IDamagable
                 UtilityHelper.ChangeColor(this.gameObject, Color.red);
             }
             if (!isOnSpellCD)
-                OnCast?.Invoke(currentElement.ToString() + " " + currSpell.lvlRequired);
+                DisplaySpell();
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -99,22 +100,26 @@ public class Wizard : MonoBehaviour, IDamagable
             SetCurrentSpell(3);
 
 
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+            ApplyRune(0, currSpell.lvlRequired);
+
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+            ApplyRune(1, currSpell.lvlRequired);
+
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+            ApplyRune(2, currSpell.lvlRequired);
+
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+            ApplyRune(3, currSpell.lvlRequired);
+
+
         if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            _iDB.AddRune(0, this);
-            spells[0].runeSlot = runes[0];
-            currSpell.ApplyRune();
-        }
+            ResetRunes();
+    }
 
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            _iDB.RemoveRune(0, this);
-        }
-
-        if (Health <= 0 && level > 0)
-        {
-            //Destroy(this.gameObject);
-        }
+    public void OnEnable()
+    {
+        Enemy.OnEnemyDeath += GainExp;
     }
 
     public Vector3 RetPos()
@@ -127,6 +132,14 @@ public class Wizard : MonoBehaviour, IDamagable
         return this.GetComponent<MeshRenderer>().material.color;
     }
 
+    public void Die()
+    {
+        if (OnDeath != null)
+        {
+            OnDeath();
+        }
+    }
+
     private void SetCurrentSpell(int spellKey)
     {
         foreach (var spell in spells)
@@ -135,10 +148,11 @@ public class Wizard : MonoBehaviour, IDamagable
             if (spell.lvlRequired == spellKey && spell.lvlRequired <= this.level)
             {
                 currSpell = spell;
-                Debug.Log("current spell: " + currSpell.name);
-                if(!isOnSpellCD)
-                    OnCast?.Invoke(currentElement.ToString() + " " + currSpell.lvlRequired);//level);//spell.name);
-
+                //Debug.Log("current spell: " + currSpell.name);
+                if (!isOnSpellCD)
+                    DisplaySpell();
+                if (currSpell.runeSlot.spellStat > 0 )
+                    currSpell.ApplyRune();
             }
         }
     }
@@ -147,15 +161,18 @@ public class Wizard : MonoBehaviour, IDamagable
     {
         if (!isOnSpellCD)
         {
-            Debug.Log("Casting: " + currSpell.name);
+            //Debug.Log("============================================================Casting: " + currSpell.name);
             this.exp += currSpell.Cast(enemyPos);
             UIManager.Instance.UpdatePlayerExp(exp, expCap);
             //Debug.Log("Wizard has " + exp + " Total Exp");
 
             spellObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             spellObject.AddComponent<SpellEffect>();
-            spellObject.GetComponent<SpellEffect>().currentWizLevel = level;
-            spellObject.GetComponent<SpellEffect>().SetCurrentSpell(currSpell);
+            spellObject.AddComponent<SphereCollider>();
+            spellObject.GetComponent<SphereCollider>().isTrigger = true;
+            //spellObject.GetComponent<SpellEffect>().currentWizLevel = level;
+            //spellObject.GetComponent<SpellEffect>().SetCurrentSpell(currSpell);
+            spellObject.GetComponent<SpellEffect>().SetSpellEffect(currSpell, level);
             spellObject.transform.position =
                     new Vector3(enemyPos.x, enemyPos.y + currSpell.spellDiameter, enemyPos.z);
             spellObject.transform.localScale =
@@ -188,11 +205,26 @@ public class Wizard : MonoBehaviour, IDamagable
         }
         else
         {
-            Debug.Log("The Wizard is on Cool Down! They cannot Cast yet.");
+            //Debug.Log("The Wizard is on Cool Down! They cannot Cast yet.");
             OnCast?.Invoke("On Cool Down!");
             //return 0;
         }
         
+    }
+
+    public void GainExp(int expGained)
+    {
+        //Debug.Log("Gained Exp: " + expGained);
+        exp += expGained;
+    }
+
+    private void DisplaySpell()
+    {
+        if (currSpell.runeSlot != null && currSpell.runeSlot.itemType == Item.ItemType.Rune)
+            OnCast?.Invoke(currSpell.name + " " + currentElement.ToString() + "\n" +
+                    currSpell.runeSlot.name + " " + currSpell.runeSlot.itemType.ToString());
+        else
+            OnCast?.Invoke(currSpell.name + " " + currentElement.ToString());
     }
 
     IEnumerator SpellCoolDownTimer(float spellCD)
@@ -200,33 +232,56 @@ public class Wizard : MonoBehaviour, IDamagable
         OnCast?.Invoke("On Cool Down!");
         yield return new WaitForSeconds(spellCD);
         isOnSpellCD = false;
-        OnCast?.Invoke(currentElement.ToString() + " " + currSpell.lvlRequired);//level);//spell.name);
+        DisplaySpell();
     }
 
     IEnumerator SpellEffectAnimation(GameObject Effect, float CD, Vector3 origin, Vector3 destination)
     {
         //yield return new WaitForSeconds(CD);
-        while (Effect.transform.position.y >= destination.y)
+        while (Effect != null && Effect.transform.position.y >= destination.y)
         {
             if (level <= 0) yield break;
             Vector3 toFace = destination - origin;
             Effect.transform.Translate(new Vector3(0, -0.05f, 0));//toFace);
             yield return new WaitForEndOfFrame();
             //Debug.Log("mid, Effect.transform.position.y" + Effect.transform.position.y + " <= destination.y" + destination.y);
-            if (Effect.transform.position.y <= destination.y)
+            if (Effect != null && Effect.transform.position.y <= destination.y)
                 Destroy(Effect);
         }
+    }
+
+    public void ApplyRune(int runeID, int spellType)
+    {
+        spells[spellType].runeSlot = runes[runeID];
+        if (currSpell.lvlRequired == spells[spellType].lvlRequired)
+        {
+            currSpell.runeSlot = runes[runeID];
+            currSpell.ApplyRune();
+        }
+        DisplaySpell();
+    }
+
+    public void ResetRunes()
+    {
+        foreach (Spell spell in spells)
+            spell.RemoveRune();
+        for (int i = 0; i <= (runes.Length - 1); i++)
+        {
+            runes[i] = null;
+        }
+        currSpell.RemoveRune();
+        DisplaySpell();
     }
 
     public void Damage(float dmgAmount)
     {
         //GetComponent<MeshRenderer>().material.color = Color.yellow;
         Health -= dmgAmount;
+        //Debug.Log("Quack! The Wizard Hit himself2! HP: " + Health);
         if (OnDamage != null)
         {
             OnDamage(Health);
         }
-        //Debug.Log("Quack! The Wizard Hit himself! HP: " + Health);
     }
 
     public void DisplayStats()
@@ -236,8 +291,8 @@ public class Wizard : MonoBehaviour, IDamagable
         {
             foreach (var spell in spells)
             {
-                if (spell.lvlRequired == this.level)
-                    OnLvlUp(level, currentElement.ToString() + " " + level);//spell.name);
+                if (spell.lvlRequired <= this.level)
+                    OnLvlUp(level, currSpell.name + " " + currentElement.ToString());
             }
         }
         if (OnDamage != null)
@@ -279,8 +334,10 @@ public class Wizard : MonoBehaviour, IDamagable
                 expCap = 100;
             else if (level > 3)
                 expCap -= 100;
-            expCap /= 10;
-            exp = expCap / 10;
+            if (level < 3)
+                exp = expCap / 10;
+            else if (level >= 3)
+                exp /= 2;
             if (currSpell.lvlRequired > level && level > 1)
             {
                 currSpell = spells[level - 1];
@@ -293,23 +350,12 @@ public class Wizard : MonoBehaviour, IDamagable
             exp = 0;
             expCap = 10;
             Health = 10;
-            runes = null;
             GetComponent<MeshRenderer>().material.color = defaultColor;
             this.gameObject.transform.position = startingPos;
+            ResetRunes();
         }
         isOnSpellCD = false;
         this.gameObject.SetActive(true);
         DisplayStats();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        //Debug.Log("Wizard: OnTriggerEnter");
-        if (other.tag == "Enemy")
-        {
-            //Debug.Log("Enemy hit Wizard");
-            other.GetComponent<Bandit>().Attack(this);
-            other.GetComponent<Bandit>().Die();
-        }
     }
 }
