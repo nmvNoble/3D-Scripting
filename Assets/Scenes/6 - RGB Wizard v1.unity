@@ -1821,7 +1821,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Waves
+  m_Text: Waves/Enemy
 --- !u!222 &282625597
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2523,7 +2523,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &373144180
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9311,12 +9311,12 @@ GameObject:
   - component: {fileID: 1409612327}
   - component: {fileID: 1409612326}
   m_Layer: 5
-  m_Name: Waves Intro
+  m_Name: Waves/Enemy Intro
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1409612325
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9371,18 +9371,18 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Waves end when you gain the Level equal to the Next Wave.
 
-    You gain
-    Exp everytime you cast a Spell
+    Your Damage
+    increases every Level.
 
-    Your Damage increases every Level.
+    You gain Exp everytime you kill an Enemy
 
-    Enemy
-    HP and Speed increase every wave.
+    3 types
+    of enemies exist each with corresponding HP, Damage, and Speed.
 
-    Be careful not to loose too many levels
-    or you''ll have to do a lot of catching up!
+    The 3 enemies
+    are Light, Normal, and Heavy.
 
-'
+    Enemy Stats are increase every wave.'
 --- !u!222 &1409612327
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10826,7 +10826,7 @@ GameObject:
   - component: {fileID: 1643653714}
   - component: {fileID: 1643653713}
   m_Layer: 5
-  m_Name: iMenu Waves
+  m_Name: iMenu Waves/Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10942,8 +10942,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 250, y: -100}
-  m_SizeDelta: {x: 80, y: 30}
+  m_AnchoredPosition: {x: 260, y: -100}
+  m_SizeDelta: {x: 100, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1670749708
 GameObject:
@@ -12478,7 +12478,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1848325055
 RectTransform:
   m_ObjectHideFlags: 0
