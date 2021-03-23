@@ -299,7 +299,7 @@ ScriptsOnlyBuild:
     className: ContentSizeFitter
   - hash:
       serializedVersion: 2
-      Hash: 677a95b8fa7b80d93f1abb22cab444ed
+      Hash: a33eb9ef9fce3d5dbdee1f80f7e19719
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Enemy
@@ -461,7 +461,7 @@ ScriptsOnlyBuild:
     className: UIManager
   - hash:
       serializedVersion: 2
-      Hash: 677a95b8fa7b80d93f1abb22cab444ed
+      Hash: a33eb9ef9fce3d5dbdee1f80f7e19719
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Bandit
@@ -894,5 +894,5 @@ ScriptsOnlyBuild:
   platform: 5
   scenePathNames:
   - Assets/Scenes/6 - RGB Wizard v1.unity
-  playerPath: D:/Unity Projects/3D Scripting/Build/RGB Wizard/RGB Wizard v0.2/RGB
-    Wizard TEST v0.2.exe
+  playerPath: D:/Unity Projects/3D Scripting/Build/RGB Wizard/RGB Wizard v0.2.1/RGB
+    Wizard TEST v0.2.1.exe

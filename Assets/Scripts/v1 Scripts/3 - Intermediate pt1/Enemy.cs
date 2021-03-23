@@ -6,6 +6,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, IDamagable
 {
     public float Health { get; set; }
+    public bool isBugged = false;
     public static Action<int> OnEnemyDeath;
 
     [SerializeField]
@@ -31,13 +32,20 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         lookAt = (target.transform.position - transform.position).normalized;
         transform.Translate(lookAt * Time.deltaTime * speed);
-        if (isBeingDamaged)
+        if (isBeingDamaged && spellHitBy != null )
         {
             /*LogStats("update~~~~~~~~~~~");
             Debug.Log(spellHitBy.spellTotalDamage + " * " + //.currentSpell.spellDmg + spellHitBy.currentWizLevel + " * " +
                     UtilityHelper.GetElementMod(RetColor(), spellHitBy.currentSpell.spellColor));*/
             Damage(Mathf.CeilToInt(spellHitBy.spellTotalDamage) * //.currentSpell.spellDmg + spellHitBy.currentWizLevel) *
                     UtilityHelper.GetElementMod(RetColor(), spellHitBy.currentSpell.spellColor));
+        }
+        if(Vector3.Distance(this.transform.position, target.transform.position) <= .75f)
+        {
+            Debug.Log("OnTriggerEnter not Working, Enemy Bugged");
+            isBugged = true;
+            //Attack(target.GetComponent<IDamagable>());
+            Die();
         }
         /*speed = .01f;
         step += Time.deltaTime * speed;
@@ -49,6 +57,8 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         UIManager.Instance.UpdateEnemyCount();
         SetEnemyType();
+        if(isBugged)
+            Die();
         //LogStats(this.gameObject.name + "=====onEnable====type: ^");
     }
 
@@ -119,18 +129,18 @@ public class Enemy : MonoBehaviour, IDamagable
             //Debug.Log("HP before: " + Health + " - " + dmgAmount + "(dmg)");
             Health -= dmgAmount;
             //Debug.Log("HP after: " + Health);
-            isBeingDamaged = false;
             HpText.text = Health.ToString();
             if (Health <= 0)
             {
                 this.CancelInvoke();
                 Die();
-                if (OnEnemyDeath != null)
+                if (OnEnemyDeath != null && isBeingDamaged)
                 {
                     //Debug.Log("Enemy Died, giving " + exp + " exp");
                     OnEnemyDeath(exp);
                 }
             }
+            isBeingDamaged = false;
         }
     }
 

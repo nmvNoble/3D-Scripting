@@ -47,6 +47,7 @@ public class Wizard : MonoBehaviour, IDamagable
             spell.SetDefaultSpellStats();
         SetCurrentSpell(1);
         startingPos = RetPos();
+        Enemy.OnEnemyDeath += GainExp;
     }
 
     // Update is called once per frame
@@ -119,7 +120,7 @@ public class Wizard : MonoBehaviour, IDamagable
 
     public void OnEnable()
     {
-        Enemy.OnEnemyDeath += GainExp;
+        //Enemy.OnEnemyDeath += GainExp;
     }
 
     public Vector3 RetPos()
@@ -151,7 +152,8 @@ public class Wizard : MonoBehaviour, IDamagable
                 //Debug.Log("current spell: " + currSpell.name);
                 if (!isOnSpellCD)
                     DisplaySpell();
-                if (currSpell.runeSlot.spellStat > 0 )
+                //Debug.Log("------set curr spell-----" + currSpell.name);
+                if (currSpell.runeSlot != null && currSpell.runeSlot.spellStat > 0 )
                     currSpell.ApplyRune();
             }
         }
@@ -161,9 +163,11 @@ public class Wizard : MonoBehaviour, IDamagable
     {
         if (!isOnSpellCD)
         {
+            GameManager.Instance.CheckExistingSpellEffects();
+
             //Debug.Log("============================================================Casting: " + currSpell.name);
             this.exp += currSpell.Cast(enemyPos);
-            UIManager.Instance.UpdatePlayerExp(exp, expCap);
+            //UIManager.Instance.UpdatePlayerExp(exp, expCap);
             //Debug.Log("Wizard has " + exp + " Total Exp");
 
             spellObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -216,6 +220,7 @@ public class Wizard : MonoBehaviour, IDamagable
     {
         //Debug.Log("Gained Exp: " + expGained);
         exp += expGained;
+        UIManager.Instance.UpdatePlayerExp(exp, expCap);
     }
 
     private void DisplaySpell()
@@ -338,7 +343,7 @@ public class Wizard : MonoBehaviour, IDamagable
                 exp = expCap / 10;
             else if (level >= 3)
                 exp /= 2;
-            if (currSpell.lvlRequired > level && level > 1)
+            if (currSpell.lvlRequired > level && level >= 1)
             {
                 currSpell = spells[level - 1];
                 StopCoroutine(SpellCoolDownTimer(0));

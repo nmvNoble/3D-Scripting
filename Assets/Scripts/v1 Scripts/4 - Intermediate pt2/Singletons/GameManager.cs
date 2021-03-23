@@ -17,6 +17,7 @@ public class GameManager : MonoSingleton<GameManager>
     private ItemDB _iDB;
     private int runeGained;
     private bool _isWaveOngoing, lastRune = false;
+    private GameObject destroySpell;
 
     public override void Init()
     {
@@ -40,13 +41,13 @@ public class GameManager : MonoSingleton<GameManager>
             wizard.DisplayStats();
             GameOver();
         }
-        if (_isWaveOngoing == true && wizard.exp >= wizard.expCap)
+        if(wizard.level != 1 && wizard.level >= wave)
+            WaveStatusChange(_isWaveOngoing);
+        else if (_isWaveOngoing == true && wizard.exp >= wizard.expCap)
         {
             wizard.LevelUp();
             if(wizard.level >= wave)
-            {
                 WaveStatusChange(_isWaveOngoing);
-            }
         }
 
     }
@@ -127,9 +128,21 @@ public class GameManager : MonoSingleton<GameManager>
     {
         Time.timeScale = 0;
         isGameOver = true;
+        CheckExistingSpellEffects();
         if (OnGameOver != null)
         {
             OnGameOver();
+        }
+    }
+
+    public void CheckExistingSpellEffects()
+    {
+        destroySpell = GameObject.Find("Sphere");
+        if (destroySpell != null)
+        {
+            Debug.Log("Destroy left-over SpellEffect");
+            Destroy(destroySpell);
+            destroySpell = null;
         }
     }
 

@@ -70,7 +70,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     {
         foreach(var enemy in _enemyPool)
         {
-            if(enemy.activeInHierarchy == false)
+            if(enemy.activeInHierarchy == false && !enemy.GetComponent<Enemy>().isBugged)
             {
                 ChangeColor(enemy);
                 enemy.transform.position = new Vector3(Random.Range(-6, 6), 2, 7);
