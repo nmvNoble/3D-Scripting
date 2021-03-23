@@ -14,7 +14,7 @@ public class UIManager : MonoSingleton<UIManager>
     public Text playerDeathsText, playerHealthText, playerLevelText, playerExpText, wizardSpellText;
     public Text runeTitle, runeDesc, runeStatMod, runeStatMul;
     public GameObject gameStartMenu, gameOverMenu, waveEndMenu, runeMenu;
-    public GameObject introMenu, iMenuHealth, iMenuElements, iMenuControls, iMenuSpellInfo, iMenuRunes, iMenuWaves;
+    public GameObject introMenu, iMenuControls, iMenuElements, iMenuEnemies, iMenuHealth, iMenuRunes, iMenuSpellInfo, iMenuWaves;
     private int _playerDeaths = 0;
     private void Start()
     {
@@ -116,59 +116,40 @@ public class UIManager : MonoSingleton<UIManager>
     public void ToggleIMenuText(GameObject iMenuText)
     {
         if (iMenuText.name == "Health Intro")
-        {
             iMenuHealth.gameObject.SetActive(true);
-            iMenuElements.gameObject.SetActive(false);
-            iMenuControls.gameObject.SetActive(false);
-            iMenuSpellInfo.gameObject.SetActive(false);
-            iMenuRunes.gameObject.SetActive(false);
-            iMenuWaves.gameObject.SetActive(false);
-        }
-        else if (iMenuText.name == "Elements Intro")
-        {
+        else
             iMenuHealth.gameObject.SetActive(false);
+
+        if (iMenuText.name == "Elements Intro")
             iMenuElements.gameObject.SetActive(true);
-            iMenuControls.gameObject.SetActive(false);
-            iMenuSpellInfo.gameObject.SetActive(false);
-            iMenuRunes.gameObject.SetActive(false);
-            iMenuWaves.gameObject.SetActive(false);
-        }
-        else if (iMenuText.name == "Controls Intro")
-        {
-            iMenuHealth.gameObject.SetActive(false);
-            iMenuElements.gameObject.SetActive(false);
+        else
+            iMenuElements.gameObject.SetActive(false); 
+        
+        if (iMenuText.name == "Enemies Intro")
+            iMenuEnemies.gameObject.SetActive(true);
+        else
+            iMenuEnemies.gameObject.SetActive(false);
+        
+        if (iMenuText.name == "Controls Intro")
             iMenuControls.gameObject.SetActive(true);
-            iMenuSpellInfo.gameObject.SetActive(false);
-            iMenuRunes.gameObject.SetActive(false);
-            iMenuWaves.gameObject.SetActive(false);
-        }
-        else if (iMenuText.name == "Spell Info Intro")
-        {
-            iMenuHealth.gameObject.SetActive(false);
-            iMenuElements.gameObject.SetActive(false);
+        else
             iMenuControls.gameObject.SetActive(false);
+
+        if (iMenuText.name == "Spell Info Intro")
             iMenuSpellInfo.gameObject.SetActive(true);
-            iMenuRunes.gameObject.SetActive(false);
-            iMenuWaves.gameObject.SetActive(false);
-        }
-        else if (iMenuText.name == "Runes Intro")
-        {
-            iMenuHealth.gameObject.SetActive(false);
-            iMenuElements.gameObject.SetActive(false);
-            iMenuControls.gameObject.SetActive(false);
+        else
             iMenuSpellInfo.gameObject.SetActive(false);
+        
+        if (iMenuText.name == "Runes Intro")
             iMenuRunes.gameObject.SetActive(true);
-            iMenuWaves.gameObject.SetActive(false);
-        }
-        else if (iMenuText.name == "Waves Intro")
-        {
-            iMenuHealth.gameObject.SetActive(false);
-            iMenuElements.gameObject.SetActive(false);
-            iMenuControls.gameObject.SetActive(false);
-            iMenuSpellInfo.gameObject.SetActive(false);
+        else
             iMenuRunes.gameObject.SetActive(false);
+        
+        if (iMenuText.name == "Waves Intro")
             iMenuWaves.gameObject.SetActive(true);
-        }
+        else
+            iMenuWaves.gameObject.SetActive(false);
+
     }
 
     public void ResetGame()
