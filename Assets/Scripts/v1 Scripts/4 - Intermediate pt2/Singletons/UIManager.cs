@@ -10,7 +10,7 @@ public class UIManager : MonoSingleton<UIManager>
         base.Init();
     }
 
-    public Text waveCountText, activeEnemiesText;
+    public Text timeText, waveCountText, activeEnemiesText;
     public Text playerDeathsText, playerHealthText, playerLevelText, playerExpText, wizardSpellText;
     public Text runeTitle, runeDesc, runeStatMod, runeStatMul;
     public GameObject gameStartMenu, gameOverMenu, waveEndMenu, runeMenu;
@@ -67,6 +67,11 @@ public class UIManager : MonoSingleton<UIManager>
     public void UpdateWizardSpell(string spell)
     {
         wizardSpellText.text = "Current Spell\n" + spell;
+    }
+
+    public void UpdateTimer(int timeMin, int timeSec)
+    {
+        timeText.text = timeMin + ":" + timeSec;
     }
 
     public void DisableGameStartMenu()

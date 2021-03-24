@@ -10,7 +10,7 @@ public class GameManager : MonoSingleton<GameManager>
     public static Action<bool> OnWaveStatusChange;
     public static Action<bool, Rune> OnRuneChange;
     public bool isGameOver, isPlayerResetting, isFirstRun;
-    public int wave;
+    public int wave, timeSec, timeMin;
 
     [SerializeField]
     private Wizard wizard;
@@ -27,6 +27,9 @@ public class GameManager : MonoSingleton<GameManager>
     {
         _iDB = GameObject.Find("ItemDB").GetComponent<ItemDB>();
         Time.timeScale = 0;
+        timeSec = 0;
+        timeMin = 0;
+        StartCoroutine(StartTimer());
         isFirstRun = true;
     }
 
@@ -49,12 +52,26 @@ public class GameManager : MonoSingleton<GameManager>
             if(wizard.level >= wave)
                 WaveStatusChange(_isWaveOngoing);
         }
-
     }
 
     private void OnEnable()
     {
         //Wizard.OnDeath += ResetPlayer;
+    }
+
+    public IEnumerator StartTimer()
+    {
+        while (!isGameOver)
+        {
+            yield return new WaitForSeconds(1.0f);
+            timeSec++;
+            if (timeSec >= 60)
+            {
+                timeMin++;
+                timeSec = 0;
+            }
+            UIManager.Instance.UpdateTimer(timeMin, timeSec);
+        }
     }
 
     public void ResetPlayer()
@@ -156,6 +173,8 @@ public class GameManager : MonoSingleton<GameManager>
         isGameOver = false;
         wave = 1;
         UIManager.Instance.UpdateWave(wave.ToString());
+        timeSec = 0;
+        timeMin = 0;
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
