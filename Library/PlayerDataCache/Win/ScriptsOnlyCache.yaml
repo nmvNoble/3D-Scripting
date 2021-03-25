@@ -455,7 +455,7 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
-      Hash: 68a003887b6fb4b2966ce7b9be054990
+      Hash: 373d70dfc90dbe9b5c4f7d4a681d54f9
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: UIManager
@@ -869,7 +869,7 @@ ScriptsOnlyBuild:
     className: V0ItemDB
   - hash:
       serializedVersion: 2
-      Hash: 3dfdc04c1920df49d876e0e222d95575
+      Hash: bfaed65b527bd159b2de275895e7695d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -894,5 +894,5 @@ ScriptsOnlyBuild:
   platform: 5
   scenePathNames:
   - Assets/Scenes/6 - RGB Wizard v1.unity
-  playerPath: D:/Unity Projects/3D Scripting/Build/RGB Wizard/RGB Wizard v0.2.2/RGB
-    Wizard TEST v0.2.2.exe
+  playerPath: D:/Unity Projects/3D Scripting/Build/RGB Wizard/RGB Wizard v0.2.3/RGB
+    Wizard TEST v0.2.3.exe
