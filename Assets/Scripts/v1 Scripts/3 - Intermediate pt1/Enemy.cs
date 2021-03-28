@@ -107,9 +107,15 @@ public class Enemy : MonoBehaviour, IDamagable
         HpText.text = Health.ToString(); 
     }
 
-    public virtual void Attack(IDamagable taget)
+    public virtual void Attack(IDamagable target)
     {
-        taget.Damage(damage);
+        if(damage > 0)
+        {
+            //target.Damage(damage);
+            target.Damage(Mathf.CeilToInt(damage) *
+                        UtilityHelper.GetElementMod(target.RetColor(), RetColor()));
+            //Debug.Log("dmg:" + Mathf.CeilToInt(damage) + " , mod:"+ UtilityHelper.GetElementMod(target.RetColor(), RetColor()));
+        }
     }
 
     public void HitBySpell(SpellEffect spellEffect)//float spellDmg, int wizLvl, Color spellElement)
