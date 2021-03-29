@@ -55,7 +55,6 @@ public class Enemy : MonoBehaviour, IDamagable
 
     public virtual void OnEnable()
     {
-        UIManager.Instance.UpdateEnemyCount();
         SetEnemyType();
         if(isBugged)
             Die();
@@ -80,27 +79,27 @@ public class Enemy : MonoBehaviour, IDamagable
             case 1:
                 this.transform.position = transform.position + new Vector3(0, .75f, 0);
                 this.transform.localScale = new Vector3(.75f, .75f, .75f);
-                this.Health = GameManager.Instance.wave;
-                this.speed = 3f + (GameManager.Instance.wave * .1f);
-                this.damage = 1 + (GameManager.Instance.wave / 4);
+                this.Health = GameManager.Instance.Wave;
+                this.speed = 3f + (GameManager.Instance.Wave * .1f);
+                this.damage = 1 + (GameManager.Instance.Wave / 4);
                 this.exp = 1;
-                SpawnManager.Instance.t1Count++;
+                SpawnManager.Instance.UpdateEnemyTypeCount(1);
                 break;
             case 2:
                 this.transform.localScale = new Vector3(1, 2, 1);
-                this.Health = GameManager.Instance.wave + (GameManager.Instance.wave / 2);
-                this.speed = 2.5f + (GameManager.Instance.wave * .05f);
-                this.damage = 1 + (GameManager.Instance.wave / 2);
+                this.Health = GameManager.Instance.Wave + (GameManager.Instance.Wave / 2);
+                this.speed = 2.5f + (GameManager.Instance.Wave * .05f);
+                this.damage = 1 + (GameManager.Instance.Wave / 2);
                 this.exp = 2;
-                SpawnManager.Instance.t2Count++;
+                SpawnManager.Instance.UpdateEnemyTypeCount(2);
                 break;
             case 3:
                 this.transform.localScale = new Vector3(2, 2, 2);
-                this.Health = GameManager.Instance.wave * 2;
-                this.speed = 2f + (GameManager.Instance.wave * .01f);
-                this.damage = 1 + GameManager.Instance.wave;
+                this.Health = GameManager.Instance.Wave * 2;
+                this.speed = 2f + (GameManager.Instance.Wave * .01f);
+                this.damage = 1 + GameManager.Instance.Wave;
                 this.exp = 3;
-                SpawnManager.Instance.t3Count++;
+                SpawnManager.Instance.UpdateEnemyTypeCount(3);
                 break;
         }
         //Debug.Log("type: " + type);// + ", HP: " + Health + ", speed: " + speed + ", dmg: " + damage);

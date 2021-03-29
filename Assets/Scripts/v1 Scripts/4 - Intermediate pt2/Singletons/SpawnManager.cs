@@ -4,39 +4,28 @@ using UnityEngine;
 
 public class SpawnManager : MonoSingleton<SpawnManager>
 {
-    public override void Init()
-    {
+    public override void Init() {
         base.Init();
     }
 
-    public int t1Count, t2Count, t3Count;
     [SerializeField]
-    private GameObject _enemyContainer;
-    [SerializeField]
-    private GameObject _enemyPrefab;
+    private GameObject _enemyContainer, _enemyPrefab;
     [SerializeField]
     private List<GameObject> _enemyPool;
 
-    public static int enemyCount;
-    public bool isGameOver = false;
-    public int time, wave, type;
-    public int RedCounter = 0, GreenCounter = 0, BlueCounter = 0, enemyColorCounter = 0, randColor = 0;
+    //public static int enemyCount;
+    private int time, type, enemyColorCounter = 0, randColor = 0,
+        t1Count, t2Count, t3Count;
 
-    // Start is called before the first frame update
     void Start()
     {
         _enemyPool = GenerateEnemies(10);
         StartCoroutine(StartTimer());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     public IEnumerator StartTimer()
     {
-        while (!isGameOver)
+        while (!GameManager.Instance.IsGameOver)
         {
             yield return new WaitForSeconds(1.0f);
             time++;
@@ -46,7 +35,6 @@ public class SpawnManager : MonoSingleton<SpawnManager>
                 //enemy.GetComponent<Enemy>().SetEnemyType(Random.Range(1, 4));
                 enemy.SetActive(true);
             }
-            //_timeText.text = "Time: " + time;
         }
     }
 
@@ -107,12 +95,26 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         return type;
     }
 
+    public void UpdateEnemyTypeCount(int typeCount)
+    {
+        switch (typeCount)
+        {
+            case 1:
+                t1Count++;
+                break;
+            case 2:
+                t2Count++;
+                break;
+            case 3:
+                t3Count++;
+                break;
+        }
+    }
+
     private void ChangeColor(GameObject enemy)
     {
         do
-        {
             randColor = (int)Random.Range(1, 4);
-        }
         while (randColor == enemyColorCounter);
         switch (randColor)
         {

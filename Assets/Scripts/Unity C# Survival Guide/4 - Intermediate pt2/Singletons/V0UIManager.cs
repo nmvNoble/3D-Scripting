@@ -26,7 +26,7 @@ public class V0UIManager : V0MonoSingleton<V0UIManager>
 
     public void UpdateEnemyCount()
     {
-        activeEnemiesText.text = "Active Enemies: " + SpawnManager.enemyCount;
+        activeEnemiesText.text = "Active Enemies: " + V0SpawnManager.enemyCount;
     }
 
     public void UpdatePlayerDeath()

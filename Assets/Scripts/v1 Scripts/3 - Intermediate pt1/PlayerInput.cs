@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    public Wizard wiz = new Wizard();
-    // Start is called before the first frame update
+    [SerializeField]
+    private Wizard wizard = new Wizard();
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -18,12 +17,9 @@ public class PlayerInput : MonoBehaviour
             if(Physics.Raycast(rayOrigin, out hitInfo))
             {
                 IDamagable obj = hitInfo.collider.GetComponent<IDamagable>();
-                //hitInfo.collider.GetComponent<Bandit>().Damage(1);
                 if (obj != null)
                 {
-
-                    //obj.Damage(wiz.Cast(obj.RetPos(), obj.RetColor()));
-                    wiz.Cast(obj.RetPos(), obj.RetColor());
+                    wizard.Cast(obj.RetPos(), obj.RetColor());
                 }
 
             }

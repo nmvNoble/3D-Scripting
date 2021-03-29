@@ -223,7 +223,7 @@ public class Wizard : MonoBehaviour, IDamagable
     {
         //Debug.Log("Gained Exp: " + expGained);
         exp += expGained;
-        UIManager.Instance.UpdatePlayerExp(exp, expCap);
+        UIManager.Instance.UpdateWizardExp(exp, expCap);
     }
 
     private void DisplaySpell()
@@ -309,7 +309,7 @@ public class Wizard : MonoBehaviour, IDamagable
             OnDamage(Health);
         }
         wizHpText.text = Health.ToString();
-        UIManager.Instance.UpdatePlayerExp(exp, expCap);
+        UIManager.Instance.UpdateWizardExp(exp, expCap);
     }
 
     public void LevelUp()
@@ -330,7 +330,7 @@ public class Wizard : MonoBehaviour, IDamagable
 
     public void ResetWizard()
     {
-        if (!GameManager.Instance.isGameOver)
+        if (!GameManager.Instance.IsGameOver)
         {
             level--;
             if (level == 1)

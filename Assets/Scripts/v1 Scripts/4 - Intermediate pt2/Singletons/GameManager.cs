@@ -9,54 +9,55 @@ public class GameManager : MonoSingleton<GameManager>
     public static Action OnGameOver;
     public static Action<bool> OnWaveStatusChange;
     public static Action<bool, Rune> OnRuneChange;
-    public bool isGameOver, isPlayerResetting, isFirstRun;
-    public int wave, timeSec, timeMin;
 
-    [SerializeField]
+    public bool IsGameOver {
+        get {
+            return isGameOver;
+        }
+    }
+    public int Wave {
+        get {
+            return wave;
+        }
+    }
+
     private Wizard wizard;
-    private ItemDB _iDB;
-    private int runeGained;
-    private bool _isWaveOngoing, lastRune = false;
+    private ItemDB iDB;
+    private int runeGained, timeSec, timeMin, wave;
+    private bool isGameOver, isWaveOngoing;
     private GameObject destroySpell;
 
-    public override void Init()
-    {
+    public override void Init() {
         base.Init();
     }
+
     private void Start()
     {
-        _iDB = GameObject.Find("ItemDB").GetComponent<ItemDB>();
+        wizard = GameObject.Find("Wizard").GetComponent<Wizard>();
+        iDB = GameObject.Find("ItemDB").GetComponent<ItemDB>();
         Time.timeScale = 0;
         timeSec = 0;
         timeMin = 0;
         StartCoroutine(StartTimer());
-        isFirstRun = true;
     }
 
     private void Update()
     {
         if (wizard.Health <= 0 && wizard.level > 0)
-        {
             ResetPlayer();
-        }
+
         if (wizard.level <= 0)
         {
             wizard.DisplayStats();
             GameOver();
         }
-        if(wizard.level != 1 && wizard.level >= wave)
-            WaveStatusChange(_isWaveOngoing);
-        else if (_isWaveOngoing == true && wizard.exp >= wizard.expCap)
+
+        else if (isWaveOngoing == true && wizard.exp >= wizard.expCap)
         {
             wizard.LevelUp();
-            if(wizard.level >= wave)
-                WaveStatusChange(_isWaveOngoing);
+            if(wizard.level >= wave)//wizard.level != 1 && wizard.level >= wave)
+                WaveStatusChange(isWaveOngoing);
         }
-    }
-
-    private void OnEnable()
-    {
-        //Wizard.OnDeath += ResetPlayer;
     }
 
     public IEnumerator StartTimer()
@@ -88,13 +89,11 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void WaveStatusChange(bool ongoingWave)
     {
-        if (OnWaveStatusChange != null)
-        {
-            OnWaveStatusChange(ongoingWave);
-        }
+        OnWaveStatusChange?.Invoke(ongoingWave);
+
         if (ongoingWave)
         {
-            _isWaveOngoing = false;
+            isWaveOngoing = false;
             Time.timeScale = 0;
             wave++;
             UIManager.Instance.UpdateWave(wave.ToString());
@@ -103,17 +102,14 @@ public class GameManager : MonoSingleton<GameManager>
             {
                 wizard.ResetRunes();
                 runeGained = UnityEngine.Random.Range(1, 4);
-                _iDB.AddRune(runeGained, wizard); //UnityEngine.Random.Range(0, 4), wizard);
-                                                  //wizard.currSpell.runeSlot = wizard.runes[runeGained;
-                                                  //wizard.currSpell.ApplyRune();
+                iDB.AddRune(runeGained, wizard); 
                 OnRuneChange(ongoingWave, wizard.runes[runeGained]);
-                if (lastRune)
-                    UIManager.Instance.ToggleRuneMenu(false);
+                UIManager.Instance.ToggleRuneMenu(false);
             }
         }
         else
         {
-            _isWaveOngoing = true;
+            isWaveOngoing = true;
             Time.timeScale = 1;
         }
     }
@@ -121,35 +117,24 @@ public class GameManager : MonoSingleton<GameManager>
     public void PlayerGainRune(int runeSpellType)
     {
         wizard.ApplyRune(runeGained, runeSpellType);
-            UIManager.Instance.ToggleRuneMenu(false);
+        UIManager.Instance.ToggleRuneMenu(false);
     }
 
     public void StartGame()
     {
         Time.timeScale = 1;
-        if (isFirstRun)
-        {
-            isFirstRun = false;
-            UIManager.Instance.DisableGameStartMenu();
-        }
-
+        UIManager.Instance.DisableGameStartMenu();
         isGameOver = false;
-        isPlayerResetting = false;
-
         wave = 1;
-        _isWaveOngoing = true;
+        isWaveOngoing = true;
     }
 
-    // Stop game, bring up game over text and restart button
     public void GameOver()
     {
         Time.timeScale = 0;
         isGameOver = true;
         CheckExistingSpellEffects();
-        if (OnGameOver != null)
-        {
-            OnGameOver();
-        }
+        OnGameOver?.Invoke();
     }
 
     public void CheckExistingSpellEffects()
@@ -169,12 +154,11 @@ public class GameManager : MonoSingleton<GameManager>
         UIManager.Instance.ResetGame();
         SpawnManager.Instance.ResetEnemies();
         wizard.ResetWizard();
-        Time.timeScale = 1;
         isGameOver = false;
-        wave = 1;
-        UIManager.Instance.UpdateWave(wave.ToString());
         timeSec = 0;
         timeMin = 0;
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        wave = 1;
+        UIManager.Instance.UpdateWave(wave.ToString());
+        Time.timeScale = 1;
     }
 }

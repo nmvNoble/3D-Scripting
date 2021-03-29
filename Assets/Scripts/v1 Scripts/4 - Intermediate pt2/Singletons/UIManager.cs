@@ -10,23 +10,28 @@ public class UIManager : MonoSingleton<UIManager>
         base.Init();
     }
 
-    public Text timeText, waveCountText, activeEnemiesText;
-    public Text playerDeathsText, playerHealthText, playerLevelText, playerExpText, wizardSpellText;
-    public Text runeTitle, runeDesc, runeStatMod, runeStatMul;
-    public GameObject gameStartMenu, gameOverMenu, waveEndMenu, runeMenu;
-    public GameObject introMenu, iMenuControls, iMenuElements, iMenuEnemies, iMenuHealth, iMenuRunes, iMenuSpellInfo, iMenuWaves;
-    private int _playerDeaths = 0;
+    [SerializeField]
+    private Text activeEnemiesText, timeText, waveCountText,
+        runeTitle, runeDesc, runeStatMod, runeStatMul, 
+        wizardDeathsText, wizardExpText, wizardHealthText, wizardLevelText, wizardSpellText;
+
+    [SerializeField]
+    private GameObject gameStartMenu, gameOverMenu, waveEndMenu, runeMenu,
+        introMenu, iMenuControls, iMenuElements, iMenuEnemies, iMenuHealth, iMenuRunes, iMenuSpellInfo, iMenuWaves;
+    
+    private int wizardDeaths = 0;
+
     private void Start()
     {
-        //ToggleIntroMenu(true);
-        gameOverMenu.gameObject.SetActive(false);
+        gameStartMenu.SetActive(true);
+        gameOverMenu.SetActive(false);
     }
     public void OnEnable()
     {
-        Wizard.OnDamage += UpdatePlayerHealth;
-        Wizard.OnLvlUp += UpdatePlayerLevel;
+        Wizard.OnDamage += UpdateWizardHealth;
+        Wizard.OnLvlUp += UpdateWizardLevel;
         Wizard.OnCast += UpdateWizardSpell;
-        Wizard.OnDeath += UpdatePlayerDeath;
+        Wizard.OnDeath += UpdateWizardDeath;
         GameManager.OnGameOver += EnableGameOverMenu;
         GameManager.OnWaveStatusChange += ToggleWaveMenu;
         GameManager.OnRuneChange += ToggleRuneText;
@@ -37,31 +42,26 @@ public class UIManager : MonoSingleton<UIManager>
         waveCountText.text = "Wave: " + waveCount;
     }
 
-    public void UpdateEnemyCount()
+    public void UpdateWizardDeath()
     {
-        activeEnemiesText.text = "Active Enemies: " + SpawnManager.enemyCount;
+        wizardDeaths++;
+        wizardDeathsText.text = "Wizard\nDeaths\n" + wizardDeaths;
     }
 
-    public void UpdatePlayerDeath()
+    public void UpdateWizardHealth(float Health)
     {
-        _playerDeaths++;
-        playerDeathsText.text = "Player\nDeaths\n" + _playerDeaths;
+        wizardHealthText.text = "Health: " + Health;
     }
 
-    public void UpdatePlayerHealth(float Health)
+    public void UpdateWizardLevel(int lvl, string spell)
     {
-        playerHealthText.text = "Health: " + Health;
-    }
-
-    public void UpdatePlayerLevel(int lvl, string spell)
-    {
-        playerLevelText.text = "Level: " + lvl;
+        wizardLevelText.text = "Level: " + lvl;
         wizardSpellText.text = "Current Spell\n" + spell;
     }
 
-    public void UpdatePlayerExp(int exp, int expCap)
+    public void UpdateWizardExp(int exp, int expCap)
     {
-        playerExpText.text = "Exp: " + exp + "/" + expCap;
+        wizardExpText.text = "Exp: " + exp + "/" + expCap;
     }
 
     public void UpdateWizardSpell(string spell)
@@ -159,8 +159,8 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void ResetGame()
     {
-        _playerDeaths = -1;
-        UpdatePlayerDeath();
+        wizardDeaths = -1;
+        UpdateWizardDeath();
         gameOverMenu.gameObject.SetActive(false);
     }
 }

@@ -38,7 +38,7 @@ public class V0Bandit : V0Enemy, V0IDamagable
     public void OnEnable()
     {
         Health = 10;
-        SpawnManager.enemyCount++;
+        V0SpawnManager.enemyCount++;
         //_ui = GameObject.Find("UI Manager").GetComponent<V0UIManager>();
         //_ui.UpdateEnemyCount();
         V0UIManager.Instance.UpdateEnemyCount();
@@ -48,7 +48,7 @@ public class V0Bandit : V0Enemy, V0IDamagable
 
     public void OnDisable()
     {
-        SpawnManager.enemyCount--;
+        V0SpawnManager.enemyCount--;
         //_ui.UpdateEnemyCount();
         V0UIManager.Instance.UpdateEnemyCount();
     }

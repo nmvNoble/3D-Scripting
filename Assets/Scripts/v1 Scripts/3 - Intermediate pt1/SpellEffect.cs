@@ -17,7 +17,7 @@ public class SpellEffect : MonoBehaviour
     void Update()
     {
 
-        if (GameManager.Instance.isGameOver)
+        if (GameManager.Instance.IsGameOver)
             Destroy(this);
     }
 
