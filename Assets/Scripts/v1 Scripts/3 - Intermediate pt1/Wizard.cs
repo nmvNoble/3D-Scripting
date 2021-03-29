@@ -21,6 +21,8 @@ public class Wizard : MonoBehaviour, IDamagable
     public static Action<int, string> OnLvlUp;
     public static Action<string> OnCast;
 
+    [SerializeField]
+    private TextMesh wizHpText;
     private Color defaultColor;
     private GameObject spellObject;
     private bool isOnSpellCD = false;
@@ -40,6 +42,7 @@ public class Wizard : MonoBehaviour, IDamagable
     {
         _iDB = GameObject.Find("ItemDB").GetComponent<ItemDB>();
         Health = 10;
+        wizHpText.text = Health.ToString();
         UtilityHelper.ChangeColor(this.gameObject, Color.red);
         defaultColor = GetComponent<MeshRenderer>().material.color;
         DisplayStats();
@@ -282,6 +285,7 @@ public class Wizard : MonoBehaviour, IDamagable
     {
         //GetComponent<MeshRenderer>().material.color = Color.yellow;
         Health -= dmgAmount;
+        wizHpText.text = Health.ToString();
         //Debug.Log("Quack! The Wizard Hit himself2! HP: " + Health);
         if (OnDamage != null)
         {
@@ -304,6 +308,7 @@ public class Wizard : MonoBehaviour, IDamagable
         {
             OnDamage(Health);
         }
+        wizHpText.text = Health.ToString();
         UIManager.Instance.UpdatePlayerExp(exp, expCap);
     }
 
@@ -355,6 +360,7 @@ public class Wizard : MonoBehaviour, IDamagable
             exp = 0;
             expCap = 10;
             Health = 10;
+            wizHpText.text = Health.ToString();
             GetComponent<MeshRenderer>().material.color = defaultColor;
             this.gameObject.transform.position = startingPos;
             ResetRunes();
