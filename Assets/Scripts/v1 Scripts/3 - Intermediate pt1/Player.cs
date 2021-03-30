@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
             EventMain.onTeleport += Spawn;
-        if (wizard.Health <= 0 && wizard.level > 0)
+        if (wizard.Health <= 0 && wizard.Level > 0)
             Death();
     }
     public static void RemoveEventListener()

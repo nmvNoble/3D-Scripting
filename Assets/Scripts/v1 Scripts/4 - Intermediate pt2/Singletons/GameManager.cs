@@ -10,16 +10,8 @@ public class GameManager : MonoSingleton<GameManager>
     public static Action<bool> OnWaveStatusChange;
     public static Action<bool, Rune> OnRuneChange;
 
-    public bool IsGameOver {
-        get {
-            return isGameOver;
-        }
-    }
-    public int Wave {
-        get {
-            return wave;
-        }
-    }
+    public bool IsGameOver { get { return isGameOver; } }
+    public int Wave { get { return wave; } }
 
     private Wizard wizard;
     private ItemDB iDB;
@@ -43,19 +35,19 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Update()
     {
-        if (wizard.Health <= 0 && wizard.level > 0)
+        if (wizard.Health <= 0 && wizard.Level > 0)
             ResetPlayer();
 
-        if (wizard.level <= 0)
+        if (wizard.Level <= 0)
         {
             wizard.DisplayStats();
             GameOver();
         }
 
-        else if (isWaveOngoing == true && wizard.exp >= wizard.expCap)
+        else if (isWaveOngoing == true && wizard.Exp >= wizard.ExpCap)
         {
             wizard.LevelUp();
-            if(wizard.level >= wave)//wizard.level != 1 && wizard.level >= wave)
+            if(wizard.Level >= wave)//wizard.level != 1 && wizard.level >= wave)
                 WaveStatusChange(isWaveOngoing);
         }
     }
@@ -104,7 +96,6 @@ public class GameManager : MonoSingleton<GameManager>
                 runeGained = UnityEngine.Random.Range(1, 4);
                 iDB.AddRune(runeGained, wizard); 
                 OnRuneChange(ongoingWave, wizard.runes[runeGained]);
-                UIManager.Instance.ToggleRuneMenu(false);
             }
         }
         else

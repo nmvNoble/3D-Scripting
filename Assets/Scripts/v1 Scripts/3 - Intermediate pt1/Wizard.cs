@@ -5,57 +5,63 @@ using UnityEngine;
 
 public class Wizard : MonoBehaviour, IDamagable
 {
-    private ItemDB _iDB;
-    public Spell[] spells;
-    public Spell currSpell;
-    public Rune[] runes = new Rune[4];
-    //public List<Rune> runes;
-    public Item[] items = new Item[3];
-
-    public int level = 1;
-    public int exp;
-    public int expCap = 10;
-    public float Health { get; set; }
     public static Action OnDeath;
     public static Action<float> OnDamage;
     public static Action<int, string> OnLvlUp;
     public static Action<string> OnCast;
 
-    [SerializeField]
-    private TextMesh wizHpText;
-    private Color defaultColor;
-    private GameObject spellObject;
-    private bool isOnSpellCD = false;
-    private Vector3 startingPos;
+    //private ItemDB iDB;
+    //public List<Rune> runes;
+    //public Item[] items = new Item[3];
 
+    public Rune[] runes = new Rune[4];
+    public Spell currSpell;
+    public Spell[] spells;
+
+    public float Health { get; set; }
     public enum Element
     {
-        Red, 
+        Red,
         Green,
         Blue
     }
+    public int Exp { get { return exp; } }
+    public int ExpCap { get { return expCap; } }
+    public int Level { get { return level; } }
 
-    public Element currentElement = Element.Red;
+    [SerializeField]
+    private TextMesh wizHpText;
+    private GameObject spellObject;
+    private Color defaultColor;
+    private Element currentElement = Element.Red;
+    private Vector3 startingPos;
+    private bool isOnSpellCD = false;
+    private int exp, expCap = 10, level = 1;
+    private float speed = 3, horizontalInput, verticalInput;
 
-    // Start is called before the first frame update
+
     void Start()
     {
-        _iDB = GameObject.Find("ItemDB").GetComponent<ItemDB>();
+        Enemy.OnEnemyDeath += GainExp;
+
         Health = 10;
         wizHpText.text = Health.ToString();
+        startingPos = RetPos();
         UtilityHelper.ChangeColor(this.gameObject, Color.red);
         defaultColor = GetComponent<MeshRenderer>().material.color;
-        DisplayStats();
-        foreach(Spell spell in spells)
+        foreach (Spell spell in spells)
             spell.SetDefaultSpellStats();
         SetCurrentSpell(1);
-        startingPos = RetPos();
-        Enemy.OnEnemyDeath += GainExp;
+        DisplayStats();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (Input.GetAxis("Horizontal") != 0)
+            this.transform.Translate(new Vector3(Input.GetAxis("Horizontal"), 0, 0) * speed * Time.deltaTime);
+        if (Input.GetAxis("Vertical") != 0)
+            this.transform.Translate(new Vector3(0, 0, Input.GetAxis("Vertical")) * speed * Time.deltaTime);
+
         if (transform.position.z < -6.5f)
             transform.position = new Vector3(RetPos().x, RetPos().y, -6.5f);
         if (transform.position.z > 5f)
@@ -66,25 +72,7 @@ public class Wizard : MonoBehaviour, IDamagable
             transform.position = new Vector3(5f, RetPos().y, RetPos().z);
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            if (currentElement == Element.Red)
-            {
-                currentElement = Element.Green;
-                UtilityHelper.ChangeColor(this.gameObject, Color.green);
-            }
-            else if (currentElement == Element.Green)
-            {
-                currentElement = Element.Blue;
-                UtilityHelper.ChangeColor(this.gameObject, Color.blue);
-            }
-            else if (currentElement == Element.Blue)
-            {
-                currentElement = Element.Red;
-                UtilityHelper.ChangeColor(this.gameObject, Color.red);
-            }
-            if (!isOnSpellCD)
-                DisplaySpell();
-        }
+            ChangeElement();
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -104,26 +92,17 @@ public class Wizard : MonoBehaviour, IDamagable
             SetCurrentSpell(3);
 
 
-        if (Input.GetKeyDown(KeyCode.Alpha6))
+        /*if (Input.GetKeyDown(KeyCode.Alpha6))
             ApplyRune(0, currSpell.lvlRequired);
-
         if (Input.GetKeyDown(KeyCode.Alpha7))
             ApplyRune(1, currSpell.lvlRequired);
-
         if (Input.GetKeyDown(KeyCode.Alpha8))
             ApplyRune(2, currSpell.lvlRequired);
-
         if (Input.GetKeyDown(KeyCode.Alpha9))
             ApplyRune(3, currSpell.lvlRequired);
 
-
         if (Input.GetKeyDown(KeyCode.Alpha0))
-            ResetRunes();
-    }
-
-    public void OnEnable()
-    {
-        //Enemy.OnEnemyDeath += GainExp;
+            ResetRunes();*/
     }
 
     public Vector3 RetPos()
@@ -144,18 +123,36 @@ public class Wizard : MonoBehaviour, IDamagable
         }
     }
 
+    private void ChangeElement()
+    {
+        if (currentElement == Element.Red)
+        {
+            currentElement = Element.Green;
+            UtilityHelper.ChangeColor(this.gameObject, Color.green);
+        }
+        else if (currentElement == Element.Green)
+        {
+            currentElement = Element.Blue;
+            UtilityHelper.ChangeColor(this.gameObject, Color.blue);
+        }
+        else if (currentElement == Element.Blue)
+        {
+            currentElement = Element.Red;
+            UtilityHelper.ChangeColor(this.gameObject, Color.red);
+        }
+        if (!isOnSpellCD)
+            DisplaySpell();
+    }
+
     private void SetCurrentSpell(int spellKey)
     {
         foreach (var spell in spells)
         {
-            //Debug.Log("lvl " + level + ", lvlreq: "+ spell.lvlRequired);
             if (spell.lvlRequired == spellKey && spell.lvlRequired <= this.level)
             {
                 currSpell = spell;
-                //Debug.Log("current spell: " + currSpell.name);
                 if (!isOnSpellCD)
                     DisplaySpell();
-                //Debug.Log("------set curr spell-----" + currSpell.name);
                 if (currSpell.runeSlot != null && currSpell.runeSlot.spellStat > 0 )
                     currSpell.ApplyRune();
             }
@@ -164,21 +161,14 @@ public class Wizard : MonoBehaviour, IDamagable
 
     public void Cast(Vector3 enemyPos, Color enemyElement)
     {
+        GameManager.Instance.CheckExistingSpellEffects();
+
         if (!isOnSpellCD)
         {
-            GameManager.Instance.CheckExistingSpellEffects();
-
-            //Debug.Log("============================================================Casting: " + currSpell.name);
-            this.exp += currSpell.Cast(enemyPos);
-            //UIManager.Instance.UpdatePlayerExp(exp, expCap);
-            //Debug.Log("Wizard has " + exp + " Total Exp");
-
             spellObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             spellObject.AddComponent<SpellEffect>();
             spellObject.AddComponent<SphereCollider>();
             spellObject.GetComponent<SphereCollider>().isTrigger = true;
-            //spellObject.GetComponent<SpellEffect>().currentWizLevel = level;
-            //spellObject.GetComponent<SpellEffect>().SetCurrentSpell(currSpell);
             spellObject.GetComponent<SpellEffect>().SetSpellEffect(currSpell, level);
             spellObject.transform.position =
                     new Vector3(enemyPos.x, enemyPos.y + currSpell.spellDiameter, enemyPos.z);
@@ -201,27 +191,21 @@ public class Wizard : MonoBehaviour, IDamagable
                 spellObject.GetComponent<SpellEffect>().currentSpell.spellColor = Color.blue;
             }
             else
-                Debug.Log("none");
+                Debug.Log("No Element Found");
 
             StartCoroutine(SpellEffectAnimation(spellObject, currSpell.spellCD, spellObject.transform.position, enemyPos));
             isOnSpellCD = true;
             StartCoroutine(SpellCoolDownTimer(currSpell.spellCD));
-            //Debug.Log("Spell Rune: " + currSpell.runeSlot.name);
-
-            //UtilityHelper.ChangeColor(spellObject, spell.spellColor);
         }
         else
         {
-            //Debug.Log("The Wizard is on Cool Down! They cannot Cast yet.");
             OnCast?.Invoke("On Cool Down!");
-            //return 0;
         }
         
     }
 
     public void GainExp(int expGained)
     {
-        //Debug.Log("Gained Exp: " + expGained);
         exp += expGained;
         UIManager.Instance.UpdateWizardExp(exp, expCap);
     }
@@ -245,14 +229,12 @@ public class Wizard : MonoBehaviour, IDamagable
 
     IEnumerator SpellEffectAnimation(GameObject Effect, float CD, Vector3 origin, Vector3 destination)
     {
-        //yield return new WaitForSeconds(CD);
         while (Effect != null && Effect.transform.position.y >= destination.y)
         {
             if (level <= 0) yield break;
-            Vector3 toFace = destination - origin;
+            //Vector3 toFace = destination - origin;
             Effect.transform.Translate(new Vector3(0, -0.05f, 0));//toFace);
             yield return new WaitForEndOfFrame();
-            //Debug.Log("mid, Effect.transform.position.y" + Effect.transform.position.y + " <= destination.y" + destination.y);
             if (Effect != null && Effect.transform.position.y <= destination.y)
                 Destroy(Effect);
         }
@@ -283,19 +265,13 @@ public class Wizard : MonoBehaviour, IDamagable
 
     public void Damage(float dmgAmount)
     {
-        //GetComponent<MeshRenderer>().material.color = Color.yellow;
         Health -= dmgAmount;
         wizHpText.text = Health.ToString();
-        //Debug.Log("Quack! The Wizard Hit himself2! HP: " + Health);
-        if (OnDamage != null)
-        {
-            OnDamage(Health);
-        }
+        OnDamage?.Invoke(Health);
     }
 
     public void DisplayStats()
     {
-        //Debug.Log("display");
         if (OnLvlUp != null)
         {
             foreach (var spell in spells)
@@ -304,17 +280,13 @@ public class Wizard : MonoBehaviour, IDamagable
                     OnLvlUp(level, currSpell.name + " " + currentElement.ToString());
             }
         }
-        if (OnDamage != null)
-        {
-            OnDamage(Health);
-        }
+        OnDamage?.Invoke(Health);
         wizHpText.text = Health.ToString();
         UIManager.Instance.UpdateWizardExp(exp, expCap);
     }
 
     public void LevelUp()
     {
-        //Debug.Log("lvlup");
         this.level++;
         if (level == 2)
             expCap = 50;

@@ -29,22 +29,11 @@ public class Spell
         this.spellDmgMod = newSpell.spellDmgMod;
         this.spellDiameter = newSpell.spellDiameter;
         this.spellColor = newSpell.spellColor;
-}
-
-    public int Cast(Vector3 enemyPos)
-    {
-        //Debug.Log("Casting: " + this.name);
-        //Debug.Log("Wizard gains " + expGained + " Exp");
-        return 0;//this.expGained;
     }
 
     public void SetDefaultSpellStats()
     {
         defaultSpellStats = new Spell(this);
-        //defaultSpellStats.expGained = expGained;
-        //defaultSpellStats.spellCD = spellCD;
-        //defaultSpellStats.spellDmgMod = spellDmgMod;
-        //defaultSpellStats.spellDiameter = spellDiameter;
     }
 
     public void ApplyRune()
@@ -60,19 +49,13 @@ public class Spell
                     //Debug.Log("Stat after: " + expGained);
                     break;
                 case 1:
-                    //Debug.Log("Stat before: " + spellCD);
                     spellCD *= runeSlot.runeEffect;
-                    //Debug.Log("Stat after: " + spellCD);
                     break;
                 case 2:
-                    //Debug.Log("Stat before: " + spellDmgMod);
                     spellDmgMod += runeSlot.runeEffect;
-                    //Debug.Log("Stat after: " + spellDmgMod);
                     break;
                 case 3:
-                    //Debug.Log("Stat before: " + spellDiameter);
                     spellDiameter *= runeSlot.runeEffect;
-                    //Debug.Log("Stat after: " + spellDiameter);
                     break;
             }
         }

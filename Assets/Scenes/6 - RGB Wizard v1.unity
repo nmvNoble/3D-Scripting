@@ -747,7 +747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c33036e1ccac15418affeeee56c1db0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 5
+  speed: 0
 --- !u!136 &82842309
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3096,12 +3096,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 444846119}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 4, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1098878355}
-  m_Father: {fileID: 2020144938}
-  m_RootOrder: 1
+  - {fileID: 2081020819}
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &444846121
 MonoBehaviour:
@@ -3115,7 +3116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c33036e1ccac15418affeeee56c1db0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
+  speed: 0
 --- !u!54 &444846122
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3144,6 +3145,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e86b016ebbd52ee4eb77b57924caed3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  runes:
+  - name: 
+    id: 0
+    description: 
+    icon: {fileID: 0}
+    itemType: 0
+    spellStat: 0
+    runeEffect: 0
+  - name: 
+    id: 0
+    description: 
+    icon: {fileID: 0}
+    itemType: 0
+    spellStat: 0
+    runeEffect: 0
+  - name: 
+    id: 0
+    description: 
+    icon: {fileID: 0}
+    itemType: 0
+    spellStat: 0
+    runeEffect: 0
+  - name: 
+    id: 0
+    description: 
+    icon: {fileID: 0}
+    itemType: 0
+    spellStat: 0
+    runeEffect: 0
+  currSpell:
+    name: 
+    lvlRequired: 0
+    expGained: 0
+    spellCD: 0
+    spellDmgMod: 0
+    spellDiameter: 0
+    spellColor: {r: 0, g: 0, b: 0, a: 0}
+    runeSlot:
+      name: 
+      id: 0
+      description: 
+      icon: {fileID: 0}
+      itemType: 0
+      spellStat: 0
+      runeEffect: 0
   spells:
   - name: Light
     lvlRequired: 1
@@ -3190,72 +3236,7 @@ MonoBehaviour:
       itemType: 0
       spellStat: 0
       runeEffect: 0
-  currSpell:
-    name: 
-    lvlRequired: 0
-    expGained: 0
-    spellCD: 0
-    spellDmgMod: 0
-    spellDiameter: 0
-    spellColor: {r: 0, g: 0, b: 0, a: 0}
-    runeSlot:
-      name: 
-      id: 0
-      description: 
-      icon: {fileID: 0}
-      itemType: 0
-      spellStat: 0
-      runeEffect: 0
-  runes:
-  - name: 
-    id: 0
-    description: 
-    icon: {fileID: 0}
-    itemType: 0
-    spellStat: 0
-    runeEffect: 0
-  - name: 
-    id: 0
-    description: 
-    icon: {fileID: 0}
-    itemType: 0
-    spellStat: 0
-    runeEffect: 0
-  - name: 
-    id: 0
-    description: 
-    icon: {fileID: 0}
-    itemType: 0
-    spellStat: 0
-    runeEffect: 0
-  - name: 
-    id: 0
-    description: 
-    icon: {fileID: 0}
-    itemType: 0
-    spellStat: 0
-    runeEffect: 0
-  items:
-  - name: 
-    id: 0
-    description: 
-    icon: {fileID: 0}
-    itemType: 0
-  - name: 
-    id: 0
-    description: 
-    icon: {fileID: 0}
-    itemType: 0
-  - name: 
-    id: 0
-    description: 
-    icon: {fileID: 0}
-    itemType: 0
-  level: 1
-  exp: 0
-  expCap: 10
   wizHpText: {fileID: 1098878356}
-  currentElement: 0
 --- !u!136 &444846124
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5135,61 +5116,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92989d88d4309744c87584df0698cb4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _items: []
-  consumables: []
-  weapons:
-  - name: Shortsword
-    id: 0
-    description: 
-    icon: {fileID: 0}
-    itemType: 3
-    damage: 6
-    strBonus: 2
-    dexBonus: 4
-  - name: Longsword
-    id: 1
-    description: 
-    icon: {fileID: 0}
-    itemType: 3
-    damage: 10
-    strBonus: 4
-    dexBonus: 2
-  - name: Longbow
-    id: 2
-    description: 
-    icon: {fileID: 0}
-    itemType: 3
-    damage: 8
-    strBonus: 1
-    dexBonus: 5
-  - name: Heavy Crossbow
-    id: 3
-    description: 
-    icon: {fileID: 0}
-    itemType: 3
-    damage: 10
-    strBonus: 2
-    dexBonus: 4
-  - name: Whip
-    id: 4
-    description: 
-    icon: {fileID: 0}
-    itemType: 3
-    damage: 4
-    strBonus: 1
-    dexBonus: 5
-  note1:
-    name: 
-    id: 0
-    description: 
-    icon: {fileID: 0}
-    itemType: 0
-  note2:
-    name: 
-    id: 0
-    description: 
-    icon: {fileID: 0}
-    itemType: 0
 --- !u!1 &759333663
 GameObject:
   m_ObjectHideFlags: 0
@@ -11113,6 +11039,7 @@ Transform:
   - {fileID: 3610737}
   - {fileID: 1206345568}
   - {fileID: 1048194856}
+  - {fileID: 2020144938}
   m_Father: {fileID: 1682909639}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11611,7 +11538,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1682909639
 Transform:
   m_ObjectHideFlags: 0
@@ -12225,21 +12152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d31d5ce67e74b4b9daacccb65d0718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  t1Count: 0
-  t2Count: 0
-  t3Count: 0
   _enemyContainer: {fileID: 132439139}
   _enemyPrefab: {fileID: 5020877030135953565, guid: 9d56b7da0a0386f4c82a5d2b141af2de, type: 3}
   _enemyPool: []
-  isGameOver: 0
-  time: 0
-  wave: 0
-  type: 0
-  RedCounter: 0
-  GreenCounter: 0
-  BlueCounter: 0
-  enemyColorCounter: 0
-  randColor: 0
 --- !u!1 &1766426853
 GameObject:
   m_ObjectHideFlags: 0
@@ -14011,7 +13926,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2020144938
 Transform:
   m_ObjectHideFlags: 0
@@ -14022,11 +13937,9 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 4, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2081020819}
-  - {fileID: 444846120}
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_Children: []
+  m_Father: {fileID: 1623979736}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2020144939
 MonoBehaviour:
@@ -14048,12 +13961,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2020144937}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c33036e1ccac15418affeeee56c1db0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
+  speed: 0
 --- !u!1 &2027660777
 GameObject:
   m_ObjectHideFlags: 0
@@ -14336,8 +14249,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 1.3000002, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
-  m_Father: {fileID: 2020144938}
-  m_RootOrder: 0
+  m_Father: {fileID: 444846120}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2081020820
 MonoBehaviour:

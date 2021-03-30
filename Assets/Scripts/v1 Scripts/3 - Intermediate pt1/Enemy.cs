@@ -73,7 +73,6 @@ public class Enemy : MonoBehaviour, IDamagable
 
     public void SetEnemyType()
     {
-
         switch (SpawnManager.Instance.DetermineEnemyType())
         {
             case 1:
