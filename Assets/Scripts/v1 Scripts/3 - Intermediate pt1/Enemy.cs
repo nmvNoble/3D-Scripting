@@ -5,21 +5,20 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamagable
 {
-    public float Health { get; set; }
-    public bool isBugged = false;
     public static Action<int> OnEnemyDeath;
 
-    [SerializeField]
-    private int exp;
-    [SerializeField]
-    private float damage, speed;
+    public float Health { get; set; }
+    public bool IsBugged { get { return isBugged; } }
+
     [SerializeField]
     private TextMesh HpText;
 
-    private bool isBeingDamaged;
+    private bool isBeingDamaged, isBugged = false;
+    private int exp;
+    private float damage, speed;
     private GameObject target;
-    private Vector3 lookAt;
     private SpellEffect spellHitBy;
+    private Vector3 lookAt;
 
 
     private void Start()
@@ -34,23 +33,15 @@ public class Enemy : MonoBehaviour, IDamagable
         transform.Translate(lookAt * Time.deltaTime * speed);
         if (isBeingDamaged && spellHitBy != null )
         {
-            /*LogStats("update~~~~~~~~~~~");
-            Debug.Log(spellHitBy.spellTotalDamage + " * " + //.currentSpell.spellDmg + spellHitBy.currentWizLevel + " * " +
-                    UtilityHelper.GetElementMod(RetColor(), spellHitBy.currentSpell.spellColor));*/
-            Damage(Mathf.CeilToInt(spellHitBy.spellTotalDamage) * //.currentSpell.spellDmg + spellHitBy.currentWizLevel) *
+            Damage(Mathf.CeilToInt(spellHitBy.spellTotalDamage) * 
                     UtilityHelper.GetElementMod(RetColor(), spellHitBy.currentSpell.spellColor));
         }
         if(Vector3.Distance(this.transform.position, target.transform.position) <= .75f)
         {
             Debug.Log("OnTriggerEnter not Working, Enemy Bugged");
             isBugged = true;
-            //Attack(target.GetComponent<IDamagable>());
             Die();
         }
-        /*speed = .01f;
-        step += Time.deltaTime * speed;
-        // Moves the object to target position
-        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, step);*/
     }
 
     public virtual void OnEnable()
@@ -109,30 +100,22 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         if(damage > 0)
         {
-            //target.Damage(damage);
             target.Damage(Mathf.CeilToInt(damage) *
                         UtilityHelper.GetElementMod(target.RetColor(), RetColor()));
-            //Debug.Log("dmg:" + Mathf.CeilToInt(damage) + " , mod:"+ UtilityHelper.GetElementMod(target.RetColor(), RetColor()));
         }
     }
 
-    public void HitBySpell(SpellEffect spellEffect)//float spellDmg, int wizLvl, Color spellElement)
+    public void HitBySpell(SpellEffect spellEffect)
     {
         isBeingDamaged = true;
         spellHitBy = spellEffect;
-        //LogStats(isBeingDamaged+"|"+spellEffect.name+" ==hitbyspell== ");
-        //Damage(Mathf.CeilToInt(spellDmg + wizLvl) *
-        //        UtilityHelper.GetElementMod(RetColor(), spellElement));
     }
 
     public void Damage(float dmgAmount)
     {
-        //LogStats(this.gameObject.name + "=====damage====type: ^");
         if (dmgAmount > 0 && this.damage > 0)
         {
-            //Debug.Log("HP before: " + Health + " - " + dmgAmount + "(dmg)");
             Health -= dmgAmount;
-            //Debug.Log("HP after: " + Health);
             HpText.text = Health.ToString();
             if (Health <= 0)
             {
@@ -140,7 +123,6 @@ public class Enemy : MonoBehaviour, IDamagable
                 Die();
                 if (OnEnemyDeath != null && isBeingDamaged)
                 {
-                    //Debug.Log("Enemy Died, giving " + exp + " exp");
                     OnEnemyDeath(exp);
                 }
             }
@@ -159,11 +141,7 @@ public class Enemy : MonoBehaviour, IDamagable
         {
             if (other.name == "Sphere")
             {
-                //isBeingDamaged = true;
-                HitBySpell(other.GetComponent<SpellEffect>());
-                //HitBySpell(other.GetComponent<SpellEffect>().currentSpell.spellDmg,
-                //    other.GetComponent<SpellEffect>().currentWizLevel, other.GetComponent<SpellEffect>().currentSpell.spellColor);
-            }
+                HitBySpell(other.GetComponent<SpellEffect>());}
             if (other.name == "Wizard")
             {
                 Attack(other.GetComponent<IDamagable>());

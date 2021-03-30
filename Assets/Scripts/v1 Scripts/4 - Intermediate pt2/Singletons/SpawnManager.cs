@@ -58,7 +58,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     {
         foreach(var enemy in _enemyPool)
         {
-            if(enemy.activeInHierarchy == false && !enemy.GetComponent<Enemy>().isBugged)
+            if(enemy.activeInHierarchy == false && !enemy.GetComponent<Enemy>().IsBugged)
             {
                 ChangeColor(enemy);
                 enemy.transform.position = new Vector3(Random.Range(-6, 6), 2, 7);
@@ -94,6 +94,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
                 type = 2;
         return type;
     }
+
 
     public void UpdateEnemyTypeCount(int typeCount)
     {
