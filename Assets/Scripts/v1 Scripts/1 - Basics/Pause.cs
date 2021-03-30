@@ -8,8 +8,8 @@ using UnityEditor;
 
 public class Pause : MonoBehaviour
 {
-    [SerializeField] private Text PauseBtn;
-    [SerializeField] private GameObject PauseMenu;
+    [SerializeField] private Text pauseBtn;
+    [SerializeField] private GameObject pauseMenu;
 
     // Start is called before the first frame update
     void Start()
@@ -28,15 +28,15 @@ public class Pause : MonoBehaviour
     {
         if (Time.timeScale == 1)
         {
-            PauseMenu.SetActive(true);
+            pauseMenu.SetActive(true);
             Time.timeScale = 0;
-            PauseBtn.text = "Resume";
+            pauseBtn.text = "Resume";
         }
         else if (Time.timeScale == 0)
         {
-            PauseMenu.SetActive(false);
+            pauseMenu.SetActive(false);
             Time.timeScale = 1;
-            PauseBtn.text = "Pause";
+            pauseBtn.text = "Pause";
         }
     }
     public void ExitGame()

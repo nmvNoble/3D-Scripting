@@ -333,7 +333,7 @@ public class Wizard : MonoBehaviour, IDamagable
             expCap = 10;
             Health = 10;
             wizHpText.text = Health.ToString();
-            GetComponent<MeshRenderer>().material.color = defaultColor;
+            //GetComponent<MeshRenderer>().material.color = defaultColor;
             this.gameObject.transform.position = startingPos;
             ResetRunes();
         }

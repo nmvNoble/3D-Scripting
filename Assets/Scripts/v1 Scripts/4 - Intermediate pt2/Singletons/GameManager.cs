@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    public static Action OnGameOver;
+    public static Action OnGameOver, OnToggleTime;
     public static Action<bool> OnWaveStatusChange;
     public static Action<bool, Rune> OnRuneChange;
 
@@ -35,6 +38,9 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            ToggleTime();
+
         if (wizard.Health <= 0 && wizard.Level > 0)
             ResetPlayer();
 
@@ -65,6 +71,15 @@ public class GameManager : MonoSingleton<GameManager>
             }
             UIManager.Instance.UpdateTimer(timeMin, timeSec);
         }
+    }
+
+    public void ToggleTime()
+    {
+        OnToggleTime?.Invoke();
+        if (Time.timeScale == 1)
+            Time.timeScale = 0;
+        else if (Time.timeScale == 0)
+            Time.timeScale = 1;
     }
 
     public void ResetPlayer()
@@ -141,6 +156,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void ResetGame()
     {
+        isGameOver = true;
         Debug.Log("Reset Game");
         UIManager.Instance.ResetGame();
         SpawnManager.Instance.ResetEnemies();
@@ -151,5 +167,13 @@ public class GameManager : MonoSingleton<GameManager>
         wave = 1;
         UIManager.Instance.UpdateWave(wave.ToString());
         Time.timeScale = 1;
+    }
+    public void ExitGame()
+    {
+        #if UNITY_EDITOR
+            EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
     }
 }

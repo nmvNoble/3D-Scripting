@@ -11,12 +11,12 @@ public class UIManager : MonoSingleton<UIManager>
     }
 
     [SerializeField]
-    private Text activeEnemiesText, timeText, waveCountText,
+    private Text activeEnemiesText, pauseBtn, timeText, waveCountText,
         runeTitle, runeDesc, runeStatMod, runeStatMul, 
         wizardDeathsText, wizardExpText, wizardHealthText, wizardLevelText, wizardSpellText;
 
     [SerializeField]
-    private GameObject gameStartMenu, gameOverMenu, waveEndMenu, runeMenu,
+    private GameObject gameStartMenu, gameOverMenu, pauseMenu, runeMenu, waveEndMenu, 
         introMenu, iMenuControls, iMenuElements, iMenuEnemies, iMenuHealth, iMenuRunes, iMenuSpellInfo, iMenuWaves;
     
     private int wizardDeaths = 0;
@@ -35,6 +35,7 @@ public class UIManager : MonoSingleton<UIManager>
         GameManager.OnGameOver += EnableGameOverMenu;
         GameManager.OnWaveStatusChange += ToggleWaveMenu;
         GameManager.OnRuneChange += ToggleRuneText;
+        GameManager.OnToggleTime += TogglePauseMenu;
     }
 
     public void UpdateWave(string waveCount)
@@ -82,6 +83,20 @@ public class UIManager : MonoSingleton<UIManager>
     public void EnableGameOverMenu()
     {
         gameOverMenu.gameObject.SetActive(true);
+    }
+
+    public void TogglePauseMenu()
+    {
+        if (Time.timeScale == 1)
+        {
+            pauseMenu.SetActive(true);
+            pauseBtn.text = "Resume";
+        }
+        else if (Time.timeScale == 0)
+        {
+            pauseMenu.SetActive(false);
+            pauseBtn.text = "Pause";
+        }
     }
 
     public void ToggleWaveMenu(bool menuStatus)
@@ -162,5 +177,7 @@ public class UIManager : MonoSingleton<UIManager>
         wizardDeaths = -1;
         UpdateWizardDeath();
         gameOverMenu.gameObject.SetActive(false);
+        pauseMenu.SetActive(false);
+        pauseBtn.text = "Pause";
     }
 }
