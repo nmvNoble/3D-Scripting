@@ -335,6 +335,7 @@ public class Wizard : MonoBehaviour, IDamagable
             wizHpText.text = Health.ToString();
             //GetComponent<MeshRenderer>().material.color = defaultColor;
             this.gameObject.transform.position = startingPos;
+            SetCurrentSpell(1);
             ResetRunes();
         }
         isOnSpellCD = false;

@@ -11,7 +11,6 @@ ScriptsOnlyBuild:
     - GameManager
     - ItemDB
     - Movement
-    - Pause
     - Player
     - PlayerInput
     - SpawnManager
@@ -76,8 +75,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 11716}
     - Class: 114
       Script: {instanceID: 11728}
-    - Class: 114
-      Script: {instanceID: 11794}
     - Class: 114
       Script: {instanceID: 11908}
     - Class: 114
@@ -203,7 +200,7 @@ ScriptsOnlyBuild:
     className: TMP_Dropdown
   - hash:
       serializedVersion: 2
-      Hash: 1ebd30cd571c79a6c8314d2417170d7e
+      Hash: 9626c382c2c996057ea4fa6333a94763
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Pause
@@ -299,7 +296,7 @@ ScriptsOnlyBuild:
     className: ContentSizeFitter
   - hash:
       serializedVersion: 2
-      Hash: a33eb9ef9fce3d5dbdee1f80f7e19719
+      Hash: 7876bd785aeb3efa2c15813075f73f11
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Enemy
@@ -455,13 +452,13 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
-      Hash: 373d70dfc90dbe9b5c4f7d4a681d54f9
+      Hash: 028b3ff998eb1975d363ac4d38300c1d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: UIManager
   - hash:
       serializedVersion: 2
-      Hash: a33eb9ef9fce3d5dbdee1f80f7e19719
+      Hash: 7876bd785aeb3efa2c15813075f73f11
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Bandit
@@ -569,7 +566,7 @@ ScriptsOnlyBuild:
     className: TextContainer
   - hash:
       serializedVersion: 2
-      Hash: f23319a85897b3ca8b010253ca213d5f
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ItemDB
@@ -695,7 +692,7 @@ ScriptsOnlyBuild:
     className: GraphicRaycaster
   - hash:
       serializedVersion: 2
-      Hash: 740458bbc2a39c9de117e1a2c3dc1994
+      Hash: 21dd0d9590b43cd2c2e5979889dcd6f8
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SpawnManager
@@ -755,13 +752,13 @@ ScriptsOnlyBuild:
     className: V0Aim
   - hash:
       serializedVersion: 2
-      Hash: 8ea688c4203f946ab4ef0915ff25b0b0
+      Hash: f68f3d33d6906523e21972a8897eb7f3
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Wizard
   - hash:
       serializedVersion: 2
-      Hash: 3cf156985df62fac63708d6bed3583bf
+      Hash: afc5b93a7b192de2dcb3832fe35a5c7e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Movement
@@ -839,7 +836,7 @@ ScriptsOnlyBuild:
     className: StandaloneInputModule
   - hash:
       serializedVersion: 2
-      Hash: 27da239d2c207bfadda9d4661ef327e2
+      Hash: 7fc25d792f57a06b67e4cbd705fbbf8e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerInput
@@ -869,7 +866,7 @@ ScriptsOnlyBuild:
     className: V0ItemDB
   - hash:
       serializedVersion: 2
-      Hash: bfaed65b527bd159b2de275895e7695d
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -894,5 +891,5 @@ ScriptsOnlyBuild:
   platform: 5
   scenePathNames:
   - Assets/Scenes/6 - RGB Wizard v1.unity
-  playerPath: D:/Unity Projects/3D Scripting/Build/RGB Wizard/RGB Wizard v0.2.3/RGB
-    Wizard TEST v0.2.3.exe
+  playerPath: D:/Unity Projects/3D Scripting/Build/RGB Wizard/RGB Wizard v0.2.4/RGB
+    Wizard TEST v0.2.4.exe
